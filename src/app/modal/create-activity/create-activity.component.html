@@ -1,0 +1,79 @@
+<div class="modal-header d-flex">
+  <div class="title w-100">
+    <h4>Criar Atividade</h4>
+  </div>
+  <button type="button" class="btn-close close" data-dismiss="modal"  (click)="activeModal.dismiss()">
+
+  </button>
+</div>
+
+<div class="modal-body d-flex justify-content-center">
+  <form class="d-flex flex-column align-items-center justify-content-between mt-2 mx-2 w-100" [formGroup]="formActivity" (submit)="formActivity.value.id == null ? save() : update()">
+    <div class="d-flex flex-column justify-content-center w-100">
+      <div class="d-flex flex-column">
+
+        <label>Titulo</label>
+        <input placeholder="Título" formControlName="title" class="p-1"/>
+
+        <label>Descrição</label>
+        <input placeholder="Descrição" formControlName="description" class="p-1"/>
+
+        <label>Tempo estimado</label>
+        <input placeholder="Tempo estimado" formControlName="estimatedTime" class="p-1"/>
+<!--
+        <label for="statusActivity"> <strong>Status Atividade:</strong> </label>
+        <select id="statusActivity" class="form-control" name="statusActivity" formControlName="statusActivity" role="selectStatus" >
+          <option class="optionForm">Selecione Status</option>
+          <option *ngFor="let sa of statusActivity" [ngValue]="sa" class="optionForm">{{ sa.name }}</option>
+        </select> -->
+
+        <label for="sectorActivity"> <strong>Setor Atividade:</strong> </label>
+        <select  id="sectorActivity" class="form-control" name="sectorActivity" formControlName="sectorActivity" role="selectSectorActivity" >
+          <option class="optionForm">Selecione o setor da Atividade</option>
+          <option *ngFor="let sa of sectorActivity" [ngValue]="sa" class="optionForm">{{ sa.name }}</option>
+        </select>
+
+        <label for="tagsActivity"> <strong>Tag de priorização da Atividade:</strong> </label>
+        <select id="tagsActivity" class="form-control" name="tagsActivity" formControlName="tagsActivity" role="selectTagsActivity" >
+          <option class="optionForm">Selecione a tag de priorização da Atividade</option>
+          <option *ngFor="let ta of tagsActivity" [ngValue]="ta" class="optionForm">{{ ta.name }}</option>
+        </select>
+
+
+        <label for="statusPriorityActivity"> <strong>Prioridade Atividade:</strong> </label>
+        <select id="statusPriorityActivity" class="form-control" name="statusPriorityActivity" formControlName="statusPriorityActivity" role="selectStatusPriorityActivity" >
+          <option class="optionForm">Selecione a prioridade da Atividade</option>
+          <option *ngFor="let spa of statusPriorityActivity" [ngValue]="spa" class="optionForm">{{ spa.name }}</option>
+        </select>
+
+        <div class="form-group activity-dependents">
+          <label for="">Selecione as atividades</label>
+          <ng-select
+          [items]="activitiesList"
+          formControlName="activityDependentIds"
+          [multiple]="true"
+          [(ngModel)]="owner"
+          class="form-control"
+          bindLabel="title"
+          bindValue= "id"
+          role="selectedActivities"
+          [searchable]="true" 
+          [clearable]="true"
+          [compareWith]="compareFunction">
+          <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              <div class="custom-checkbox">
+                <input [ngModelOptions]="{standalone: true}" id="item-{{index}}" type="checkbox" class="custom-control-input" [(ngModel)]="item$.selected"/>
+                <label for="custom-control-label">{{item?.id}} - {{item?.identifier}} - {{item?.title}}</label>
+              </div>
+              <hr class="custom-hr-input">
+          </ng-template>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <button type="button" class="btn btn-danger" (click)="activeModal.close(false)">Cancelar</button>
+      <button type="submit" class="btn btn-primary ml-2" [disabled]="formActivity.invalid || buttonDisabled">Salvar</button>
+    </div>
+  </form>
+</div>

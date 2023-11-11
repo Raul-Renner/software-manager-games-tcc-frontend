@@ -1,0 +1,33 @@
+<div class="d-flex flex-column align-items-center container">
+  <div class="d-flex justify-content-between align-items-start mb-2">
+    <div class="mt-1 title-header" [ngStyle]="{color: color}">{{item.identifier}} - {{item.title}}</div>
+  </div>
+
+  <div class="d-flex justify-content-end align-items-center options">
+    <button mat-icon-button class="icon-info" (click)="viewActivity(item)">
+      <mat-icon [ngStyle]="{color: color}" style="font-size: 18px;">info</mat-icon>
+    </button>
+    <button mat-icon-button class="icon-edit" (click)="onCardEdit(item)">
+      <mat-icon  [ngStyle]="{color: color}" style="font-size: 18px;">edit</mat-icon>
+    </button>
+    <button mat-icon-button class="icon-delete" (click)="onCardDelete(item.id)" >
+      <mat-icon [ngStyle]="{color: color}" style="font-size: 18px;">delete</mat-icon>
+    </button>
+  </div>
+  <div class="align-items-center container-dependent" [hidden]="!item.isBlock">
+    <button type="button" class="btn btn-light btn-sm" (click)="viewDependentCard(item)">
+      dependências
+    </button>
+  </div>
+  <!-- <div class="container-dependent" [hidden]="!item.isBlock">
+    <div class="d-flex flex-column justify-content-between align-items-center m-3">
+      <mat-icon class="mat-18" [ngStyle]="{color: '#000000'}">lock</mat-icon>
+      <button type="button" class="btn btn-light" (click)="viewDependentCard(item)">
+        dependências
+      </button>
+    </div>
+
+  </div> -->
+</div>
+
+

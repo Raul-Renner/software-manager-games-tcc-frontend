@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h4>Dependências</h4>
+  <button type="button" class="btn-close close" data-dismiss="modal" (click)="activeModal.dismiss()">
+  </button>
+</div>
+<div class="modal-body" *ngIf="activitiesSource.length === 0">
+  <p>Não há atividades</p>
+</div>
+<div class="modal-body" *ngIf="activitiesSource.length > 0">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Atividade</th>
+        <th scope="col">Setor Atual</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of activitiesSource">
+        <td>{{item.identifier}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.sectorActivityEnum}}</td>
+        <td>
+          <button type="button" class="btn btn-danger btn-sm icon-delete" (click)="onCardDelete(item)" >
+            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;">delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

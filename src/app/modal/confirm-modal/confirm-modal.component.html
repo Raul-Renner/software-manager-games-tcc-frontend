@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h4 *ngIf="!title">Confirmação</h4>
+  <h4 *ngIf="title">{{title}}</h4>
+  <button type="button" class="btn-close close" data-dismiss="modal" (click)="activeModal.dismiss()">
+  </button>
+</div>
+
+  <div class="modal-body">
+    <p>{{content}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-red" id="cancel" (click)="activeModal.close(false)">Cancelar</button>
+    <button type="button" class="btn btn-blue" id="confirm" (click)="activeModal.close(true)">Confimar</button>
+  </div>
