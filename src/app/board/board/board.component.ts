@@ -168,7 +168,6 @@ export class BoardComponent  implements OnInit {
 ​      tagsEnum: activity.tagsEnum,
       title: activity.title
   })
-    console.log(this.activityUpdate);
     this.activityService.updateSectorActivity(this.activityUpdate).subscribe(resp => {
       this.getActivities();
     });

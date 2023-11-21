@@ -1,3 +1,4 @@
+<div>
 <div class="modal-header d-flex">
   <div class="title w-100">
     <h4>Criar Atividade</h4>
@@ -53,14 +54,14 @@
           formControlName="activityDependentIds"
           [multiple]="true"
           [(ngModel)]="owner"
-          class="form-control"
+          class="form-control test"
           bindLabel="title"
           bindValue= "id"
           role="selectedActivities"
-          [searchable]="true" 
+          [searchable]="true"
           [clearable]="true"
           [compareWith]="compareFunction">
-          <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          <ng-template class="testt" ng-option-tmp let-item="item" let-item$="item$" let-index="index">
               <div class="custom-checkbox">
                 <input [ngModelOptions]="{standalone: true}" id="item-{{index}}" type="checkbox" class="custom-control-input" [(ngModel)]="item$.selected"/>
                 <label for="custom-control-label">{{item?.id}} - {{item?.identifier}} - {{item?.title}}</label>
@@ -76,4 +77,5 @@
       <button type="submit" class="btn btn-primary ml-2" [disabled]="formActivity.invalid || buttonDisabled">Salvar</button>
     </div>
   </form>
+</div>
 </div>

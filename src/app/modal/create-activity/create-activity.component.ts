@@ -82,7 +82,6 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
       const statusActivityEnum = this.statusActivity.find(element => element.statusActivityEnum === this.activity.statusActivityEnum);
       const statusPriorityEnum = this.statusPriorityActivity.find(element => element.statusPriorityEnum === this.activity.statusPriorityEnum);
       const tagActivityEnum = this.tagsActivity.find(element => element.tagsEnum === this.activity.tagsEnum);
-
       this.activity.activityDependentList.map((activityDependent: any) => {
         this.owner.push({
           ...activityDependent,
@@ -148,22 +147,19 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
 
   update(){
     this.owner = [];
-    console.log(this.formActivity.value.activityDependentIds);
-      this.formActivity.value.activityDependentIds.map((activitiesSourceId:number) =>{
-        console.log(activitiesSourceId);
+      this.formActivity.value.activityDependentIds.map((activitiesSourceDep:any) =>{
+        let activitiesSourceId = activitiesSourceDep.activitySource != undefined ? activitiesSourceDep.activitySource : activitiesSourceDep;
         let activitySource = this.activity.activityDependentList.find((activity:any) =>
           activity.activitySource == activitiesSourceId
         );
 
-        console.log(activitySource);
         if(activitySource != null && activitySource != undefined){
           this.owner.push({
             ...activitySource,
             activityBranch: this.activity.id
           });
         }else{
-          let activitySource = this.activitiesList.find((activitySource:any) => activitySource.id == activitiesSourceId);
-          console.log(activitySource);
+          let activitySource = this.activitiesList.find((activitySource:any) => activitySource.id == activitiesSourceDep);
           this.owner.push({
             id: null,
             activityBranch: this.activity.id,
@@ -189,6 +185,8 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
           this.getActivities();
           this.getActivitiesDependents();
           this.activeModal.close(true);
+          this.owner = [];
+
         },
         error: () => {
           this.buttonDisabled = false;
