@@ -42,7 +42,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "https://raul-renner.github.io/software-manager-games-tcc-frontend/",
               "budgets": [
                 {
                   "type": "initial",
@@ -64,7 +63,6 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
-              "baseHref": "https://raul-renner.github.io/software-manager-games-tcc-frontend/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
