@@ -1,0 +1,19 @@
+<app-head></app-head>
+<nav id="sidebar">
+  <ul class="sidebar-nav">
+    <div>
+      <li class="nav-item" *ngFor="let l of links; index as i;" routerLinkActive="active"  placement="bottom" container="body">
+        <a routerLink="{{l.url}}"  routerLinkActive="active" ana-role="item-nav" tabindex="{{34 + i}}" id="nav-item-{{i}}" class="nav-link {{l.icon}} mdi-24px text-nowrap d-flex align-items-center">
+          <img class="icon-lo-blue"  [src]="l.icon" alt="" width="30" height="25">
+          <img class="icon-lo-white" [src]="l.iconWhite" alt="" width="30" height="25">
+          <span>{{l.label}}</span>
+        </a>
+      </li>
+    </div>
+  </ul>
+</nav>
+<div class="wrapper">
+  <div id="content" class="focus-content" >
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+  </div>
+</div>

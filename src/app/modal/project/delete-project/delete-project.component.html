@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="head">
+    <h5>Deseja excluir o seguinte projeto?</h5>
+    <div class="info-colaborator">
+      <span id="name-colaborator">{{content.name}}</span>
+      <span>Responsável:<span id="responsible"> name responsável</span></span>
+    </div>
+
+  </div>
+
+  <div class="buttons">
+    <div class="button-login">
+      <button type="button" class="btn btn-lg" (click)="activeModal.close(true)">Excluir Projeto</button>
+    </div>
+    <div class="button-logout">
+      <button type="button" class="btn btn-lg" (click)="activeModal.close(false)">Cancelar</button>
+    </div>
+  </div>
+</div>

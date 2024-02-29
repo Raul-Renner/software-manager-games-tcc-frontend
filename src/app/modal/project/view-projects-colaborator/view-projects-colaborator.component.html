@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h4>Colaboradores</h4>
+  <button type="button" class="btn-close close" data-dismiss="modal" (click)="activeModal.dismiss()">
+  </button>
+</div>
+
+<div class="modal-body">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Projeto</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <div class="modal-body" *ngIf="content.length == 0">
+        <p>Não está participando de nenhum projeto</p>
+      </div>
+      <tr *ngFor="let content of content">
+        <td>{{content.name}}</td>
+        <td>
+          <button type="button" class="btn btn-danger btn-sm icon-delete">
+            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;">delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

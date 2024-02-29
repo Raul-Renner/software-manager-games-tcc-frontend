@@ -1,0 +1,51 @@
+<div class="container container-lg">
+  <div class="child">
+    <div class="button-added">
+      <div class="button-added-project">
+        <button type="button" class="btn btn-lg" (click)="createProject()">Novo Projeto</button>
+      </div>
+    </div>
+    <div class="status-project">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" (change)="checkedProjectProgress($event.target)" id="inProgress" value="inProgress" [disabled]="checkedProgress">
+        <label class="form-check-label" for="inProgress">Em progresso</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="concluded" (change)="checkedProjectFinish($event.target)" value="concluded" [disabled]="checkedFinished">
+        <label class="form-check-label" for="concluded">Concluído</label>
+      </div>
+    </div>
+
+    <div class="projects">
+      <div class="container">
+        <div *ngIf="projects?.length == 0">
+          <span>Não há projetos registrados</span>
+        </div>
+        <div *ngIf="projects.length > 0" class="content-card">
+          <div *ngFor="let project of projects" class="card">
+            <div class="head">
+              <div class="name-projeto">
+                <span id="title">{{project.name}}</span>
+                <!-- <span id="responsible">name responsible</span> -->
+                <div class="progress"><span>Em Progresso</span></div>
+              </div>
+              <div class="button-delete">
+                <button type="button" class="btn" (click)="deleteProject(project)">
+                  <img src="assets/icons/delete_forever.svg" />
+                </button>
+              </div>
+            </div>
+            <div class="buttons">
+              <div class="button-login">
+                <button type="button" class="btn view-info">Ir para o Board</button>
+              </div>
+              <div class="button-logout">
+                <button  type="button" class="btn view-info" [routerLink]="['/details-project/' + project?.id]">Detalhes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

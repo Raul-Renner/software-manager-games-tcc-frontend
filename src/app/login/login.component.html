@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="container-login">
+    <div class="head">
+      <h3>Login</h3>
+      <span>Acesse a conta da sua organização</span>
+    </div>
+    <form action="">
+      <div class="user">
+        <label for="login">
+          Usuário
+        </label>
+        <input type="text" name="login" id="login" class="form-control mb-3 form-login" autofocus>
+      </div>
+
+      <div class="password">
+        <label for="password">
+          Senha
+        </label>
+        <div class="inline-input-test">
+          <input [type]="password" name="password" id="password" class="form-control" required />
+          <button type="button" class="btn btn-lg btn-visibility" (click)="updateVisibilityPassword()">
+            <mat-icon class="mat-18" aria-hidden="true" *ngIf="!show">visibility</mat-icon>
+            <mat-icon class="mat-18" aria-hidden="true" *ngIf="show">visibility_off</mat-icon>
+          </button>
+
+        </div>
+      </div>
+      <a href="" class="password-recovery" routerLink="">Esqueceu a senha?</a>
+      <div class="buttons">
+        <div class="button-login">
+          <button type="button" class="btn btn-lg">Acessar</button>
+        </div>
+        <div class="button-logout">
+          <button type="reset" class="btn btn-lg" (click)="goAddOrg()">Cadastrar Organização</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

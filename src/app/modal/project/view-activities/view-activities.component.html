@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h4><span>Atividades</span> <span *ngIf="isFinished"> Concluídas</span></h4>
+  <button type="button" class="btn-close close" data-dismiss="modal" (click)="activeModal.dismiss()">
+  </button>
+</div>
+
+<div class="modal-body">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Atividade</th>
+        <th scope="col">Status</th>
+        <th scope="col" [hidden]="isFinished">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <span *ngIf="content.length == 0">Não há atividades</span>
+      <tr *ngIf="content.length > 0">
+        <td>identifier title</td>
+        <td>Status</td>
+        <td [hidden]="isFinished">
+          <button type="button" class="btn btn-danger btn-sm icon-delete">
+            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;">delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

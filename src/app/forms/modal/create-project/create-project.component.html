@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="head">
+    <h4>Novo Projeto</h4>
+    <span>Cadastro de um novo projeto da organização</span>
+  </div>
+  <form action="" [formGroup]="projectForm" (submit)="createProject()">
+    <div class="form-container">
+      <label for="name">
+        Nome do projeto
+      </label>
+      <input type="text" name="name" id="name" formControlName="name" class="form-control mb-3" autofocus>
+
+      <div class="form-group responsible selection-members mb-3">
+        <label for="">Selecionar responsáveis</label>
+        <ng-select
+        [items]="colaborators"
+        [(ngModel)]="owner"
+        formControlName="members"
+        [multiple]="true"
+        class="form-select selection-responsible"
+        bindLabel="userInformation.name"
+        bindValue= "id"
+        role="selectedResponsible"
+        [searchable]="true"
+        [clearable]="true"
+        [compareWith]="compareFunction">
+        <ng-template class="testt" ng-option-tmp let-item="item" let-item$="item$" let-index="index" >
+            <div class="custom-checkbox">
+              <input  type="checkbox" [ngModelOptions]="{standalone: true}" id="item-{{index}}" class="custom-control-input" [(ngModel)]="item$.selected"/>
+              <label for="custom-control-label" class="label-info">{{item?.userInformation.name}} {{item?.userInformation.username}} | FUNCTION</label>
+            </div>
+            <hr class="custom-hr-input">
+        </ng-template>
+        </ng-select>
+      </div>
+
+      <label for="description">
+        Descrição
+      </label>
+      <textarea  name="description"  id="description" formControlName="description" class="form-control textarea-description mb-3" rows="3"></textarea>
+
+    </div>
+
+      <div class="buttons">
+        <div class="button-login">
+          <button type="submit" class="btn btn-lg" [disabled]="projectForm.invalid">Cadastrar</button>
+        </div>
+        <div class="button-logout">
+          <button type="button" class="btn btn-lg" (click)="activeModal.close(false)">Voltar</button>
+        </div>
+      </div>
+  </form>
+</div>

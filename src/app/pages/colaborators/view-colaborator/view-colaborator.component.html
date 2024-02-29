@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="head">
+    <h4>Visualizar dados Colaborador</h4>
+    <span>informações de um colaborador da organização</span>
+  </div>
+  <ng-container *ngIf="colaborator != null && colaborator != undefined">
+    <div class="form-container">
+      <div class="form-left">
+        <label for="name">
+          Nome
+        </label>
+        <span>{{colaborator.userInformation.name}}</span>
+        <label for="username">
+          Sobrenome
+        </label>
+        <span>{{colaborator.userInformation.username}}</span>
+
+        <label for="login">
+          Nome de usuário
+        </label>
+        <span>{{colaborator.login}}</span>
+      </div>
+      <div class="form-right">
+        <label for="email">
+          Email
+        </label>
+        <span>{{colaborator.userInformation.email}}</span>
+        <label for="role">Cargo</label>
+        <span>{{colaborator.userInformation.profileEnum}}</span>
+
+        <label for="role">Projetos</label>
+        <!-- <span *ngFor="let project of projects">{{project.name}}</span> -->
+        <span *ngIf="projects === undefined || projects.length === 0">Sem Projetos</span>
+        <a *ngIf="projects.length > 0"  (click)="viewActivitiesFinished()"><span>Ver atividades concluídas</span></a>
+
+      </div>
+    </div>
+  </ng-container>
+  <div class="button">
+    <div class="button-login">
+      <button type="button" class="btn btn-lg" routerLink="/colaborators">Voltar</button>
+    </div>
+  </div>
+</div>

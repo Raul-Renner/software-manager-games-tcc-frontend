@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="head">
+      <h3>Realizar cadastro da sua organização</h3>
+      <span>Cadastre sua organização em nosso sistema</span>
+    </div>
+    <form action="" [formGroup]="organizationForm">
+      <div class="form">
+        <div class="form-left">
+          <label for="name">
+            Nome da organização
+          </label>
+          <input type="text" formControlName="name" name="name" id="name" class="form-control mb-3">
+
+          <label for="email">
+            Email da organização
+          </label>
+          <input type="email" name="email" id="email" formControlName="email" class="form-control mb-3" >
+
+          <label for="description">
+            Descrição
+          </label>
+          <textarea name="description" id="description" formControlName="description" class="form-control textarea-description mb-3" rows="3"></textarea>
+
+          <!-- <label for="name-owner">
+            Nome do responsável
+          </label>
+          <input type="text" name="name-owner" id="name-owner" class="form-control mb-3" autofocus>
+
+          <label for="username-owner">
+            Sobrenome do responsável
+          </label>
+          <input type="text" name="username-owner" id="username-owner" class="form-control mb-3" autofocus> -->
+        </div>
+        <div class="form-right">
+            <label for="login">
+              Nome de usuário
+            </label>
+            <input type="text" name="login" id="login" formControlName="login" class="form-control mb-3" >
+            <div class="password mb-3">
+              <label for="password">
+                Senha
+              </label>
+              <div class="inline-input-password">
+                <input [type]="password" formControlName="password" name="password" id="password" class="form-control" required />
+                <button type="button" class="btn btn-lg btn-visibility" (click)="updateVisibilityPassword(true)">
+                <mat-icon class="mat-18" aria-hidden="true" *ngIf="!show">visibility</mat-icon>
+                <mat-icon class="mat-18" aria-hidden="true" *ngIf="show">visibility_off</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="confirm-password">
+              <label for="confirm-password">
+                Confirmar senha
+              </label>
+              <div class="inline-input-password">
+                <input [type]="confirm_password" name="confirm_password" formControlName="confirm_password" id="confirm_password" class="form-control"  />
+                <button type="button" class="btn btn-lg btn-visibility" (click)="updateVisibilityPassword(false)">
+                <mat-icon class="mat-18" aria-hidden="true" *ngIf="!show_confirm_password">visibility</mat-icon>
+                <mat-icon class="mat-18" aria-hidden="true" *ngIf="show_confirm_password">visibility_off</mat-icon>
+                </button>
+              </div>
+            </div>
+
+
+        </div>
+      </div>
+
+        <div class="buttons">
+          <div class="button-login">
+            <button (click)="save()" type="button" class="btn btn-lg" [disabled]="organizationForm.invalid">Cadastrar</button>
+          </div>
+          <div class="button-logout">
+            <button type="button" class="btn btn-lg" routerLink="/login">Voltar</button>
+          </div>
+        </div>
+    </form>
+  </div>

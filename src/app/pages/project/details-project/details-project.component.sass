@@ -1,0 +1,120 @@
+.container
+  .head
+    display: flex
+    justify-content: flex-start
+    align-items: flex-start
+    flex-direction: column
+    color: #072047
+    margin-right: 76px
+    h4
+      font-weight: bold
+      text-align: left
+    span
+      color: #072047
+      font-size: 16px
+      font-weight: 500
+      margin-top: 8px
+  .form-container
+    .progress > *
+      padding: 8px
+    .progress
+      background-color: transparent
+      width: auto
+      height: auto
+      max-height: 32px
+      display: table
+      flex-direction: row
+      margin-top: 8px
+      margin-bottom: 8px
+
+      span
+        vertical-align: middle
+        font-size: 14px
+        font-weight: 600
+      #porcent-progress
+        vertical-align: middle
+        display: table-cell
+        padding-top: 16px
+
+      .status
+        max-width: 104px
+        width: auto
+        background-color: #A6F38B
+        display: flex
+        align-items: center
+        margin-top: 8px
+        border-radius: 4px
+    .container-infos
+      margin: 8px 0px 16px 0px
+      display: flex
+      justify-content: space-between
+      flex-direction: row
+      justify-content: flex-start
+      .form-left
+        margin-right: 150px
+        display: flex
+        flex-direction: column
+      .form-left > *
+        margin-bottom: 8px
+      .form-right
+        margin-left: 150px
+        display: flex
+        flex-direction: column
+      .form-right > *
+        margin-bottom: 8px
+      label
+        color: #072047
+        font-size: 16px
+        font-weight: bold
+        margin-top: 8px
+      a
+        text-decoration: underline
+        text-align: left
+        cursor: pointer
+      a:hover
+        opacity: 0.5
+
+  .buttons
+    display: flex
+    flex-direction: row
+    justify-content: center
+    margin: 40px 64px 24px 0px
+
+    button
+      width: 208px
+      height: 48px
+
+    .button-board
+      button
+        background-color: #072047
+        color: #ffffff
+        font-size: 16px
+        font-weight: bold
+        margin-right: 24px
+    .button-login
+      button
+        background-color: #646161
+        color: #ffffff
+        font-size: 16px
+        font-weight: bold
+        margin-left: 24px
+        margin-right: 24px
+
+    .button-logout
+      button
+        background-color: rgba(0, 0, 0, 0.1)
+        font-size: 16px
+        font-weight: bold
+        color: #0A1047
+        border: 1px solid #0A1047
+        background-color: white
+        margin-left: 24px
+
+
+    .button-login button:hover
+      opacity: 0.9
+    .button-board button:hover
+      opacity: 0.9
+    .button-logout button:hover
+      opacity: 0.7
+      background-color: #E4E4E4

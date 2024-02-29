@@ -3,3 +3,16 @@ export interface ActivityDependentFilterType {
   activitySource?: number;
   activityBranch?: number;
 }
+
+
+export interface ProjectFilterType {
+  projectIds?: Array<number>;
+  organizationId?: number;
+  userId?: number;
+}
+
+export interface UserFilterType {
+  organizationId?: number;
+  projectId?: number;
+  userId?: number;
+}

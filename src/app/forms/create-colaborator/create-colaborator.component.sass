@@ -1,0 +1,132 @@
+.container
+  .head
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    color: #072047
+  h4
+    font-weight: bold
+    text-align: center
+  span
+    color: #072047
+    font-size: 16px
+    font-weight: 600
+    margin-top: 16px
+  form
+    display: flex
+    justify-content: center
+    flex-direction: column
+    margin-right: 48px
+  .form-container
+    margin: 32px 32px 16px 0px
+    display: flex
+    justify-content: space-between
+    flex-direction: row
+    .custom-checkbox
+      padding: 8px
+      input
+        width: 16px
+        height: 16px
+        background-color: #E4E4E4
+        border: 1px solid #A3A3A3
+        text-align: center
+      label
+        color: #072047
+        font-size: 14px
+        font-weight: 600
+        margin-left: 8px
+    .form-left
+      margin-right: 64px
+
+    input
+      width: 440px
+      height: 48px
+      background-color: #E4E4E4
+      border: 1px solid #A3A3A3
+
+    label
+      color: #072047
+      font-size: 16px
+      font-weight: bold
+      margin-bottom: 4px
+
+  .buttons
+    display: flex
+    flex-direction: row
+    justify-content: center
+    margin: 32px 0px 24px 0px
+
+    button
+      width: 208px
+      height: 48px
+
+    .button-login
+      button
+        background-color: #072047
+        color: #ffffff
+        font-size: 16px
+        font-weight: bold
+        margin-right: 32px
+
+    .button-logout
+      button
+        background-color: rgba(0, 0, 0, 0.1)
+        font-size: 16px
+        font-weight: bold
+        color: #0A1047
+        border: 1px solid #0A1047
+        background-color: white
+        margin-left: 32px
+
+
+    .button-login button:hover
+      opacity: 0.9
+
+    .button-logout button:hover
+      opacity: 0.7
+      background-color: #E4E4E4
+
+
+
+.inline-input-password
+  display: flex
+  flex-direction: row
+  border-radius: 8px
+
+  input
+    width: 100%
+    max-width: 383px
+    border-top-left-radius: 8px
+    border-bottom-left-radius: 8px
+    border-bottom-right-radius: 0px
+    border-top-right-radius: 0px
+
+.btn-visibility
+  background-color: #E4E4E4
+  border: 1px solid #A3A3A3
+  border-left-style: none
+  height: 48px
+  border-top-left-radius: 0px
+  border-bottom-left-radius: 0px
+  border-bottom-right-radius: 8px
+  border-top-right-radius: 8px
+
+.selection-project
+  width: 440px
+  height: 48px
+  background-color: #E4E4E4
+  border: 1px solid #A3A3A3
+.selection-colabrators-role
+  select
+    width: 440px
+    height: 48px
+    background-color: #E4E4E4
+    border: 1px solid #A3A3A3
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items
+  background-color: #E4E4E4
+  border-end-start-radius: 8px
+  margin: 10px 10px 0px 0px
+::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value
+  margin-right: 8px
