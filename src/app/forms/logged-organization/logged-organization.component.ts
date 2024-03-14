@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OrganizationService } from 'src/app/services/organization.service';
 
@@ -27,12 +28,14 @@ export class LoggedOrganizationComponent implements OnInit {
   constructor(
     private elemento: ElementRef,
     private organizationService: OrganizationService,
-    private toastr: ToastrService) {}
+    private toastr: ToastrService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.elemento.nativeElement.ownerDocument.body.style.backgroundColor = '#FFFFFF';
 
     this.password = 'password';
+    this.confirm_password = 'password';
   }
 
   updateVisibilityPassword(flag: boolean) {
@@ -60,6 +63,7 @@ export class LoggedOrganizationComponent implements OnInit {
         //alert success
         this.toastr.success('O cadastro da sua organização foi realizada com sucesso!','Cadastro realizado!');
         this.organizationForm.reset();
+        this.router.navigateByUrl("login");
       },
       error: (response) => {
         this.toastr.error(response.error.errors[0].defaultMessage, 'Error cadastrar organização!');

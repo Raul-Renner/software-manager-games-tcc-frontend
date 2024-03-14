@@ -11,6 +11,7 @@ import { ViewColaboratorComponent } from './pages/colaborators/view-colaborator/
 import { EditAdmColaboratorComponent } from './pages/colaborators/edit-adm-colaborator/edit-adm-colaborator.component';
 import { DetailsProjectComponent } from './pages/project/details-project/details-project.component';
 import { RecoveryPasswordComponent } from './forms/recovery-password/recovery-password.component';
+import { ProjectColaboratorComponent } from './pages/colaborators/project-colaborator/project-colaborator.component';
 
 const routes: Routes = [
   { path: "", component: SidebarComponent,
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: "home", component: HomeGeneralComponent},
       { path: "colaborators", component: ColaboratorsComponent},
       { path: "projects", component: ProjectComponent},
+      { path: "colaborator-projects", component: ProjectColaboratorComponent},
       { path: "added-colaborator", component: CreateColaboratorComponent},
       { path: "view-colaborator/:idColaborator", component: ViewColaboratorComponent},
       { path: "edit-colaborator/:idColaborator", component: EditAdmColaboratorComponent},

@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ToastrModule } from 'ngx-toastr';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/template/header/header.component';
@@ -41,6 +43,7 @@ import { DetailsProjectComponent } from './pages/project/details-project/details
 import { ViewColaboratorsComponent } from './modal/project/view-colaborators/view-colaborators.component';
 import { ViewActivitiesComponent } from './modal/project/view-activities/view-activities.component';
 import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-colaborator/view-projects-colaborator.component';
+import { ProjectColaboratorComponent } from './pages/colaborators/project-colaborator/project-colaborator.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +74,8 @@ import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-
     DetailsProjectComponent,
     ViewColaboratorsComponent,
     ViewActivitiesComponent,
-    ViewProjectsColaboratorComponent
+    ViewProjectsColaboratorComponent,
+    ProjectColaboratorComponent
   ],
   imports: [
     BrowserModule,
@@ -87,6 +91,7 @@ import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-
     MatIconModule,
     CommonModule,
     MatToolbarModule,
+    MatExpansionModule,
     ToastrModule.forRoot()
 
   ],

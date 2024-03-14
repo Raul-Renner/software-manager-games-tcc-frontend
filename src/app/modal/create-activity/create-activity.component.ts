@@ -2,7 +2,6 @@ import { ActivityDependentService } from './../../services/activity-dependent.se
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivityDependentFilterType } from 'src/app/interfaces/filters';
 import { ActivityService } from 'src/app/services/activity.service';
 
 @Component({
@@ -36,6 +35,20 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     {id: 3, name:'ALTA', statusPriorityEnum:'HIGH'}
   ];
 
+  public estimatedTimeList: Array<any> = [
+    {id: 1, name:'2h'},
+    {id: 2, name:'4h'},
+    {id: 3, name:'6h'},
+    {id: 1, name:'1d 2h'},
+    {id: 1, name:'1d 4h'},
+    {id: 1, name:'1d 6h'},
+    {id: 2, name:'2d'},
+    {id: 2, name:'2d 2h'},
+    {id: 2, name:'2d 4h'},
+    {id: 2, name:'2d 6h'},
+    {id: 3, name:'3d'},
+  ];
+
   public tagsActivity: Array<any> = [
     {id: 1, name:'URGENTE', tagsEnum:'URGENT'},
     {id: 2, name:'DEPENDENTE', tagsEnum:'DEPENDENT'},
@@ -60,6 +73,7 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     title: new FormControl(null, Validators.required),
     description: new FormControl(null, Validators.required),
     estimatedTime: new FormControl(null),
+    usedTime: new FormControl(null),
     sectorActivity: new FormControl([]),
     statusActivity: new FormControl(""),
     statusPriorityActivity: new FormControl(""),
@@ -109,8 +123,8 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     this.activityService.findAll().subscribe(resp =>{
       this.activitiesList = resp.content;
     });
-
   }
+
   getActivitiesDependents(){
     this.activitiesDependentsList = [];
     this.activityDependentService.findAll({}).subscribe(resp =>{

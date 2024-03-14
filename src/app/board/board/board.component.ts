@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateActivityComponent } from 'src/app/modal/create-activity/create-activity.component';
 import { ActivityService } from 'src/app/services/activity.service';
@@ -35,10 +35,13 @@ export class BoardComponent  implements OnInit {
     {id: 9, name:'FEITO', sectorActivityEnum:'DONE', list: []}
   ];
 
-  constructor(private activityService:ActivityService,private modalService: NgbModal
+  constructor(private activityService:ActivityService,
+    private modalService: NgbModal,private elemento: ElementRef
     ){}
 
   ngOnInit(): void {
+    this.elemento.nativeElement.ownerDocument.body.style.backgroundColor = '#072047';
+
     this.getActivities();
 
   }
@@ -114,7 +117,7 @@ export class BoardComponent  implements OnInit {
   }
 
   createActivity(): void {
-    const modalResult = this.modalService.open(CreateActivityComponent);
+    const modalResult = this.modalService.open(CreateActivityComponent, {size: 'lg', backdrop: 'static'});
     modalResult.result.then((result) => {
       if(result){
           this.getActivities();
