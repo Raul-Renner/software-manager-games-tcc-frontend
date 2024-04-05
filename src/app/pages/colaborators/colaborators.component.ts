@@ -16,19 +16,27 @@ export class ColaboratorsComponent implements OnInit{
 
   public projects: Array<any> = [];
 
+  public storage: any;
+  public userInfo: any;
+
   constructor(private modalService: NgbModal,
-              private userService: UserService,
+              private user: UserService,
               private projectService: ProjectService,
               private toast: ToastrService){}
 
   ngOnInit(): void {
+    this.storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
+
+    var storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
+    this.userInfo = JSON.parse(storage.getItem("currentUser") || '{}');
+
     this.getProjects();
     this.getColaborators();
   }
 
   getColaborators(){
-    this.userService.findAllBy({
-      organizationId: 1
+    this.user.findAllBy({
+      organizationId: this.user.organizationId
     }).subscribe({
       next: (response) => {
         this.colaborators = response.content;
@@ -41,8 +49,8 @@ export class ColaboratorsComponent implements OnInit{
     modalResult.componentInstance.content = colaborator;
     modalResult.result.then((result) => {
       if(result){
-        this.userService.delete(colaborator.id).subscribe({
-          next: (resp) => {
+        this.user.delete(colaborator.id).subscribe({
+          next: () => {
             this.getColaborators();
             this.toast.success('Usuário Removido!','Usuário foi removido com sucesso!');
           },
@@ -56,10 +64,10 @@ export class ColaboratorsComponent implements OnInit{
 
   getProjects(){
     this.projectService.findBy({
-      organizationId: 1,
+      organizationId: this.user.organizationId,
     }).subscribe({
       next: (response) => {
-          this.projects = response.content;
+          this.projects = response.body.content;
       },
     });
   }
@@ -67,8 +75,8 @@ export class ColaboratorsComponent implements OnInit{
     if(event.target.value === "Todos"){
       this.getColaborators();
     }else{
-      this.userService.findAllBy({
-        organizationId: 1,
+      this.user.findAllBy({
+        organizationId: this.user.organizationId,
         projectId: event.target.value
       }).subscribe({
         next: (response) => {

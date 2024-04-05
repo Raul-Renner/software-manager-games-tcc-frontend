@@ -55,7 +55,6 @@ export class DetailsProjectComponent implements OnInit {
     }).subscribe({
       next: (response) => {
         this.project = response.content[0];
-        console.log(this.project);
       },
     })
   }

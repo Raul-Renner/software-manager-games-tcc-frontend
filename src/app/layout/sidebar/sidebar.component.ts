@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.sass']
 })
 export class SidebarComponent implements OnInit {
+
+  constructor(
+    public authService: AuthService,
+    public user: UserService
+  ){}
+
   ngOnInit(): void {
+    this.linksNavigationUser();
   }
 
   onActivate(componentRef:any){
@@ -22,8 +31,23 @@ export class SidebarComponent implements OnInit {
 
   public links = [
     { url: "/home", icon: "assets/icons/home-icon.svg", iconWhite: "assets/icons/home-icon-white.svg",  label: "Home"},
-    { url: "/projects", icon: "assets/icons/project.svg", iconWhite: "assets/icons/project-white.svg", label: "Projetos"},
-    { url: "/colaborators", icon: "assets/icons/group.svg", iconWhite: "assets/icons/group-white.svg",  label: "Colaboradores"},
     { url: "/colaborator-projects", icon: "assets/icons/project.svg", iconWhite: "assets/icons/project-white.svg", label: "Projetos-user"}
   ];
+
+
+  private linksNavigationUser(){
+    switch(this.user.profile){
+      case "ADMINISTRADOR":
+        this.links = [
+          { url: "/home-admin", icon: "assets/icons/home-icon.svg", iconWhite: "assets/icons/home-icon-white.svg",  label: "Home"},
+          { url: "/projects", icon: "assets/icons/project.svg", iconWhite: "assets/icons/project-white.svg", label: "Projetos"},
+          { url: "/colaborators", icon: "assets/icons/group.svg", iconWhite: "assets/icons/group-white.svg",  label: "Colaboradores"},
+        ];
+        break;
+      case "GERENTE":
+        break;
+      case "LIDER_TECNICO":
+        break;
+    }
+  }
 }

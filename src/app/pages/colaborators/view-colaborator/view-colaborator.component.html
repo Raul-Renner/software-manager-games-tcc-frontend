@@ -26,12 +26,12 @@
         </label>
         <span>{{colaborator.userInformation.email}}</span>
         <label for="role">Cargo</label>
-        <span>{{colaborator.userInformation.profileEnum}}</span>
+        <span>{{colaborator.profile}}</span>
 
         <label for="role">Projetos</label>
         <!-- <span *ngFor="let project of projects">{{project.name}}</span> -->
         <span *ngIf="projects === undefined || projects.length === 0">Sem Projetos</span>
-        <a *ngIf="projects.length > 0"  (click)="viewActivitiesFinished()"><span>Ver atividades concluídas</span></a>
+        <a *ngIf="projects.length > 0"  (click)="viewProjectsUser()"><span>Ver projetos</span></a>
 
       </div>
     </div>

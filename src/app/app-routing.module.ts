@@ -12,11 +12,16 @@ import { EditAdmColaboratorComponent } from './pages/colaborators/edit-adm-colab
 import { DetailsProjectComponent } from './pages/project/details-project/details-project.component';
 import { RecoveryPasswordComponent } from './forms/recovery-password/recovery-password.component';
 import { ProjectColaboratorComponent } from './pages/colaborators/project-colaborator/project-colaborator.component';
+import { HomeAdminComponent } from './pages/pages-home/home-admin/home-admin.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent},
+  { path: '', redirectTo: 'login', pathMatch: 'prefix'},
+
   { path: "", component: SidebarComponent,
     children:[
       { path: "home", component: HomeGeneralComponent},
+      { path: "home-admin", component: HomeAdminComponent},
       { path: "colaborators", component: ColaboratorsComponent},
       { path: "projects", component: ProjectComponent},
       { path: "colaborator-projects", component: ProjectColaboratorComponent},
@@ -24,11 +29,10 @@ const routes: Routes = [
       { path: "view-colaborator/:idColaborator", component: ViewColaboratorComponent},
       { path: "edit-colaborator/:idColaborator", component: EditAdmColaboratorComponent},
       { path: "details-project/:idProject", component: DetailsProjectComponent}
-    ]
+    ],
    },
   { path: 'add_organization', component: LoggedOrganizationComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'recovery-password', component: RecoveryPasswordComponent},
+  { path: 'recovery-password', component: RecoveryPasswordComponent},
 
 ];
 

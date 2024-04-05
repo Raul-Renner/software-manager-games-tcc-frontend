@@ -66,7 +66,6 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   public activitiesDependentsListUpdate: Array<any> | undefined;
 
 
-
   public formActivity:FormGroup = new FormGroup ({
     id: new FormControl(null),
     identifier: new FormControl(null),

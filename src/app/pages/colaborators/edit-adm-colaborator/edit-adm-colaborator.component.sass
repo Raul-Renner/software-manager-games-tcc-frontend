@@ -90,12 +90,54 @@
 
 .selection-project
   width: 320px
-  height: 48px
+  min-height: 48px
+  height: auto
   background-color: #E4E4E4
   border: 1px solid #A3A3A3
+  .custom-checkbox
+    padding: 8px 8px 0px 8px
+    input
+      width: 16px
+      height: 16px
+      background-color: #E4E4E4
+      border: 1px solid #A3A3A3
+      text-align: center
+    label
+      color: #072047
+      font-size: 14px
+      font-weight: 600
+      margin-left: 8px
 .selection-colabrators-role
   select
     width: 320px
     height: 48px
     background-color: #E4E4E4
     border: 1px solid #A3A3A3
+  .description-cargo-atual
+    font-size: 14px
+    font-weight: bold
+    color: #0A1047
+  .cargo-atual
+    font-size: 14px
+    font-weight: 500
+    color: #252525
+
+hr
+  margin: 6px
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items
+  background-color: #E4E4E4
+  border-end-start-radius: 8px
+  margin: 10px 0px 0px 0px
+  width: 320px
+
+::ng-deep .ng-select-container .ng-value-container .ng-input
+  input
+    width: 100%
+    background: transparent
+    border: transparent
+::ng-deep .ng-select-container .ng-value-container .ng-value .ng-value-label
+  margin-right: 6px
+
+::ng-deep .ng-select-container
+  padding: 4px

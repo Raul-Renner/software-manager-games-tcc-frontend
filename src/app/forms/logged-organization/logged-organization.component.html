@@ -41,7 +41,7 @@
                 Senha
               </label>
               <div class="inline-input-password">
-                <input [type]="password" formControlName="password" name="password" id="password" class="form-control" required />
+                <input [type]="password" formControlName="password" name="password" id="password" class="form-control" autocomplete="password"  required />
                 <button type="button" class="btn btn-lg btn-visibility" (click)="updateVisibilityPassword(true)">
                 <mat-icon class="mat-18" aria-hidden="true" *ngIf="!show">visibility</mat-icon>
                 <mat-icon class="mat-18" aria-hidden="true" *ngIf="show">visibility_off</mat-icon>
@@ -54,7 +54,7 @@
                 Confirmar senha
               </label>
               <div class="inline-input-password">
-                <input [type]="confirm_password" name="confirm_password" formControlName="confirm_password" id="confirm_password" class="form-control"  />
+                <input [type]="confirm_password" name="confirm_password" formControlName="confirm_password" id="confirm_password" class="form-control" autocomplete="current-password" />
                 <button type="button" class="btn btn-lg btn-visibility" (click)="updateVisibilityPassword(false)">
                 <mat-icon class="mat-18" aria-hidden="true" *ngIf="!show_confirm_password">visibility</mat-icon>
                 <mat-icon class="mat-18" aria-hidden="true" *ngIf="show_confirm_password">visibility_off</mat-icon>

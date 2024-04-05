@@ -6,6 +6,8 @@ import { DeleteProjectComponent } from 'src/app/modal/project/delete-project/del
 import { ProjectService } from 'src/app/services/project.service';
 import { ToastrService } from 'ngx-toastr';
 import { DetailsProjectComponent } from 'src/app/modal/project/details-project/details-project.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-project',
@@ -17,6 +19,9 @@ export class ProjectComponent implements OnInit{
   public projects: Array<any> = new Array();
   public checkedProgress: boolean = false;
   public checkedFinished: boolean = false;
+  public storage: any;
+  public userInfo: any;
+
   @Output() emitDeleteProject: EventEmitter<number> = new EventEmitter();
 
 
@@ -27,15 +32,19 @@ export class ProjectComponent implements OnInit{
   constructor(
     private modalService: NgbModal,
     private projectService: ProjectService,
-    private toastr: ToastrService){
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private user: UserService){
+      this.storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
 
+      var storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
+      this.userInfo = JSON.parse(storage.getItem("currentUser") || '{}');
     }
 
 
   createProject(): void {
     const modalResult = this.modalService.open(CreateProjectComponent);
     modalResult.result.then((result) => {
-      console.log(result);
       if(result){
         this.getProjects();
       }
@@ -62,10 +71,14 @@ export class ProjectComponent implements OnInit{
 
   getProjects(): void {
     this.projectService.findBy({
-      organizationId: 1
-    }).subscribe(response => {
-      this.projects = response.content;
-    })
+      organizationId: this.user.organizationId
+    }).subscribe({
+      next: (resp) => {
+        this.projects = resp.body.content;
+      },
+      error: (err) => {
+      }
+    });
   }
 
   //refactoring 70-93

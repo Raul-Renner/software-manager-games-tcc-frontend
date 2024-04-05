@@ -44,14 +44,19 @@ export class ViewColaboratorComponent implements OnInit{
   getProjectsUser(){
     this.projectService.findBy({userId: this.idColaborator}).subscribe({
       next:(response) => {
-        this.projects = response.content;
+        this.projects = response.body.content;
       }
     })
   }
 
-  viewActivitiesFinished(){
+  viewProjectsUser(){
     const modalResult = this.modalService.open(ViewProjectsColaboratorComponent);
     modalResult.componentInstance.content = this.projects;
-    modalResult.result.then((result) => {});
+    modalResult.componentInstance.colaborator = this.colaborator;
+    modalResult.result.then((result) => {
+      if(result) {
+        this.getProjectsUser();
+      }
+    });
   }
 }

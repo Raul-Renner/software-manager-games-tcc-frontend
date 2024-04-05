@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4>Colaboradores</h4>
+  <h4>Projetos</h4>
   <button type="button" class="btn-close close" data-dismiss="modal" (click)="activeModal.dismiss()">
   </button>
 </div>
@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th scope="col">Projeto</th>
-        <th scope="col">Ações</th>
+        <!-- <th scope="col">Ações</th> -->
       </tr>
     </thead>
     <tbody>
@@ -18,11 +18,11 @@
       </div>
       <tr *ngFor="let content of content">
         <td>{{content.name}}</td>
-        <td>
+        <!-- <td>
           <button type="button" class="btn btn-danger btn-sm icon-delete">
-            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;">delete</mat-icon>
+            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;" (click)="deleteProjectUser(content.id)">delete</mat-icon>
           </button>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>

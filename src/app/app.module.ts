@@ -44,6 +44,7 @@ import { ViewColaboratorsComponent } from './modal/project/view-colaborators/vie
 import { ViewActivitiesComponent } from './modal/project/view-activities/view-activities.component';
 import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-colaborator/view-projects-colaborator.component';
 import { ProjectColaboratorComponent } from './pages/colaborators/project-colaborator/project-colaborator.component';
+import { HomeAdminComponent } from './pages/pages-home/home-admin/home-admin.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { ProjectColaboratorComponent } from './pages/colaborators/project-colabo
     ViewColaboratorsComponent,
     ViewActivitiesComponent,
     ViewProjectsColaboratorComponent,
-    ProjectColaboratorComponent
+    ProjectColaboratorComponent,
+    HomeAdminComponent
   ],
   imports: [
     BrowserModule,
