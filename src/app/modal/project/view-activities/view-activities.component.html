@@ -15,12 +15,12 @@
     </thead>
     <tbody>
       <span *ngIf="content.length == 0">Não há atividades</span>
-      <tr *ngIf="content.length > 0">
-        <td>identifier title</td>
-        <td>Status</td>
+      <tr *ngFor="let activity of content">
+        <td>{{activity.title}}</td>
+        <td>{{activity.sectorActivity}}</td>
         <td [hidden]="isFinished">
           <button type="button" class="btn btn-danger btn-sm icon-delete">
-            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;">delete</mat-icon>
+            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;" (click)="deleteActivity(activity)">delete</mat-icon>
           </button>
         </td>
       </tr>

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateProjectComponent } from 'src/app/forms/modal/create-project/create-project.component';
+import { EditProjectComponent } from 'src/app/forms/modal/edit-project/edit-project.component';
 import { ViewActivitiesComponent } from 'src/app/modal/project/view-activities/view-activities.component';
 import { ViewColaboratorsComponent } from 'src/app/modal/project/view-colaborators/view-colaborators.component';
+import { ActivityService } from 'src/app/services/activity.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,11 +19,16 @@ export class DetailsProjectComponent implements OnInit {
   project: any;
   idProject: any;
   colaborators: Array<any> = [];
+  activities: Array<any> = [];
+  activitiesFinished: Array<any> = [];
 
 
 
-  constructor(private route: ActivatedRoute, private userService: UserService,
-    private projectService: ProjectService, private modalService: NgbModal){}
+  constructor(private route: ActivatedRoute,
+    private userService: UserService,
+    private projectService: ProjectService,
+    private activityService: ActivityService,
+    private modalService: NgbModal){}
 
   ngOnInit(): void {
     this.idProject = this.route.snapshot.url[1].path;
@@ -29,13 +37,14 @@ export class DetailsProjectComponent implements OnInit {
     }else{
       this.getColaborators();
       this.getProject();
+      this.getActivities();
 
     }
   }
 
   getColaborators(){
     this.userService.findAllBy({
-      organizationId: 1,
+      organizationId: this.userService.organizationId,
       projectId: this.idProject
     }).subscribe({
       next:(response) => {
@@ -45,27 +54,54 @@ export class DetailsProjectComponent implements OnInit {
   }
 
   getActivities(){
-
+    this.activityService.findAllBy({
+      organizationId: this.userService.organizationId,
+      projectId: this.idProject
+    }).subscribe({
+      next:(response) => {
+        this.activities = response.content;
+        this.activitiesFinished = this.activities.filter(activity => activity.isFinished == true);
+      },
+    })
   }
 
   getProject(){
     this.projectService.findBy({
       projectIds:[this.idProject],
-      organizationId: 1
+      organizationId: this.userService.organizationId
     }).subscribe({
       next: (response) => {
-        this.project = response.content[0];
+        this.project = response.body.content[0];
       },
     })
   }
   viewColaborator(){
     const modalResult = this.modalService.open(ViewColaboratorsComponent);
-    modalResult.componentInstance.content = this.project.members;
+    modalResult.componentInstance.content = this.colaborators;
+    modalResult.componentInstance.projectId = this.idProject;
+    modalResult.result.then((result) => {
+      if(result){
+        this.getColaborators();
+      }
+    });
   }
 
   viewActivities(isFinished: boolean){
     const modalResult = this.modalService.open(ViewActivitiesComponent);
-    modalResult.componentInstance.content = this.project.activities;
+    modalResult.componentInstance.content = this.activities;
     modalResult.componentInstance.isFinished = isFinished;
+    modalResult.result.then((result) => {
+      if(result){
+        this.getActivities();
+      }
+    });
+  }
+
+  updateProject(): void {
+    const modalResult = this.modalService.open(EditProjectComponent);
+    modalResult.componentInstance.content = this.project;
+    modalResult.result.then((result) => {
+      if(result){}
+    })
   }
 }

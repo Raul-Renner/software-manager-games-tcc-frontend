@@ -1,44 +1,66 @@
 <div class="container">
-<ng-container *ngIf="project != null && project != undefined">
+<ng-container>
+  <div class="content-head">
+    <div class="head">
+      <div class="head-title">
+        <div><h4>{{project.name}}</h4></div>
+        <div class=>
+          <button id="btn-icon" type="button" class="btn" (click)="updateProject()">
+            <img src="assets/icons/edit.svg" />
+          </button>
+        </div>
 
-  <div class="head">
-    <h4>{{project.name}}</h4>
-    <span>{{project.description}}</span>
+      </div>
+      <div>
+        <span>{{project.description}}</span>
+      </div>
+    </div>
   </div>
+
   <div class="form-container">
-    <div class="progress">
+    <div class="progress" *ngIf="!project.isFinished && activities.length > 0">
+      <div class="status-progress">
+        <span>Em progresso</span>
+      </div>
+      <!-- <span id="porcent-progress">100% concluída</span> -->
+    </div>
+    <div class="finished" *ngIf="project.isFinished && activities.length > 0">
       <div class="status">
         <span>Concluído</span>
       </div>
-      <span id="porcent-progress">100% concluída</span>
+      <span id="porcent-finished">100% concluída</span>
     </div>
-
     <div class="container-infos">
       <div class="form-left">
-        <!-- <label for="responsáveis">
-          Responsáveis
-        </label>
-        <span>NAME 1, NAME 2, NAME 3...</span>
-        <a><span>Ver responsáveis</span></a> -->
-
         <label for="activity">
           Quantidade de atividades
         </label>
-        <span>33 atividades</span>
-        <a (click)="viewActivities(false)"><span>Ver atividades</span></a>
-
+        <div *ngIf="activities.length > 0" class="info-activities">
+          <span>{{activities.length}} atividades</span>
+          <a (click)="viewActivities(false)"><span>Ver atividades</span></a>
+        </div>
+        <span *ngIf="activities.length == 0">Não há atividades</span>
         <label for="colaborator">
           Quantidade de atividades concluídas
         </label>
-        <span>23 Atividades</span>
-        <a  (click)="viewActivities(true)"><span>Ver atividades concluídas</span></a>
+        <div *ngIf="activitiesFinished.length > 0" class="info-activities">
+          <span>{{activitiesFinished.length}} Atividades</span>
+          <a  (click)="viewActivities(true)"><span>Ver atividades concluídas</span></a>
+        </div>
+        <span *ngIf="activitiesFinished.length == 0">Não há atividades</span>
       </div>
       <div class="form-right">
         <label for="colaborator">
           Número de colaboradores
         </label>
-        <span>{{project.members.length}} Colaboradores</span>
-        <a (click)="viewColaborator()"><span>Ver colaboradores</span></a>
+        <div *ngIf="colaborators.length > 0" class="info-colaborators">
+          <span>{{colaborators.length}} Colaboradores</span>
+          <a (click)="viewColaborator()"><span>Ver colaboradores</span></a>
+        </div>
+        <div *ngIf="colaborators.length == 0">
+          <span>Não há Colaboradores</span>
+        </div>
+
       </div>
     </div>
 
@@ -46,9 +68,6 @@
   <div class="buttons">
     <div class="button-board">
       <button type="button" class="btn btn-lg">Ir para o Board</button>
-    </div>
-    <div class="button-login">
-      <button type="button" class="btn btn-lg">Editar</button>
     </div>
 
     <div class="button-logout">

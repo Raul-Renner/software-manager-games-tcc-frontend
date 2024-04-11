@@ -44,7 +44,11 @@ export class SidebarComponent implements OnInit {
           { url: "/colaborators", icon: "assets/icons/group.svg", iconWhite: "assets/icons/group-white.svg",  label: "Colaboradores"},
         ];
         break;
-      case "GERENTE":
+      case "DESENVOLVEDOR":
+        this.links = [
+          { url: "/home", icon: "assets/icons/home-icon.svg", iconWhite: "assets/icons/home-icon-white.svg",  label: "Home"},
+          { url: "/colaborator-projects", icon: "assets/icons/project.svg", iconWhite: "assets/icons/project-white.svg", label: "Projetos-user"}
+        ];
         break;
       case "LIDER_TECNICO":
         break;

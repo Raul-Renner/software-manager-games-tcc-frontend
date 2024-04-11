@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from 'src/app/modal/confirm-modal/confirm-modal.component';
-import { CreateActivityComponent } from 'src/app/modal/create-activity/create-activity.component';
+import { CreateActivityComponent } from 'src/app/modal/activity/create-activity/create-activity.component';
 import { ViewActivityComponent } from 'src/app/modal/view-activity/view-activity.component';
 import { ViewDependenciesComponent } from 'src/app/modal/view-dependencies/view-dependencies.component';
 

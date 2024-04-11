@@ -52,7 +52,10 @@ export class UserService {
    }
 
   save(user: any): Observable<any> {
-    return this.http.post<any>(`${local}/api/org/colaborator`, user);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+    return this.http.post<any>(`${local}/api/org/colaborator`, user, {headers: headers});
   }
 
   update(user: any): Observable<any> {

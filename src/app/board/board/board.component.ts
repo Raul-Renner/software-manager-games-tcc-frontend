@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CreateActivityComponent } from 'src/app/modal/create-activity/create-activity.component';
+import { CreateActivityComponent } from 'src/app/modal/activity/create-activity/create-activity.component';
 import { ActivityService } from 'src/app/services/activity.service';
 
 @Component({

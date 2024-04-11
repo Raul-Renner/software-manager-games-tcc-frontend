@@ -16,3 +16,9 @@ export interface UserFilterType {
   projectId?: number;
   userId?: number;
 }
+
+export interface ActivityFilterType {
+  userIds?: Array<number>;
+  organizationId?: number;
+  projectId?: number;
+}

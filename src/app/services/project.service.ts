@@ -17,12 +17,29 @@ export class ProjectService {
 
 
   save(project:any): Observable<any>{
-    return this.http.post<any>(`${local}/api/org/project`, project);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.post<any>(`${local}/api/org/project`, project,
+    {headers: headers});
   }
 
   update(project:any): Observable<any>{
-    return this.http.put<any>(`${local}/api/org/project/${project.id}`, project);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.put<any>(`${local}/api/org/project/${project.id}`, project,
+    {headers: headers});
   }
+
+  updateDescAndTitle(project:any): Observable<any>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.put<any>(`${local}/api/org/project/update-titleAndDesc/${project.id}`, project,
+    {headers: headers});
+  }
+
 
   delete(projectId:number): Observable<any>{
     const headers = new HttpHeaders({
@@ -30,7 +47,6 @@ export class ProjectService {
     });
     return this.http.delete<any>(`${local}/api/org/project/${projectId}`,
     {
-      observe: "response",
       headers: headers
     });
   }
@@ -42,7 +58,6 @@ export class ProjectService {
     });
     return this.http.get<any>(`${local}/api/org/project/findAllBy`,
     {params: createParams([filter]),
-      observe: "response",
       headers: headers
     });
   }

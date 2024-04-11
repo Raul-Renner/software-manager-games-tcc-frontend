@@ -1,7 +1,7 @@
-import { ActivityDependentService } from './../../services/activity-dependent.service';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivityDependentService } from 'src/app/services/activity-dependent.service';
 import { ActivityService } from 'src/app/services/activity.service';
 
 @Component({

@@ -22,7 +22,7 @@
         <td>{{colaborator.profile}}</td>
         <td>
           <button type="button" class="btn btn-danger btn-sm icon-delete">
-            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;">delete</mat-icon>
+            <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;" (click)="deleteColaborator(colaborator)">delete</mat-icon>
           </button>
         </td>
       </tr>

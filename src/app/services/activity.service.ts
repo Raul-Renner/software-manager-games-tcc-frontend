@@ -1,7 +1,10 @@
+import { ActivityFilterType } from './../interfaces/filters';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { local } from 'src/environments/environment';
+import { UserService } from './user.service';
+import { createParams } from './activity-dependent.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +12,52 @@ import { local } from 'src/environments/environment';
 export class ActivityService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private user: UserService
   ) { }
 
   save(activity: any):Observable<ResponseGeneric<any>>{
-    return this.http.post<any>(`${local}/api/activity`, activity);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.post<any>(`${local}/api/activity`, activity, {headers: headers});
   }
 
   findAll():Observable<ResponseGeneric<any>>{
-    return this.http.get<any>(`${local}/api/activity`,{});
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.get<any>(`${local}/api/activity`,{headers: headers});
+  }
+
+  findAllBy(filter: ActivityFilterType):Observable<ResponseGeneric<any>>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.get<any>(`${local}/api/activity/findAllBy`,{
+      params: createParams([filter]),
+      headers: headers
+    });
   }
 
   deleteActivity(activityId: number):Observable<any>{
-    return this.http.delete(`${local}/api/activity/${activityId}`);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.delete(`${local}/api/activity/${activityId}`, {headers: headers});
   }
   updateActivity(activity:any): Observable<any>{
-    return this.http.put(`${local}/api/activity/${activity.id}`, activity);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.put(`${local}/api/activity/${activity.id}`, activity, {headers: headers});
   }
 
   updateSectorActivity(activity:any): Observable<any>{
-    return this.http.put(`${local}/api/activity/sector-card/${activity.id}`, activity);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.put(`${local}/api/activity/sector-card/${activity.id}`, activity, {headers: headers});
   }
 }
 

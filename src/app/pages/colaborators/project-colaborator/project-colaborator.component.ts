@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { ProjectService } from 'src/app/services/project.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-project-colaborator',
@@ -8,7 +11,35 @@ import { Component, OnInit } from '@angular/core';
 export class ProjectColaboratorComponent implements OnInit {
   hideToggle: boolean = false;
 
+  projects: Array<any> = [];
+  activitiesUser: Array<any> = [];
+  activitiesAllProject: Array<any> = [];
+  activitiesFinished: Array<any> = [];
+
+  constructor(
+    public user: UserService,
+    public projectService: ProjectService,
+    public toast: ToastrService){}
+
   ngOnInit(): void {
+    this.getProjectsUser();
+  }
+
+  getProjectsUser(){
+    this.user.findAllBy({
+      organizationId: this.user.organizationId,
+      userId: this.user.userId
+    }).subscribe({
+      next:(response) => {
+        this.projects = response.content[0].projects;
+        this.activitiesUser = response.content[0].activities;
+      },
+      error:(error) => {
+        this.toast.error("Ocorreu um Erro ao buscar seus projetos!");
+      }
+
+      ,
+    })
   }
 
 }

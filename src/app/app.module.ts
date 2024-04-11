@@ -18,7 +18,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/template/header/header.component';
 import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.component';
-import { CreateActivityComponent } from './modal/create-activity/create-activity.component';
+import { CreateActivityComponent } from './modal/activity/create-activity/create-activity.component';
 import { BoardComponent } from './board/board/board.component';
 import { BoardItemComponent } from './board/board-item/board-item.component';
 import { ViewActivityComponent } from './modal/view-activity/view-activity.component';
@@ -45,6 +45,8 @@ import { ViewActivitiesComponent } from './modal/project/view-activities/view-ac
 import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-colaborator/view-projects-colaborator.component';
 import { ProjectColaboratorComponent } from './pages/colaborators/project-colaborator/project-colaborator.component';
 import { HomeAdminComponent } from './pages/pages-home/home-admin/home-admin.component';
+import { DeleteActivityComponent } from './modal/activity/delete-activity/delete-activity.component';
+import { EditProjectComponent } from './forms/modal/edit-project/edit-project.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import { HomeAdminComponent } from './pages/pages-home/home-admin/home-admin.com
     ViewActivitiesComponent,
     ViewProjectsColaboratorComponent,
     ProjectColaboratorComponent,
-    HomeAdminComponent
+    HomeAdminComponent,
+    DeleteActivityComponent,
+    EditProjectComponent
   ],
   imports: [
     BrowserModule,

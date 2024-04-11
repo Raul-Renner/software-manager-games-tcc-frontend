@@ -59,7 +59,7 @@ export class ProjectComponent implements OnInit{
         this.projectService.delete(project.id).subscribe({
           next: (resp) => {
             this.getProjects();
-            this.toastr.success('Projeto Removido com sucesso!','Projeto foi removido com sucesso!');
+            this.toastr.success('Projeto Removido com sucesso!');
           },
           error: (error) => {
             this.toastr.error(`Ocorreu um ao remover o projeto: ${project.name}`);

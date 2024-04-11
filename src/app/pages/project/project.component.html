@@ -27,7 +27,9 @@
               <div class="name-projeto">
                 <span id="title">{{project.name}}</span>
                 <!-- <span id="responsible">name responsible</span> -->
-                <div class="progress"><span>Em Progresso</span></div>
+                <div class="progress" *ngIf="!project.isFinished"><span>Em Progresso</span></div>
+                <div class="finished" *ngIf="project.isFinished"><span>Concluído</span></div>
+
               </div>
               <div class="button-delete">
                 <button type="button" class="btn" (click)="deleteProject(project)">
