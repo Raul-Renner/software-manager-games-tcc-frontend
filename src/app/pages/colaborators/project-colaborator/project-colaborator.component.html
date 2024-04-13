@@ -1,14 +1,20 @@
 <div class="container">
   <h5>Projetos</h5>
-  <!-- <span *ngIf="projects.length <= 0">Você não está alocado em nenhum projeto da organização.</span> -->
-  <mat-expansion-panel [hideToggle]="false">
+  <span *ngIf="projects.length <= 0">Você não está alocado em nenhum projeto da organização.</span>
+  <mat-expansion-panel [hideToggle]="false" *ngFor="let project of projects">
       <mat-expansion-panel-header>
-          <mat-panel-title>Teste</mat-panel-title>
+          <mat-panel-title>{{project.name}}</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <mat-panel-description><span>asdasdsad</span></mat-panel-description>
+      <mat-panel-description><span>{{project.description}}</span></mat-panel-description>
       <div class="form-container">
-        <div class="progress">
+        <div class="progress" *ngIf="!project.isFinished && project.activities.length > 0">
+          <div class="status-progress">
+            <span>Em progresso</span>
+          </div>
+          <!-- <span id="porcent-progress">100% concluída</span> -->
+        </div>
+        <div class="progress" *ngIf="project.isFinished && project.activities.length > 0">
           <div class="status">
             <span>Concluído</span>
           </div>
@@ -20,14 +26,14 @@
           <label for="activity">
             Quantidade de atividades:
           </label>
-          <span> 33 atividades</span>
+          <span> {{project.activities.length}} atividades</span>
         </div>
 
         <div class="activity-finished">
           <label for="colaborator">
             Atividades concluídas:
           </label>
-          <span> 23 Atividades concluídas</span>
+          <span> {{project.activitiesFinished.length > 0 ? project.activitiesFinished.length : 0}} Atividades</span>
         </div>
       </div>
       <div class="activity-colaborator">
@@ -45,17 +51,20 @@
 
           </thead>
           <tbody>
-            <tr class="table-default">
-              <td>ID DE REGISTRO TITULO DA ATIVIDADE</td>
-              <td>Setor da atividade</td>
-              <td>Tempo estimado</td>
+            <div class="modal-body" *ngIf="project.activitiesUser.length == 0">
+              <p>Você não possui atividades</p>
+            </div>
+            <tr class="table-default" *ngFor="let activity of project.activitiesUser">
+              <td>{{activity.id}} - {{activity.title}}</td>
+              <td>{{activity.sectorActivity}}</td>
+              <td>{{activity.estimatedTime}}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="buttons">
         <div class="button-login">
-          <button type="button" class="btn btn-lg">Ir para o Board</button>
+          <button type="button" class="btn btn-lg" [routerLink]="['/board/project/' + project?.id + '/colaborator/' + userId]">Ir para o Board</button>
         </div>
       </div>
     </div>

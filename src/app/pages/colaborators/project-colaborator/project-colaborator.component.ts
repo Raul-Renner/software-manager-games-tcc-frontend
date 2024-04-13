@@ -15,6 +15,7 @@ export class ProjectColaboratorComponent implements OnInit {
   activitiesUser: Array<any> = [];
   activitiesAllProject: Array<any> = [];
   activitiesFinished: Array<any> = [];
+  userId: number;
 
   constructor(
     public user: UserService,
@@ -22,6 +23,7 @@ export class ProjectColaboratorComponent implements OnInit {
     public toast: ToastrService){}
 
   ngOnInit(): void {
+    this.userId = this.user.userId;
     this.getProjectsUser();
   }
 
@@ -31,14 +33,22 @@ export class ProjectColaboratorComponent implements OnInit {
       userId: this.user.userId
     }).subscribe({
       next:(response) => {
+
         this.projects = response.content[0].projects;
         this.activitiesUser = response.content[0].activities;
+
+        this.projects.map(project => {
+          project.activitiesFinished = project.activities.filter((activity:any) => activity.isFinished == true);
+          project.activities.map((activity:any) => {
+            project.activitiesUser = this.activitiesUser.filter((activityUser:any) => activityUser.id === activity.id);
+          });
+          if(project.activities.length == 0) project.activitiesUser = [];
+        });
+        console.log(this.projects);
       },
       error:(error) => {
         this.toast.error("Ocorreu um Erro ao buscar seus projetos!");
-      }
-
-      ,
+      },
     })
   }
 

@@ -47,12 +47,13 @@ export class ColaboratorsComponent implements OnInit{
   deleteColaborator(colaborator: any): void {
     const modalResult = this.modalService.open(DeleteColaboratorComponent);
     modalResult.componentInstance.content = colaborator;
+    modalResult.componentInstance.deleteAll = true;
     modalResult.result.then((result) => {
       if(result){
         this.user.delete(colaborator.id).subscribe({
           next: () => {
             this.getColaborators();
-            this.toast.success('Usuário Removido!','Usuário foi removido com sucesso!');
+            this.toast.success('Usuário foi removido com sucesso!');
           },
           error: (error) => {
             this.toast.error(`Ocorreu um ao remover o usuário: ${colaborator.userInformation.name}`);
@@ -67,7 +68,7 @@ export class ColaboratorsComponent implements OnInit{
       organizationId: this.user.organizationId,
     }).subscribe({
       next: (response) => {
-          this.projects = response.body.content;
+          this.projects = response.content;
       },
     });
   }

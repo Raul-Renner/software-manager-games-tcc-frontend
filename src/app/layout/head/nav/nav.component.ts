@@ -20,4 +20,9 @@ export class NavComponent implements OnInit{
   ngOnInit(): void {
     this.nameOrganization = this.user.nameOrganization;
   }
+
+
+  logout(){
+    
+  }
 }

@@ -21,7 +21,7 @@ export class DetailsProjectComponent implements OnInit {
   colaborators: Array<any> = [];
   activities: Array<any> = [];
   activitiesFinished: Array<any> = [];
-
+  userId: number;
 
 
   constructor(private route: ActivatedRoute,
@@ -32,6 +32,7 @@ export class DetailsProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.idProject = this.route.snapshot.url[1].path;
+    this.userId = this.userService.userId;
     if(this.idProject === null || this.idProject === undefined){
 
     }else{
@@ -71,7 +72,7 @@ export class DetailsProjectComponent implements OnInit {
       organizationId: this.userService.organizationId
     }).subscribe({
       next: (response) => {
-        this.project = response.body.content[0];
+        this.project = response.content[0];
       },
     })
   }

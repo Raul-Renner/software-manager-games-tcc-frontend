@@ -80,7 +80,7 @@ export class EditAdmColaboratorComponent implements OnInit, AfterViewInit {
   getAllProjects(){
     this.projectService.findBy({organizationId: this.colaborator.organization.id}).subscribe({
       next: (response) => {
-        this.projects = response.body.content;
+        this.projects = response.content;
       },
     });
   }

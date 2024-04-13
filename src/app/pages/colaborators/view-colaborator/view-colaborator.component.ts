@@ -44,7 +44,7 @@ export class ViewColaboratorComponent implements OnInit{
   getProjectsUser(){
     this.projectService.findBy({userId: this.idColaborator}).subscribe({
       next:(response) => {
-        this.projects = response.body.content;
+        this.projects = response.content;
       }
     })
   }

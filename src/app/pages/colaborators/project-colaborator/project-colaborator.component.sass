@@ -47,13 +47,42 @@ mat-expansion-panel
         padding-top: 8px
         color: #072047
 
+    .progress > *
+      padding: 8px
+    .progress
+      background-color: transparent
+      width: auto
+      height: auto
+      max-height: 32px
+      display: table
+      flex-direction: row
+      margin-top: 8px
+      margin-bottom: 8px
+
+      span
+        vertical-align: middle
+        font-size: 14px
+        font-weight: 600
+      #porcent-progress
+        vertical-align: middle
+        display: table-cell
+        padding-top: 16px
+
       .status
         max-width: 104px
         width: auto
         background-color: #A6F38B
         display: flex
         align-items: center
-        margin-top: 2px
+        margin-top: 8px
+        border-radius: 4px
+      .status-progress
+        max-width: 104px
+        width: auto
+        background-color: #FDFF93
+        display: flex
+        align-items: center
+        margin-top: 8px
         border-radius: 4px
     .container-infos
       display: flex
@@ -98,5 +127,10 @@ mat-expansion-panel
           font-size: 12px
           font-weight: bold
 
+.modal-body
+  display: flex
+  align-items: center
+  p
+    font-size: 14px
 .mat-expansion-panel:not([class*='mat-elevation-z'])
     box-shadow: none

@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class DeleteColaboratorComponent implements OnInit {
 
   @Input() content: any;
+  @Input() deleteAll: boolean;
 
   ngOnInit(): void {
   }

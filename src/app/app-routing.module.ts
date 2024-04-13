@@ -13,6 +13,7 @@ import { DetailsProjectComponent } from './pages/project/details-project/details
 import { RecoveryPasswordComponent } from './forms/recovery-password/recovery-password.component';
 import { ProjectColaboratorComponent } from './pages/colaborators/project-colaborator/project-colaborator.component';
 import { HomeAdminComponent } from './pages/pages-home/home-admin/home-admin.component';
+import { BoardComponent } from './board/board/board.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
    },
   { path: 'add_organization', component: LoggedOrganizationComponent},
   { path: 'recovery-password', component: RecoveryPasswordComponent},
+  { path: 'board/project/:idProject/colaborator/:idColaborator', component: BoardComponent},
 
 ];
 

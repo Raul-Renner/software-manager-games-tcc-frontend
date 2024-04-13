@@ -35,6 +35,7 @@ export class ViewColaboratorsComponent implements OnInit {
   deleteColaborator(colaborator: any): void {
     const modalResult = this.modalService.open(DeleteColaboratorComponent);
     modalResult.componentInstance.content = colaborator;
+    modalResult.componentInstance.deleteAll = false;
     modalResult.result.then((result) => {
       if(result){
         colaborator.projects.forEach((project:any) => {

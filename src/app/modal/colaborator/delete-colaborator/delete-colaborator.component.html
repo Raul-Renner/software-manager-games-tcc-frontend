@@ -1,6 +1,6 @@
 <div class="container">
   <div class="head">
-    <h5>Deseja excluir o seguinte colaborador?</h5>
+    <h5>Deseja excluir o seguinte colaborador <h5 *ngIf="!deleteAll">do projeto</h5> ?</h5>
     <div class="info-colaborator">
       <span id="name-colaborator">{{content.userInformation.name}}  {{content.userInformation.username}}</span>
       <span>Cargo:<span id="responsible">{{content.profile}}</span></span>

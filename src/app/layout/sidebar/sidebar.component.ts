@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
 
   public links = [
     { url: "/home", icon: "assets/icons/home-icon.svg", iconWhite: "assets/icons/home-icon-white.svg",  label: "Home"},
-    { url: "/colaborator-projects", icon: "assets/icons/project.svg", iconWhite: "assets/icons/project-white.svg", label: "Projetos-user"}
+    { url: "/colaborator-projects", icon: "assets/icons/project.svg", iconWhite: "assets/icons/project-white.svg", label: "Projetos"}
   ];
 
 
@@ -47,7 +47,7 @@ export class SidebarComponent implements OnInit {
       case "DESENVOLVEDOR":
         this.links = [
           { url: "/home", icon: "assets/icons/home-icon.svg", iconWhite: "assets/icons/home-icon-white.svg",  label: "Home"},
-          { url: "/colaborator-projects", icon: "assets/icons/project.svg", iconWhite: "assets/icons/project-white.svg", label: "Projetos-user"}
+          { url: "/colaborator-projects", icon: "assets/icons/project.svg", iconWhite: "assets/icons/project-white.svg", label: "Projetos"}
         ];
         break;
       case "LIDER_TECNICO":

@@ -21,11 +21,13 @@ export class ProjectComponent implements OnInit{
   public checkedFinished: boolean = false;
   public storage: any;
   public userInfo: any;
+  public userId: number;
 
   @Output() emitDeleteProject: EventEmitter<number> = new EventEmitter();
 
 
   ngOnInit(): void {
+    this.userId = this.user.userId
     this.getProjects();
   }
 
@@ -74,7 +76,7 @@ export class ProjectComponent implements OnInit{
       organizationId: this.user.organizationId
     }).subscribe({
       next: (resp) => {
-        this.projects = resp.body.content;
+        this.projects = resp.content;
       },
       error: (err) => {
       }

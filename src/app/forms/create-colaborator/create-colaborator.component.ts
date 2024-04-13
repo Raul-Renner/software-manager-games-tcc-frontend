@@ -75,7 +75,7 @@ export class CreateColaboratorComponent implements OnInit {
       organizationId: this.user.organizationId
     }).subscribe({
       next: (response) => {
-        this.projects = response.body.content;
+        this.projects = response.content;
       },
     })
   }
