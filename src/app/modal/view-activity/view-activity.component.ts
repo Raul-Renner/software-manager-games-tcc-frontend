@@ -29,7 +29,6 @@ export class ViewActivityComponent implements OnInit{
     modalRef.result.then((result) => {
       if(result){
           this.emitViewDependenciesCard.emit(activity);
-          //alert success
       }
     })
   }

@@ -71,7 +71,6 @@ export class BoardItemComponent implements OnInit{
     modalRef.result.then((result) => {
       if(result){
           this.emitEditCard.emit(activity);
-          //alert success
       }
     })
   }
@@ -83,7 +82,6 @@ export class BoardItemComponent implements OnInit{
     modalRef.result.then((result) => {
       if(result){
           this.emitViewDependenciesCard.emit(activity);
-          //alert success
       }
     })
   }

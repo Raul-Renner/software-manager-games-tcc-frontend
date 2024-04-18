@@ -60,7 +60,6 @@ export class LoggedOrganizationComponent implements OnInit {
   save(){
     this.organizationService.save(this.organizationForm.value).subscribe({
       next: (resp) => {
-        //alert success
         this.toastr.success('O cadastro da sua organização foi realizada com sucesso!','Cadastro realizado!');
         this.organizationForm.reset();
         this.router.navigateByUrl("login");

@@ -32,22 +32,6 @@ export class UserService {
     const data = JSON.stringify(storage.getItem("currentUser"));
     !!data ? (() => {
 
-    // this.userId = data.userId;
-    // this.login = data.login.trim();
-    // this.profile = data.profile;
-    // this.token = data.token;
-    // this.userInformationId = data.userInformation.id;
-    // this.email = data.userInformation.email;
-    // this.name = data.userInformation.name;
-    // this.username = data.userInformation.username;
-    // this.fullName = `${data.userInformation.name} ${data.userInformation.username}`;
-
-    // this.organizationId = data.organization.id;
-    // this.name = data.organization.name;
-    // this.description = data.organization.description;
-    // this.emailOrg = data.organization.email;
-    // this.projects = data.organization.projects;
-
     }) : this.setLoggedIn(false);
    }
 

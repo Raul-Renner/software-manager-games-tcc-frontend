@@ -56,9 +56,6 @@ export class BoardComponent  implements OnInit {
         event.currentIndex,
       );
     }
-      // let activity = event.container.data[event.currentIndex];
-      // activity.user = this.getUserResponsable(activity);
-      // console.log(activity);
       this.updateSectorCard(event.container.data[event.currentIndex], columnId);
 
   }
@@ -72,7 +69,6 @@ export class BoardComponent  implements OnInit {
       this.project = resp.content;
       this.activities = resp.content.activities;
       this.insertColumns(resp.content[0].columnsBoard);
-      // this.fillBoard();
     })
   }
 
@@ -120,7 +116,6 @@ export class BoardComponent  implements OnInit {
           this.toast.success("Atividade cadastrada com sucesso!");
 
           this.getProject();
-          //alert success
       }
     })
   }
@@ -238,18 +233,4 @@ export class BoardComponent  implements OnInit {
     });
   }
 
-  // getUserResponsable(activity: any){
-
-  //   this.user.filterUserPerActivityType({
-  //     organizationId: this.user.organizationId,
-  //     projectId: this.projectId,
-  //     activityId: activity.id
-  //   }).subscribe( response => {
-  //       console.log(response.content[0].id);
-  //       this.test = response.content.id;
-  //       console.log(this.test );
-  //   });
-  //   console.log(this.test );
-  //   return this.test;
-  // }
 }

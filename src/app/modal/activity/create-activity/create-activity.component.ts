@@ -14,12 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class CreateActivityComponent implements OnInit, AfterViewInit{
    @Input() content:any;
   public sectorActivity: Array<any> = [];
-  // public statusActivity: Array<any> = [
-  //   {id: 1, name:'TO_DO', statusActivityEnum:'TO_DO'},
-  //   {id: 2, name:'IN PROGRESS', statusActivityEnum:'IN_PROGRESS'},
-  //   {id: 3, name:'IN REVIEW', statusActivityEnum:'IN_REVIEW'},
-  //   {id: 4, name:'DONE', statusActivityEnum:'DONE'}
-  // ];
+
 
   public statusPriorityActivity: Array<any> = [
     {id: 1, name:'BAIXA', statusPriorityEnum:'LOW'},
@@ -70,10 +65,8 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     usedTime: new FormControl(null),
     sectorActivity: new FormControl(null, Validators.required),
     userSelect: new FormControl(null),
-    // statusActivity: new FormControl(""),
     statusPriorityActivity: new FormControl(""),
     tagsActivity: new FormControl(""),
-    // colorCard: new FormControl("#FFFFFF"),
     isBlock: new FormControl(false),
     activityDependentIds: new FormControl([]),
   });
@@ -92,7 +85,6 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     this.getColaborators();
     if(this.activity != undefined && this.activity != null){
       const sectorActivityEnum = this.sectorActivity.find(element => element.sectorActivityEnum === this.activity.sectorActivityEnum);
-      // const statusActivityEnum = this.statusActivity.find(element => element.statusActivityEnum === this.activity.statusActivityEnum);
       const statusPriorityEnum = this.statusPriorityActivity.find(element => element.statusPriorityEnum === this.activity.statusPriorityEnum);
       const tagActivityEnum = this.tagsActivity.find(element => element.tagsEnum === this.activity.tagsEnum);
       this.activity.activityDependentList.map((activityDependent: any) => {
@@ -154,7 +146,6 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
 
       this.activityService.save(activity).subscribe({
         next: () => {
-          //alert success
           this.getActivities();
           this.getActivitiesDependents();
           this.activeModal.close(true);
@@ -225,7 +216,6 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
 
       this.activityService.updateActivity(activity).subscribe({
         next: () => {
-          //alert success
           this.getActivities();
           this.getActivitiesDependents();
           this.activeModal.close(true);

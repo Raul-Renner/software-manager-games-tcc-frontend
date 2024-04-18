@@ -21,26 +21,6 @@ export class ViewProjectsColaboratorComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.entityColaborator = {
-    //   id: this.colaborator.id,
-    //   activities: this.colaborator.activities,
-    //   login: this.colaborator.login,
-    //   organization: this.colaborator.organization
-    //   password:
-    // }
+
   }
-
-  // deleteProjectUser(projectId:number){
-  //  this.colaborator.projects = this.colaborator.projects.filter((p:any) => p.id !== projectId);
-  //   this.user.update(this.colaborator).subscribe({
-  //     next: () => {
-  //       this.activeModal.close(true);
-  //       this.toast.success('Projeto Removido!','Projeto foi removido com sucesso!');
-  //     },
-  //     error: () => {
-  //       this.toast.error('Ocorreu um ao remover projeto');
-  //     }
-  //   })
-  // }
-
 }

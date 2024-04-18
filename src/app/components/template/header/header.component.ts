@@ -37,7 +37,6 @@ export class HeaderComponent implements OnInit{
     modalResult.result.then((result) => {
       if(result){
           this.getActivities();
-          //alert success
       }
     })
   }
@@ -49,7 +48,6 @@ export class HeaderComponent implements OnInit{
       if(result){
         this.activityService.deleteActivity(activity.id).subscribe(resp =>{
           this.getActivities();
-          //alert success
         })
       }
     })
@@ -62,7 +60,6 @@ export class HeaderComponent implements OnInit{
     modalRef.result.then((result) => {
       if(result){
           this.getActivities();
-          //alert success
       }
     })
   }
