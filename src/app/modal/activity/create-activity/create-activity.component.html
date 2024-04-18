@@ -25,9 +25,9 @@
                     <option *ngFor="let time of estimatedTimeList" [ngValue]="time" class="optionForm">{{ time.name }}
                     </option>
                   </select>
-                  <div class="usedTimeDp"><span>Tempo utilizado: </span><span>3d 6h</span></div>
+                  <div class="usedTimeDp" *ngIf="formActivity.value.id != null"><span>Tempo utilizado: </span><span>3d 6h</span></div>
                 </div>
-                <div class="d-flex flex-column timeEstimated">
+                <div class="d-flex flex-column timeEstimated" *ngIf="formActivity.value.id != null">
                   <label>Tempo utilizado</label>
                   <div class="d-flex flex-row">
                     <input  formControlName="usedTime" class="form-control p-1" />
@@ -35,7 +35,7 @@
                       <img src="assets/icons/check-lg.svg" />
                     </button>
                   </div>
-                  <div class="usedTimeDp"><span>Tempo restante: </span><span>3d 6h</span></div>
+                  <div class="usedTimeDp" *ngIf="formActivity.value.id != null"><span>Tempo restante: </span><span>3d 6h</span></div>
                 </div>
               </div>
 
@@ -47,18 +47,16 @@
               <div class="d-flex flex-row justify-content-between mt-3 select-input">
                 <div class="d-flex flex-column mr-2">
                   <label for="selectUser">Responsável:</label>
-                  <select id="selectUser" class="form-select select-response" name="selectUser" formControlName="selectUser"
+                  <select id="selectUser" class="form-select select-response" name="selectUser" formControlName="userSelect"
                     role="selectUser">
-                    <option class="optionForm">Selecionar responsável</option>
-                    <option [ngValue]="" class="optionForm">as</option>
+                    <option *ngFor="let colaborator of colaborators" [ngValue]="colaborator" class="optionForm">{{colaborator.userInformation.name}} {{colaborator.userInformation.username}}</option>
                   </select>
                 </div>
                 <div class="d-flex flex-column">
                   <label for="sectorActivity">Setor Atividade: </label>
                   <select id="sectorActivity" class="form-select select-sector" name="sectorActivity" formControlName="sectorActivity"
                     role="selectSectorActivity">
-                    <option class="optionForm">Selecione o setor da Atividade</option>
-                    <option *ngFor="let sa of sectorActivity" [ngValue]="sa" class="optionForm">{{ sa.name }}</option>
+                    <option *ngFor="let sa of sectorActivity" [ngValue]="sa" class="optionForm">{{ sa.sectorActivity }}</option>
                   </select>
                 </div>
               </div>

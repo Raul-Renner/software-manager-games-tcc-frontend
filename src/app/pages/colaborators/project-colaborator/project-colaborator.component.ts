@@ -44,7 +44,6 @@ export class ProjectColaboratorComponent implements OnInit {
           });
           if(project.activities.length == 0) project.activitiesUser = [];
         });
-        console.log(this.projects);
       },
       error:(error) => {
         this.toast.error("Ocorreu um Erro ao buscar seus projetos!");

@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { ActivityDependentService } from 'src/app/services/activity-dependent.service';
 import { ActivityService } from 'src/app/services/activity.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-create-activity',
@@ -10,24 +12,14 @@ import { ActivityService } from 'src/app/services/activity.service';
   styleUrls: ['./create-activity.component.sass']
 })
 export class CreateActivityComponent implements OnInit, AfterViewInit{
-
-  public sectorActivity: Array<any> = [
-    {id: 1, name:'PRIORIDADE', sectorActivityEnum:'PRIORITY'},
-    {id: 2, name:'PREPARAÇÃO', sectorActivityEnum:'TO_DO'},
-    {id: 3, name:'SOFTWARE', sectorActivityEnum:'SOFTWARE'},
-    {id: 4, name:'ARTE', sectorActivityEnum:'ART'},
-    {id: 5, name:'DESIGN', sectorActivityEnum:'DESIGN'},
-    {id: 6, name:'SOM', sectorActivityEnum:'SOUND'},
-    {id: 7, name:'INTEGRAÇÃO', sectorActivityEnum:'INTEGRATION'},
-    {id: 8, name:'TESTE', sectorActivityEnum:'TEST'},
-    {id: 9, name:'FEITO', sectorActivityEnum:'DONE'}
-  ];
-  public statusActivity: Array<any> = [
-    {id: 1, name:'TO_DO', statusActivityEnum:'TO_DO'},
-    {id: 2, name:'IN PROGRESS', statusActivityEnum:'IN_PROGRESS'},
-    {id: 3, name:'IN REVIEW', statusActivityEnum:'IN_REVIEW'},
-    {id: 4, name:'DONE', statusActivityEnum:'DONE'}
-  ];
+   @Input() content:any;
+  public sectorActivity: Array<any> = [];
+  // public statusActivity: Array<any> = [
+  //   {id: 1, name:'TO_DO', statusActivityEnum:'TO_DO'},
+  //   {id: 2, name:'IN PROGRESS', statusActivityEnum:'IN_PROGRESS'},
+  //   {id: 3, name:'IN REVIEW', statusActivityEnum:'IN_REVIEW'},
+  //   {id: 4, name:'DONE', statusActivityEnum:'DONE'}
+  // ];
 
   public statusPriorityActivity: Array<any> = [
     {id: 1, name:'BAIXA', statusPriorityEnum:'LOW'},
@@ -64,6 +56,9 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   public activitiesList: Array<any> = [];
   public activitiesDependentsList: Array<any> = [];
   public activitiesDependentsListUpdate: Array<any> | undefined;
+  public colaborators: Array<any> = [];
+  public userSaveVO: any;
+
 
 
   public formActivity:FormGroup = new FormGroup ({
@@ -73,11 +68,12 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     description: new FormControl(null, Validators.required),
     estimatedTime: new FormControl(null),
     usedTime: new FormControl(null),
-    sectorActivity: new FormControl([]),
-    statusActivity: new FormControl(""),
+    sectorActivity: new FormControl(null, Validators.required),
+    userSelect: new FormControl(null),
+    // statusActivity: new FormControl(""),
     statusPriorityActivity: new FormControl(""),
     tagsActivity: new FormControl(""),
-    colorCard: new FormControl("#FFFFFF"),
+    // colorCard: new FormControl("#FFFFFF"),
     isBlock: new FormControl(false),
     activityDependentIds: new FormControl([]),
   });
@@ -85,14 +81,18 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   constructor(
     private activityService: ActivityService,
     private activityDependentService: ActivityDependentService,
-    public activeModal: NgbActiveModal){
+    public activeModal: NgbActiveModal,
+    private user: UserService,
+    private toast: ToastrService){
     }
   ngOnInit(): void {
+    this.sectorActivity = this.content.columnsBoard;
     this.getActivities();
     this.getActivitiesDependents();
+    this.getColaborators();
     if(this.activity != undefined && this.activity != null){
       const sectorActivityEnum = this.sectorActivity.find(element => element.sectorActivityEnum === this.activity.sectorActivityEnum);
-      const statusActivityEnum = this.statusActivity.find(element => element.statusActivityEnum === this.activity.statusActivityEnum);
+      // const statusActivityEnum = this.statusActivity.find(element => element.statusActivityEnum === this.activity.statusActivityEnum);
       const statusPriorityEnum = this.statusPriorityActivity.find(element => element.statusPriorityEnum === this.activity.statusPriorityEnum);
       const tagActivityEnum = this.tagsActivity.find(element => element.tagsEnum === this.activity.tagsEnum);
       this.activity.activityDependentList.map((activityDependent: any) => {
@@ -102,12 +102,10 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
 
         });
       });
-
       this.formActivity.patchValue({
         ...this.activity,
         activityDependentIds: this.activity.activityDependentList,
         sectorActivity: sectorActivityEnum,
-        statusActivity: statusActivityEnum,
         statusPriorityActivity: statusPriorityEnum,
         tagsActivity: tagActivityEnum
         });
@@ -119,7 +117,10 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   }
   getActivities(){
     this.activitiesList = [];
-    this.activityService.findAll().subscribe(resp =>{
+    this.activityService.findAllBy({
+      organizationId: this.user.organizationId,
+      projectId: this.content.id
+    }).subscribe(resp =>{
       this.activitiesList = resp.content;
     });
   }
@@ -133,14 +134,24 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   save(){
     if (!this.buttonDisabled) {
       this.buttonDisabled = true;
+
+      if(this.formActivity.value.userSelect != null){
+        this.userSaveVO = {
+          id: this.formActivity.value.userSelect.id
+        }
+      }
+
       const activity = {
         ...this.formActivity.value,
+        columnBoardId: this.formActivity.value.sectorActivity.id,
+        projectId: this.content.id,
+        userSaveVO: this.userSaveVO != null ? this.userSaveVO : null,
+        estimatedTime: this.formActivity.value.estimatedTime != null ? this.formActivity.value.estimatedTime.name : null,
+        sectorActivity: this.formActivity.value.sectorActivity != null ? this.formActivity.value.sectorActivity.sectorActivity  : null,
         tagsEnum: this.formActivity.value.tagsActivity.name != null ? this.formActivity.value.tagsActivity.tagsEnum : null,
         statusPriorityEnum: this.formActivity.value.statusPriorityActivity.name != null ? this.formActivity.value.statusPriorityActivity.statusPriorityEnum : null,
-        statusActivityEnum: this.formActivity.value.statusActivity.name != null ? this.formActivity.value.statusActivity.statusActivityEnum : null,
-        sectorActivityEnum: this.formActivity.value.sectorActivity.name != null ? this.formActivity.value.sectorActivity.sectorActivityEnum : null,
-
       }
+
       this.activityService.save(activity).subscribe({
         next: () => {
           //alert success
@@ -158,9 +169,18 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     this.getActivitiesDependents();
   };
 
+  getColaborators(){
+    this.user.findAllBy({
+      organizationId: this.user.organizationId,
+      projectId: this.content.id
+    }).subscribe( response => {
+      this.colaborators = response.content;
+    })
+  }
+
   update(){
     this.owner = [];
-      this.formActivity.value.activityDependentIds.map((activitiesSourceDep:any) =>{
+        this.formActivity.value.activityDependentIds.map((activitiesSourceDep:any) =>{
         let activitiesSourceId = activitiesSourceDep.activitySource != undefined ? activitiesSourceDep.activitySource : activitiesSourceDep;
         let activitySource = this.activity.activityDependentList.find((activity:any) =>
           activity.activitySource == activitiesSourceId
@@ -183,15 +203,26 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
         }
       });
     if (!this.buttonDisabled) {
+      if(this.formActivity.value.userSelect != null){
+        this.userSaveVO = {
+          id: this.formActivity.value.userSelect.id
+        }
+      }
       this.buttonDisabled = true;
       const activity = ({
         ...this.formActivity.value,
+        columnBoardId: this.formActivity.value.sectorActivity.id,
+        projectId: this.content.id,
         activityDependentIds: this.owner,
+        userSaveVO: this.userSaveVO != null ? this.userSaveVO : null,
+        estimatedTime: this.formActivity.value.estimatedTime != null ? this.formActivity.value.estimatedTime.name : null,
+        sectorActivity: this.formActivity.value.sectorActivity != null ? this.formActivity.value.sectorActivity.sectorActivity  : null,
         tagsEnum: this.formActivity.value.tagsActivity.name != null ? this.formActivity.value.tagsActivity.tagsEnum : null,
         statusPriorityEnum: this.formActivity.value.statusPriorityActivity.name != null ? this.formActivity.value.statusPriorityActivity.statusPriorityEnum : null,
-        statusActivityEnum: this.formActivity.value.statusActivity.name != null ? this.formActivity.value.statusActivity.statusActivityEnum : null,
-        sectorActivityEnum: this.formActivity.value.sectorActivity.name != null ? this.formActivity.value.sectorActivity.sectorActivityEnum : null,
       });
+
+      console.log(activity);
+
       this.activityService.updateActivity(activity).subscribe({
         next: () => {
           //alert success
@@ -199,9 +230,10 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
           this.getActivitiesDependents();
           this.activeModal.close(true);
           this.owner = [];
-
+          this.toast.success("Atividade atualizada com sucesso!");
         },
         error: () => {
+          this.toast.success("Erro ao atualizar dados da seguinte atividade: " + activity.id);
           this.buttonDisabled = false;
         }
       });

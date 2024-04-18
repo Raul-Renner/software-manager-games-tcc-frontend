@@ -20,7 +20,8 @@ export class ActivityService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.user.token
     });
-    return this.http.post<any>(`${local}/api/activity`, activity, {headers: headers});
+    return this.http.post<any>(`${local}/api/activity`, activity,
+    {headers: headers});
   }
 
   findAll():Observable<ResponseGeneric<any>>{

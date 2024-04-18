@@ -47,6 +47,9 @@ import { ProjectColaboratorComponent } from './pages/colaborators/project-colabo
 import { HomeAdminComponent } from './pages/pages-home/home-admin/home-admin.component';
 import { DeleteActivityComponent } from './modal/activity/delete-activity/delete-activity.component';
 import { EditProjectComponent } from './forms/modal/edit-project/edit-project.component';
+import { CreateColumnComponent } from './forms/modal/create-column/create-column.component';
+import { ViewColumnsComponent } from './forms/modal/view-columns/view-columns.component';
+import { DeleteComponent } from './forms/modal/delete/delete.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +84,10 @@ import { EditProjectComponent } from './forms/modal/edit-project/edit-project.co
     ProjectColaboratorComponent,
     HomeAdminComponent,
     DeleteActivityComponent,
-    EditProjectComponent
+    EditProjectComponent,
+    CreateColumnComponent,
+    ViewColumnsComponent,
+    DeleteComponent
   ],
   imports: [
     BrowserModule,

@@ -11,11 +11,14 @@ export class ViewActivityComponent implements OnInit{
 
   @Input() activity:any;
 
+  @Input() project:any;
+
   @Output() emitViewDependenciesCard: EventEmitter<any> = new EventEmitter();
 
 
   constructor(public activeModal: NgbActiveModal, private modalService: NgbModal){}
   ngOnInit(): void {
+
   }
 
   viewDependentCard(activity: any){

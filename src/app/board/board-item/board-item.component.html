@@ -1,17 +1,17 @@
 <div class="d-flex flex-column align-items-center container">
-  <div class="d-flex justify-content-between align-items-start mb-2">
-    <div class="mt-1 title-header" [ngStyle]="{color: color}">{{item.identifier}} - {{item.title}}</div>
+  <div class="d-flex justify-content-between align-items-start mb-2 head-title">
+    <div class="mt-1 title-header">{{item.identifier}} - {{item.title}}</div>
   </div>
 
-  <div class="d-flex justify-content-end align-items-center options">
-    <button mat-icon-button class="icon-info" (click)="viewActivity(item)">
-      <mat-icon [ngStyle]="{color: color}" style="font-size: 18px;">info</mat-icon>
+  <div class="d-flex justify-content-center align-items-center options">
+    <button class="icon-info" (click)="viewActivity(item)">
+      <mat-icon style="font-size: 18px;">info</mat-icon>
     </button>
-    <button mat-icon-button class="icon-edit" (click)="onCardEdit(item)">
-      <mat-icon  [ngStyle]="{color: color}" style="font-size: 18px;">edit</mat-icon>
+    <button class="icon-edit" (click)="onCardEdit(item)">
+      <mat-icon style="font-size: 18px;">edit</mat-icon>
     </button>
-    <button mat-icon-button class="icon-delete" (click)="onCardDelete(item.id)" >
-      <mat-icon [ngStyle]="{color: color}" style="font-size: 18px;">delete</mat-icon>
+    <button class="icon-delete" (click)="onCardDelete(item.id)" >
+      <mat-icon style="font-size: 18px;">delete</mat-icon>
     </button>
   </div>
   <div class="align-items-center container-dependent" [hidden]="!item.isBlock">

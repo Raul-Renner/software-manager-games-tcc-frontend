@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { local } from 'src/environments/environment';
-import { UserFilterType } from '../interfaces/filters';
+import { UserFilterPerActivityType, UserFilterType } from '../interfaces/filters';
 import { createParams } from './activity-dependent.service';
 import { UserEntity } from '../interfaces/UserEntity';
 
@@ -100,6 +100,18 @@ export class UserService {
     });
     return this.http.put<any>(`${local}/api/org/colaborator/update-user-function/${user.id}`, user, { headers: headers });
   }
+
+
+  filterUserPerActivityType(filter: UserFilterPerActivityType): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.token
+    });
+    return this.http.get<any>(`${local}/api/org/colaborator/find-by-activity`,{
+      params: createParams([filter]),
+      headers: headers
+    });
+  }
+
 
   setLoggedIn(value: boolean) {
     this.loggedInStatus = value;

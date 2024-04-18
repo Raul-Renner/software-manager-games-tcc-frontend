@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4>Colunas de Execução</h4>
+  <button type="button" class="btn-close close" data-dismiss="modal" (click)="activeModal.dismiss()">
+  </button>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Coluna</th>
+        <th>Fase</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <span *ngIf="this.columnsBoard == undefined || this.columnsBoard.length == 0">Não há colunas na fase execução do projeto</span>
+      <tr *ngFor="let column of columnsBoard">
+        <td>{{column.name}}</td>
+        <td>{{column.phase}}</td>
+        <td>
+          <div class="options">
+            <button id="btn-icon" type="button" class="btn" (click)="updateColumn(column)">
+              <img src="../../../assets/icons/edit.svg"/>
+            </button>
+            <!-- <button class="btn" type="button"><i class="fa fa-home"></i></button> -->
+            <button type="button" class="btn" (click)="deleteColumn(column)">
+              <img src="assets/icons/delete_forever.svg" />
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
