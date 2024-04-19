@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { timeout } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
@@ -94,6 +95,7 @@ export class CreateColaboratorComponent implements OnInit {
     this.userForm.value.organizationId = this.user.organizationId;
     this.user.save(this.userForm.value).subscribe({
       next:(response) =>{
+        // this.toast.success("login: " + response.login + " Senha: " + response.password,"Cadastro realizado com sucesso!");
         this.toast.success("Cadastro realizado com sucesso!");
 
         this.userForm.reset();

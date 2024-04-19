@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OrganizationService } from 'src/app/services/organization.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-logged-organization',
@@ -21,14 +22,15 @@ export class LoggedOrganizationComponent implements OnInit {
     name: new FormControl(null, Validators.required),
     description: new FormControl(null, Validators.required),
     email: new FormControl(null, Validators.required),
-    login: new FormControl(null, Validators.required),
-    password: new FormControl(null, Validators.required),
-    confirm_password: new FormControl(null, Validators.required),
+    // login: new FormControl(null, Validators.required),
+    // password: new FormControl(null, Validators.required),
+    // confirm_password: new FormControl(null, Validators.required),
   });
   constructor(
     private elemento: ElementRef,
     private organizationService: OrganizationService,
     private toastr: ToastrService,
+    private userService: UserService,
     private router: Router) {}
 
   ngOnInit(): void {
@@ -59,13 +61,30 @@ export class LoggedOrganizationComponent implements OnInit {
   }
   save(){
     this.organizationService.save(this.organizationForm.value).subscribe({
+
       next: (resp) => {
-        this.toastr.success('O cadastro da sua organização foi realizada com sucesso!','Cadastro realizado!');
-        this.organizationForm.reset();
+      this.toastr.success('O cadastro da sua organização foi realizada com sucesso!','Cadastro realizado!');
+      this.organizationForm.reset();
+      setTimeout(() => {
         this.router.navigateByUrl("login");
+      }, 2000);
+      //   const organization = {
+      //     email: this.organizationForm.value.email,
+      //     login: this.organizationForm.value.login,
+      //     name:  this.organizationForm.value.name,
+      //     username: this.organizationForm.value.name,
+      //     organizationId: resp.id,
+      //     profileEnum: "ADMINISTRADOR",
+
+      //   }
+        // this.userService.save(organization).subscribe({
+        //   next: (response) => {
+
+        //   }
+         //})
       },
       error: (response) => {
-        this.toastr.error(response.error.errors[0].defaultMessage, 'Error cadastrar organização!');
+        this.toastr.error('Erro ao cadastrar sua organização!');
 
       }
     })
