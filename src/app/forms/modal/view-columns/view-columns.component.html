@@ -16,7 +16,7 @@
       <span *ngIf="this.columnsBoard == undefined || this.columnsBoard.length == 0">Não há colunas na fase execução do projeto</span>
       <tr *ngFor="let column of columnsBoard">
         <td>{{column.name}}</td>
-        <td>{{column.phase}}</td>
+        <td>EXECUÇÃO</td>
         <td>
           <div class="options">
             <button id="btn-icon" type="button" class="btn" (click)="updateColumn(column)">

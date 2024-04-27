@@ -21,7 +21,7 @@
         <td>{{item.identifier}}</td>
         <td>{{item.title}}</td>
         <td>{{item.sectorActivityEnum}}</td>
-        <td>
+        <td *ngIf="userService.profile === 'ADMINISTRADOR' || userService.profile === 'GERENTE' || userService.profile === 'LIDER_TECNICO' ">
           <button type="button" class="btn btn-danger btn-sm icon-delete" (click)="onCardDelete(item)" >
             <mat-icon class="icon" [ngStyle]="{color: '#FFFFFF'}" style="font-size: 18px;">delete</mat-icon>
           </button>

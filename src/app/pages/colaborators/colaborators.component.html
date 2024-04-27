@@ -28,9 +28,9 @@
       <tbody>
         <span *ngIf="this.colaborators == undefined || this.colaborators.length == 0">Não há colaboradores cadastrados</span>
         <tr *ngFor="let colaborator of colaborators">
-          <td>{{colaborator.userInformation.name}}  {{colaborator.userInformation.username}}</td>
-          <td>{{colaborator.profile}}</td>
-          <td>
+          <td *ngIf="user.userId != colaborator.id">{{colaborator.userInformation.name}}  {{colaborator.userInformation.username}}</td>
+          <td *ngIf="user.userId != colaborator.id">{{colaborator.profile}}</td>
+          <td *ngIf="user.userId != colaborator.id">
             <div class="options">
               <button id="btn-icon" type="button" class="btn" [routerLink]="['/edit-colaborator/' + colaborator?.id]">
                 <img src="../../../assets/icons/edit.svg"/>

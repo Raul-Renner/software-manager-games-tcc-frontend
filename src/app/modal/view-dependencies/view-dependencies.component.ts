@@ -4,6 +4,8 @@ import { ActivityService } from 'src/app/services/activity.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { ActivityDependentService } from 'src/app/services/activity-dependent.service';
 import { forkJoin } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-dependencies',
@@ -13,10 +15,12 @@ import { forkJoin } from 'rxjs';
 export class ViewDependenciesComponent implements OnInit {
 
   @Input() activity:any;
+  @Input() project:any;
   @Output() emitDeleteCard: EventEmitter<number> = new EventEmitter();
 
   public activityUpdate: Array<any> = [];
-  test: any;
+  activityEntity: any;
+  userVO: any;
 
 
   activitiesSource: Array<any> = [];
@@ -26,6 +30,8 @@ export class ViewDependenciesComponent implements OnInit {
     private modalService: NgbModal,
     public activeModal: NgbActiveModal,
     private activityService:ActivityService,
+    public userService: UserService,
+    public toast: ToastrService,
     private activityDependentService: ActivityDependentService){}
 
   ngOnInit(): void {
@@ -34,7 +40,10 @@ export class ViewDependenciesComponent implements OnInit {
 
   getActivities(){
     this.activitiesList = [];
-    this.activityService.findAll().subscribe(resp => {
+    this.activityService.findAllBy({
+      organizationId: this.userService.organizationId,
+      projectId: this.project.id
+    }).subscribe(resp => {
       this.activitiesList = resp.content;
       this.viewListingDependencies();
     });
@@ -57,26 +66,29 @@ export class ViewDependenciesComponent implements OnInit {
   }
 
   onCardDelete(item: any){
+    let column = this.project.columnsBoard.filter((column:any) => column.sectorActivity === this.activity.sectorActivity);
+    if(this.activity.user != null && this.activity.user != undefined){
+      this.userVO = {
+        id: this.activity.user.id
+      }
+    }
     const modalResult = this.modalService.open(ConfirmModalComponent);
-    this.test = ({
+    this.activityEntity = ({
+      ...this.activity,
+      columnBoardId: column[0].id,
+      projectId: this.project.id,
+      userSaveVO: this.userVO != null && this.userVO != undefined ? this.userVO : null,
       activityDependentIds: this.activityUpdate.filter((element:any) => element.id !== item.idActivityDependentId),
-​      colorCard: this.activity.colorCard,
-​      description: this.activity.description,
-​      estimatedTime: this.activity.estimatedTime,
-​      id: this.activity.id,
-      identifier: this.activity.identifier,
-​      isBlock: this.activity.isBlock,
-​      sectorActivityEnum: this.activity.sectorActivityEnum,
-​      statusActivityEnum: this.activity.statusActivityEnum,
-​      statusPriorityEnum: this.activity.statusPriorityEnum,
-​      tagsEnum: this.activity.tagsEnum,
-      title: this.activity.title
-    })
+
+  })
     modalResult.componentInstance.content = "Deseja confirmar a deleção da atividade dependente?";
     modalResult.result.then((result) => {
       if(result){
-        this.activityService.updateActivity(this.test).subscribe(resp =>{
-          this.activeModal.close(true);
+        this.activityService.updateActivity(this.activityEntity).subscribe({
+          next: () => {
+            this.toast.success(`Atividade dependente com id: ${item.id} removida com sucesso`);
+            this.activeModal.close(true);
+          }
         });
         this.activityUpdate = [];
       }

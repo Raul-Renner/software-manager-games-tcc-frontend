@@ -31,7 +31,7 @@ export class BoardComponent  implements OnInit {
   constructor(private activityService:ActivityService,
     private modalService: NgbModal,private elemento: ElementRef,
     private route: ActivatedRoute,
-    private user: UserService,
+    public user: UserService,
     private projectService: ProjectService,
     private toast: ToastrService
     ){}
@@ -79,34 +79,9 @@ export class BoardComponent  implements OnInit {
       projectId: this.projectId
     }).subscribe(resp =>{
       this.activities = resp.content;
-      this.fillBoard();
     });
   }
 
-  fillBoard(){
-    if(this.activities.length > 0 && this.activities != null){
-      let sectorActivityIndex;
-      this.activities.map(activity =>{
-        switch(activity.sectorActivityEnum){
-          case 'TODO':
-            break;
-          case 'PREPARAÇÃO':
-            break;
-          case 'INTEGRAÇÃO':
-
-            break;
-          case 'TESTE':
-            break;
-          case 'FEITO':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-        }
-      });
-    }else{
-      console.log(";)");
-    }
-  }
 
   createActivity(): void {
     const modalResult = this.modalService.open(CreateActivityComponent, {size: 'lg', backdrop: 'static'});
@@ -169,8 +144,6 @@ export class BoardComponent  implements OnInit {
 
       })
     });
-    console.log(activity);
-    console.log(columnId);
 
     let sector = this.sectorActivity.find(element => element.id === columnId);
     this.activityUpdate = ({
@@ -202,6 +175,11 @@ export class BoardComponent  implements OnInit {
   }
 
   updateCard(cardId: number, columnId: number){
+    this.sectorActivity = [];
+    this.getProject();
+  }
+  viewActivity(cardId: number, columnId: number){
+    this.sectorActivity = [];
     this.getProject();
   }
 

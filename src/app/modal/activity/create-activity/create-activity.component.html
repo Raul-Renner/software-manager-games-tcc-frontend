@@ -49,7 +49,7 @@
                   <label for="selectUser">Responsável:</label>
                   <select id="selectUser" class="form-select select-response" name="selectUser" formControlName="userSelect"
                     role="selectUser">
-                    <option *ngFor="let colaborator of colaborators" [ngValue]="colaborator" class="optionForm">{{colaborator.userInformation.name}} {{colaborator.userInformation.username}}</option>
+                    <option *ngFor="let colaborator of colaborators" [ngValue]="colaborator" class="optionForm">{{colaborator.userInformation.name}} | {{colaborator.profile}}</option>
                   </select>
                 </div>
                 <div class="d-flex flex-column">

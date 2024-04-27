@@ -3,8 +3,8 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivityService } from 'src/app/services/activity.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
-import { DeleteColaboratorComponent } from '../../colaborator/delete-colaborator/delete-colaborator.component';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 
 @Component({
   selector: 'app-view-colaborators',
@@ -33,9 +33,12 @@ export class ViewColaboratorsComponent implements OnInit {
   }
 
   deleteColaborator(colaborator: any): void {
-    const modalResult = this.modalService.open(DeleteColaboratorComponent);
-    modalResult.componentInstance.content = colaborator;
-    modalResult.componentInstance.deleteAll = false;
+    const modalResult = this.modalService.open(DeleteComponent);
+    modalResult.componentInstance.head = "Deseja excluir o seguinte colaborador do projeto?";
+    modalResult.componentInstance.label = "Cargo";
+    modalResult.componentInstance.infor = colaborator.userInformation.name;
+    modalResult.componentInstance.subInfor = colaborator.userInformation.username;
+    modalResult.componentInstance.infor3 = colaborator.profile;
     modalResult.result.then((result) => {
       if(result){
         colaborator.projects.forEach((project:any) => {

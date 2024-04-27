@@ -2,7 +2,7 @@
   <div class="head">
     <h5>{{head}}</h5>
     <div class="info-colaborator">
-      <span id="name-colaborator">{{infor}}  {{subInfor}}</span>
+      <span id="name-colaborator" *ngIf="infor != null && subInfor != null">{{infor}}  {{subInfor}}</span>
       <span>{{label}}:<span id="responsible" *ngIf="infor3 != null">{{infor3}}</span></span>
     </div>
 

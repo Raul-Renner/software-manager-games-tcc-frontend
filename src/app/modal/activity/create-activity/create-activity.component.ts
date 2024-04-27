@@ -75,7 +75,7 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     private activityService: ActivityService,
     private activityDependentService: ActivityDependentService,
     public activeModal: NgbActiveModal,
-    private user: UserService,
+    public user: UserService,
     private toast: ToastrService){
     }
   ngOnInit(): void {
@@ -165,7 +165,7 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
       organizationId: this.user.organizationId,
       projectId: this.content.id
     }).subscribe( response => {
-      this.colaborators = response.content;
+      this.colaborators = response.content.filter((colaborator:any) => colaborator.profile != 'ADMINISTRADOR');
     })
   }
 
@@ -211,9 +211,6 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
         tagsEnum: this.formActivity.value.tagsActivity.name != null ? this.formActivity.value.tagsActivity.tagsEnum : null,
         statusPriorityEnum: this.formActivity.value.statusPriorityActivity.name != null ? this.formActivity.value.statusPriorityActivity.statusPriorityEnum : null,
       });
-
-      console.log(activity);
-
       this.activityService.updateActivity(activity).subscribe({
         next: () => {
           this.getActivities();

@@ -2,12 +2,12 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateProjectComponent } from 'src/app/forms/modal/create-project/create-project.component';
-import { DeleteProjectComponent } from 'src/app/modal/project/delete-project/delete-project.component';
 import { ProjectService } from 'src/app/services/project.service';
 import { ToastrService } from 'ngx-toastr';
 import { DetailsProjectComponent } from 'src/app/modal/project/details-project/details-project.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 
 @Component({
   selector: 'app-project',
@@ -54,8 +54,10 @@ export class ProjectComponent implements OnInit{
   }
 
   deleteProject(project: any): void {
-    const modalResult = this.modalService.open(DeleteProjectComponent);
-    modalResult.componentInstance.content = project;
+    const modalResult = this.modalService.open(DeleteComponent);
+    modalResult.componentInstance.head = "Deseja excluir o seguinte projeto?";
+    modalResult.componentInstance.label = "Projeto";
+    modalResult.componentInstance.infor3 = project.name;
     modalResult.result.then((result) => {
       if(result){
         this.projectService.delete(project.id).subscribe({

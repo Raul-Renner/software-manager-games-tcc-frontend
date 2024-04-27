@@ -60,6 +60,13 @@ export class ActivityService {
     });
     return this.http.put(`${local}/api/activity/sector-card/${activity.id}`, activity, {headers: headers});
   }
+
+  assignUserInActivity(activity: any): Observable<any>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.user.token
+    });
+    return this.http.put<any>(`${local}/api/activity/assign-user-activity/${activity.id}`, activity, {headers: headers});
+  }
 }
 
 interface Sort {

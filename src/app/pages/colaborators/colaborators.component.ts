@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { DeleteColaboratorComponent } from 'src/app/modal/colaborator/delete-colaborator/delete-colaborator.component';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -20,7 +20,7 @@ export class ColaboratorsComponent implements OnInit{
   public userInfo: any;
 
   constructor(private modalService: NgbModal,
-              private user: UserService,
+              public user: UserService,
               private projectService: ProjectService,
               private toast: ToastrService){}
 
@@ -45,9 +45,12 @@ export class ColaboratorsComponent implements OnInit{
   }
 
   deleteColaborator(colaborator: any): void {
-    const modalResult = this.modalService.open(DeleteColaboratorComponent);
-    modalResult.componentInstance.content = colaborator;
-    modalResult.componentInstance.deleteAll = true;
+    const modalResult = this.modalService.open(DeleteComponent);
+    modalResult.componentInstance.head = "Deseja excluir o seguinte colaborador?";
+    modalResult.componentInstance.label = "Cargo";
+    modalResult.componentInstance.infor = colaborator.userInformation.name;
+    modalResult.componentInstance.subInfor = colaborator.userInformation.username;
+    modalResult.componentInstance.infor3 = colaborator.profile;
     modalResult.result.then((result) => {
       if(result){
         this.user.delete(colaborator.id).subscribe({

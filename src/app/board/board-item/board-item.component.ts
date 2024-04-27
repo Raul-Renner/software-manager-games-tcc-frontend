@@ -18,7 +18,7 @@ export class BoardItemComponent implements OnInit{
   @Input() project: any;
   @Output() emitDeleteCard: EventEmitter<number> = new EventEmitter();
   @Output() emitEditCard: EventEmitter<number> = new EventEmitter();
-  @Output() emitViewCardFull: EventEmitter<number> = new EventEmitter();
+  @Output() emitViewCardFull: EventEmitter<any> = new EventEmitter();
   @Output() emitViewDependenciesCard: EventEmitter<any> = new EventEmitter();
 
   color: any;
@@ -26,7 +26,7 @@ export class BoardItemComponent implements OnInit{
 
   constructor(
     private modalService: NgbModal,
-    private userService: UserService,
+    public userService: UserService,
     private toast: ToastrModule){}
 
   ngOnInit(): void {
@@ -44,15 +44,7 @@ export class BoardItemComponent implements OnInit{
   }
 
   viewActivity(activity: any): void {
-    this.userService.filterUserPerActivityType({
-      organizationId: this.userService.organizationId,
-      projectId: this.project[0].id,
-      activityId: activity.id
-    }).subscribe({
-      next: (result) => {
-       activity.user = result.content[0];
-      }
-    })
+    this.userActivity(activity);
     const modalResult = this.modalService.open(ViewActivityComponent,{size: 'lg', backdrop: 'static'});
     modalResult.componentInstance.activity = activity;
     modalResult.componentInstance.project = this.project[0];
@@ -76,12 +68,26 @@ export class BoardItemComponent implements OnInit{
   }
 
   viewDependentCard(activity: any){
+    this.userActivity(activity);
     const modalRef = this.modalService.open(ViewDependenciesComponent);
 
     modalRef.componentInstance.activity = activity;
+    modalRef.componentInstance.project = this.project[0];
     modalRef.result.then((result) => {
       if(result){
           this.emitViewDependenciesCard.emit(activity);
+      }
+    })
+  }
+
+  userActivity(activity:any) {
+    this.userService.filterUserPerActivityType({
+      organizationId: this.userService.organizationId,
+      projectId: this.project[0].id,
+      activityId: activity.id
+    }).subscribe({
+      next: (result) => {
+       activity.user = result.content[0];
       }
     })
   }

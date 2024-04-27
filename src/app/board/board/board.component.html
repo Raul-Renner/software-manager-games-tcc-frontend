@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div cdkDropListGroup class="row">
-    <div class="d-flex justify-content-end px-5 mt-5 buttons-functions">
+    <div class="d-flex justify-content-end px-5 mt-5 buttons-functions" *ngIf="user.profile === 'ADMINISTRADOR' || user.profile === 'GERENTE' || user.profile === 'LIDER_TECNICO' ">
       <div>
         <button class="btn btn-primary" (click)="createActivity()">Nova Atividade</button>
       </div>
@@ -20,7 +20,8 @@
           <app-board-item [item]="item" [project] = "project"
           (emitDeleteCard)="onDeleteCard($event, column.id)"
           (emitEditCard)="onEditCard($event, column.id)"
-          (emitViewDependenciesCard)="updateCard($event, column.id)"></app-board-item>
+          (emitViewDependenciesCard)="updateCard($event, column.id)"
+          (emitViewCardFull)="viewActivity($event, column.id)"></app-board-item>
         </div>
       </div>
     </div>

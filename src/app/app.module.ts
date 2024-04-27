@@ -35,21 +35,19 @@ import { ColaboratorsComponent } from './pages/colaborators/colaborators.compone
 import { ProjectComponent } from './pages/project/project.component';
 import { CreateColaboratorComponent } from './forms/create-colaborator/create-colaborator.component';
 import { CreateProjectComponent } from './forms/modal/create-project/create-project.component';
-import { DeleteColaboratorComponent } from './modal/colaborator/delete-colaborator/delete-colaborator.component';
 import { ViewColaboratorComponent } from './pages/colaborators/view-colaborator/view-colaborator.component';
 import { EditAdmColaboratorComponent } from './pages/colaborators/edit-adm-colaborator/edit-adm-colaborator.component';
-import { DeleteProjectComponent } from './modal/project/delete-project/delete-project.component';
 import { DetailsProjectComponent } from './pages/project/details-project/details-project.component';
 import { ViewColaboratorsComponent } from './modal/project/view-colaborators/view-colaborators.component';
 import { ViewActivitiesComponent } from './modal/project/view-activities/view-activities.component';
 import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-colaborator/view-projects-colaborator.component';
 import { ProjectColaboratorComponent } from './pages/colaborators/project-colaborator/project-colaborator.component';
 import { HomeAdminComponent } from './pages/pages-home/home-admin/home-admin.component';
-import { DeleteActivityComponent } from './modal/activity/delete-activity/delete-activity.component';
 import { EditProjectComponent } from './forms/modal/edit-project/edit-project.component';
 import { CreateColumnComponent } from './forms/modal/create-column/create-column.component';
 import { ViewColumnsComponent } from './forms/modal/view-columns/view-columns.component';
 import { DeleteComponent } from './forms/modal/delete/delete.component';
+import { AssignUserActivityComponent } from './modal/assign-user-activity/assign-user-activity.component';
 
 @NgModule({
   declarations: [
@@ -73,21 +71,19 @@ import { DeleteComponent } from './forms/modal/delete/delete.component';
     ProjectComponent,
     CreateColaboratorComponent,
     CreateProjectComponent,
-    DeleteColaboratorComponent,
     ViewColaboratorComponent,
     EditAdmColaboratorComponent,
-    DeleteProjectComponent,
     DetailsProjectComponent,
     ViewColaboratorsComponent,
     ViewActivitiesComponent,
     ViewProjectsColaboratorComponent,
     ProjectColaboratorComponent,
     HomeAdminComponent,
-    DeleteActivityComponent,
     EditProjectComponent,
     CreateColumnComponent,
     ViewColumnsComponent,
-    DeleteComponent
+    DeleteComponent,
+    AssignUserActivityComponent
   ],
   imports: [
     BrowserModule,

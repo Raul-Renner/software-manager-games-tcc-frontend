@@ -1,10 +1,9 @@
 import { UserService } from './../../../services/user.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DeleteColaboratorComponent } from '../../colaborator/delete-colaborator/delete-colaborator.component';
 import { ToastrService } from 'ngx-toastr';
 import { ActivityService } from 'src/app/services/activity.service';
-import { DeleteActivityComponent } from '../../activity/delete-activity/delete-activity.component';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 
 @Component({
   selector: 'app-view-activities',
@@ -34,8 +33,13 @@ export class ViewActivitiesComponent implements OnInit {
   }
 
   deleteActivity(activity:any): void {
-    const modalResult = this.modalService.open(DeleteActivityComponent);
-    modalResult.componentInstance.content = activity;
+    const modalResult = this.modalService.open(DeleteComponent);
+    modalResult.componentInstance.head = "Deseja excluir a seguinte atividade?";
+    modalResult.componentInstance.label = "Status";
+    modalResult.componentInstance.info = activity.identifier;
+    modalResult.componentInstance.subInfor = activity.title;
+    modalResult.componentInstance.infor3 = activity.sectorActivity;
+
     modalResult.result.then((result) => {
       if(result){
         this.activityService.deleteActivity(activity.id).subscribe({
