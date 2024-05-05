@@ -1,6 +1,6 @@
 import { ToastrService } from 'ngx-toastr';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateColumnComponent } from 'src/app/forms/modal/create-column/create-column.component';
@@ -15,7 +15,7 @@ import { ViewColumnsComponent } from 'src/app/forms/modal/view-columns/view-colu
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.sass']
 })
-export class BoardComponent  implements OnInit {
+export class BoardComponent  implements OnInit, AfterViewInit {
 
   public activities: Array<any> = [];
   public activitiesUpdate: Array<any> = [];
@@ -23,8 +23,14 @@ export class BoardComponent  implements OnInit {
   public userId: any;
   public projectId: any;
   public project: any;
-
   public test:any;
+
+  public tagsActivity: Array<any> = [
+    {id: 1, name:'URGENTE', tagsEnum:'URGENT'},
+    {id: 2, name:'DEPENDENTE', tagsEnum:'DEPENDENT'},
+    {id: 3, name:'INDEPENDENTE', tagsEnum:'INDEPENDENT'},
+    {id: 4, name:'MELHORIA', tagsEnum:'IMPROVEMENT'}
+  ];
 
   public sectorActivity: Array<any> = [];
 
@@ -35,14 +41,15 @@ export class BoardComponent  implements OnInit {
     private projectService: ProjectService,
     private toast: ToastrService
     ){}
+  ngAfterViewInit(): void {
+  }
 
   ngOnInit(): void {
     this.projectId = this.route.snapshot.url[2].path;
     this.userId = this.route.snapshot.url[4].path;
-    this.elemento.nativeElement.ownerDocument.body.style.backgroundColor = '#072047';
+    this.elemento.nativeElement.ownerDocument.body.style.backgroundColor = '#FFFFFF';
     //this.getActivities();
     this.getProject();
-
   }
 
   drop(event: CdkDragDrop<any[]>, columnId: number) {

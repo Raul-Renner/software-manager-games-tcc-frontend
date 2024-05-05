@@ -1,15 +1,24 @@
+<app-head></app-head>
 <div class="container-fluid">
   <div cdkDropListGroup class="row">
-    <div class="d-flex justify-content-end px-5 mt-5 buttons-functions" *ngIf="user.profile === 'ADMINISTRADOR' || user.profile === 'GERENTE' || user.profile === 'LIDER_TECNICO' ">
-      <div>
-        <button class="btn btn-primary" (click)="createActivity()">Nova Atividade</button>
-      </div>
+    <div class="d-flex flex-column description-project">
+      <span id="title-project">{{project[0].name}}</span>
+      <span id="title-description">{{project[0].description}}</span>
+    </div>
+    <div class="d-flex justify-content-center mt-5 buttons-functions" *ngIf="user.profile === 'ADMINISTRADOR' || user.profile === 'GERENTE' || user.profile === 'LIDER_TECNICO' ">
       <div class="mt-2">
-        <button class="btn btn-secondary" (click)="createColumm()">Criar Coluna</button>
-        <button class="btn btn-light" (click)="viewColunas()">Editar Colunas</button>
+        <button class="btn btn-primary" (click)="createActivity()">Nova Atividade</button>
+        <button class="btn btn-success" (click)="createColumm()">Criar Coluna</button>
+        <button class="btn btn-secondary" (click)="viewColunas()">Editar Colunas</button>
       </div>
-
-
+    </div>
+    <div class="col-1 mb-3 board-container">
+      <div class="d-flex justify-content-between align-items-center p-2 shadow-sm column-header">
+        <h2 class="m-0">Prioridade</h2>
+      </div>
+      <div cdkDropList [cdkDropListData]="" cdkDropListOrientation="vertical" *ngFor="let tag of tagsActivity" class="example-list-tags" >
+        <span>{{tag.name}}</span>
+      </div>
     </div>
     <div class="col-1 mb-3 board-container" *ngFor="let column of sectorActivity">
       <div class="d-flex justify-content-between align-items-center p-2 shadow-sm column-header">
