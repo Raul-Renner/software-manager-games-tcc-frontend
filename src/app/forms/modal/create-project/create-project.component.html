@@ -24,10 +24,10 @@
         [searchable]="true"
         [clearable]="true"
         [compareWith]="compareFunction">
-        <ng-template class="testt" ng-option-tmp let-item="item" let-item$="item$" let-index="index" >
+        <ng-template class="form-select" ng-option-tmp let-item="item" let-item$="item$" let-index="index" >
             <div class="custom-checkbox">
               <input  type="checkbox" [ngModelOptions]="{standalone: true}" id="item-{{index}}" class="custom-control-input" [(ngModel)]="item$.selected"/>
-              <label for="custom-control-label" class="label-info">{{item?.userInformation.name}} {{item?.userInformation.username}} | FUNCTION</label>
+              <label for="custom-control-label" class="label-info">{{item?.userInformation.name}} {{item?.userInformation.username}} | {{item?.profile}}</label>
             </div>
             <hr class="custom-hr-input">
         </ng-template>

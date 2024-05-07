@@ -5,7 +5,7 @@ import { Component, OnDestroy } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
   }

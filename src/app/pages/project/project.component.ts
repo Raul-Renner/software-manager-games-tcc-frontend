@@ -2,10 +2,12 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateProjectComponent } from 'src/app/forms/modal/create-project/create-project.component';
-import { DeleteProjectComponent } from 'src/app/modal/project/delete-project/delete-project.component';
 import { ProjectService } from 'src/app/services/project.service';
 import { ToastrService } from 'ngx-toastr';
 import { DetailsProjectComponent } from 'src/app/modal/project/details-project/details-project.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 
 @Component({
   selector: 'app-project',
@@ -17,25 +19,34 @@ export class ProjectComponent implements OnInit{
   public projects: Array<any> = new Array();
   public checkedProgress: boolean = false;
   public checkedFinished: boolean = false;
+  public storage: any;
+  public userInfo: any;
+  public userId: number;
+
   @Output() emitDeleteProject: EventEmitter<number> = new EventEmitter();
 
 
   ngOnInit(): void {
+    this.userId = this.user.userId
     this.getProjects();
   }
 
   constructor(
     private modalService: NgbModal,
     private projectService: ProjectService,
-    private toastr: ToastrService){
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private user: UserService){
+      this.storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
 
+      var storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
+      this.userInfo = JSON.parse(storage.getItem("currentUser") || '{}');
     }
 
 
   createProject(): void {
     const modalResult = this.modalService.open(CreateProjectComponent);
     modalResult.result.then((result) => {
-      console.log(result);
       if(result){
         this.getProjects();
       }
@@ -43,14 +54,16 @@ export class ProjectComponent implements OnInit{
   }
 
   deleteProject(project: any): void {
-    const modalResult = this.modalService.open(DeleteProjectComponent);
-    modalResult.componentInstance.content = project;
+    const modalResult = this.modalService.open(DeleteComponent);
+    modalResult.componentInstance.head = "Deseja excluir o seguinte projeto?";
+    modalResult.componentInstance.label = "Projeto";
+    modalResult.componentInstance.infor3 = project.name;
     modalResult.result.then((result) => {
       if(result){
         this.projectService.delete(project.id).subscribe({
           next: (resp) => {
             this.getProjects();
-            this.toastr.success('Projeto Removido com sucesso!','Projeto foi removido com sucesso!');
+            this.toastr.success('Projeto Removido com sucesso!');
           },
           error: (error) => {
             this.toastr.error(`Ocorreu um ao remover o projeto: ${project.name}`);
@@ -62,10 +75,14 @@ export class ProjectComponent implements OnInit{
 
   getProjects(): void {
     this.projectService.findBy({
-      organizationId: 1
-    }).subscribe(response => {
-      this.projects = response.content;
-    })
+      organizationId: this.user.organizationId
+    }).subscribe({
+      next: (resp) => {
+        this.projects = resp.content;
+      },
+      error: (err) => {
+      }
+    });
   }
 
   //refactoring 70-93

@@ -49,9 +49,14 @@ export class ViewColaboratorComponent implements OnInit{
     })
   }
 
-  viewActivitiesFinished(){
+  viewProjectsUser(){
     const modalResult = this.modalService.open(ViewProjectsColaboratorComponent);
     modalResult.componentInstance.content = this.projects;
-    modalResult.result.then((result) => {});
+    modalResult.componentInstance.colaborator = this.colaborator;
+    modalResult.result.then((result) => {
+      if(result) {
+        this.getProjectsUser();
+      }
+    });
   }
 }

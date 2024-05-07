@@ -1,46 +1,55 @@
+import { ToastrService } from 'ngx-toastr';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CreateActivityComponent } from 'src/app/modal/create-activity/create-activity.component';
+import { CreateColumnComponent } from 'src/app/forms/modal/create-column/create-column.component';
+import { CreateActivityComponent } from 'src/app/modal/activity/create-activity/create-activity.component';
 import { ActivityService } from 'src/app/services/activity.service';
+import { ProjectService } from 'src/app/services/project.service';
+import { UserService } from 'src/app/services/user.service';
+import { ViewColumnsComponent } from 'src/app/forms/modal/view-columns/view-columns.component';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.sass']
 })
-export class BoardComponent  implements OnInit {
+export class BoardComponent  implements OnInit, AfterViewInit {
 
   public activities: Array<any> = [];
   public activitiesUpdate: Array<any> = [];
   activityUpdate: any;
+  public userId: any;
+  public projectId: any;
+  public project: any;
+  public test:any;
 
-  public labelsColors: Array<any> = [
-    {id: 1, title:'Atividade Independente', color:'#FFFFFF'},
-    {id: 2, title:'Atividade Dependente', color:'#FFA500'},
-    {id: 3, title:'Atividade de Urgência', color:'#DB6262'},
-    {id: 4, title:'Atividade de Melhoria', color:'#2F8BF5'},
-    {id: 5, title:'Atividade de Finalizada', color:'#107351'}
+  public tagsActivity: Array<any> = [
+    {id: 1, name:'URGENTE', tagsEnum:'URGENT'},
+    {id: 2, name:'DEPENDENTE', tagsEnum:'DEPENDENT'},
+    {id: 3, name:'INDEPENDENTE', tagsEnum:'INDEPENDENT'},
+    {id: 4, name:'MELHORIA', tagsEnum:'IMPROVEMENT'}
   ];
 
-  public sectorActivity: Array<any> = [
-    {id: 1, name:'PRIORIDADE', sectorActivityEnum:'PRIORITY', list: []},
-    {id: 2, name:'PREPARAÇÃO', sectorActivityEnum:'TO_DO', list: []},
-    {id: 3, name:'SOFTWARE', sectorActivityEnum:'SOFTWARE', list: []},
-    {id: 4, name:'ARTE', sectorActivityEnum:'ART', list: []},
-    {id: 5, name:'DESIGN', sectorActivityEnum:'DESIGN', list: []},
-    {id: 6, name:'SOM', sectorActivityEnum:'SOUND', list: []},
-    {id: 7, name:'INTEGRAÇÃO', sectorActivityEnum:'INTEGRATION', list: []},
-    {id: 8, name:'TESTE', sectorActivityEnum:'TEST', list: []},
-    {id: 9, name:'FEITO', sectorActivityEnum:'DONE', list: []}
-  ];
+  public sectorActivity: Array<any> = [];
 
-  constructor(private activityService:ActivityService,private modalService: NgbModal
+  constructor(private activityService:ActivityService,
+    private modalService: NgbModal,private elemento: ElementRef,
+    private route: ActivatedRoute,
+    public user: UserService,
+    private projectService: ProjectService,
+    private toast: ToastrService
     ){}
+  ngAfterViewInit(): void {
+  }
 
   ngOnInit(): void {
-    this.getActivities();
-
+    this.projectId = this.route.snapshot.url[2].path;
+    this.userId = this.route.snapshot.url[4].path;
+    this.elemento.nativeElement.ownerDocument.body.style.backgroundColor = '#FFFFFF';
+    //this.getActivities();
+    this.getProject();
   }
 
   drop(event: CdkDragDrop<any[]>, columnId: number) {
@@ -58,67 +67,48 @@ export class BoardComponent  implements OnInit {
 
   }
 
+  getProject(): void {
+    this.sectorActivity = [];
+    this.projectService.findBy({
+      projectIds:[this.projectId],
+      organizationId: this.user.organizationId
+    }).subscribe( resp => {
+      this.project = resp.content;
+      this.activities = resp.content.activities;
+      this.insertColumns(resp.content[0].columnsBoard);
+    })
+  }
+
   getActivities(): void {
     this.clearBoardCard();
-    this.activityService.findAll().subscribe(resp =>{
+    this.activityService.findAllBy({
+      organizationId: this.user.organizationId,
+      projectId: this.projectId
+    }).subscribe(resp =>{
       this.activities = resp.content;
-      this.fillBoard();
     });
   }
 
-  fillBoard(){
-    if(this.activities.length > 0 && this.activities != null){
-      let sectorActivityIndex;
-      this.activities.map(activity =>{
-        switch(activity.sectorActivityEnum){
-          case 'PRIORITY':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-          case 'TO_DO':
-           sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-          case 'SOFTWARE':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-          case 'ART':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-          case 'DESIGN':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);            break;
-          case 'SOUND':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-          case 'INTEGRATION':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-          case 'TEST':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-          case 'DONE':
-            sectorActivityIndex = this.sectorActivity.findIndex((element => element.sectorActivityEnum === activity.sectorActivityEnum));
-            this.sectorActivity[sectorActivityIndex].list.push(activity);
-            break;
-        }
-      });
-    }else{
-      console.log(";)");
-    }
-  }
 
   createActivity(): void {
-    const modalResult = this.modalService.open(CreateActivityComponent);
+    const modalResult = this.modalService.open(CreateActivityComponent, {size: 'lg', backdrop: 'static'});
+    modalResult.componentInstance.content = this.project[0];
     modalResult.result.then((result) => {
       if(result){
-          this.getActivities();
-          //alert success
+          this.toast.success("Atividade cadastrada com sucesso!");
+
+          this.getProject();
+      }
+    })
+  }
+
+  createColumm(): void {
+    const modalResult = this.modalService.open(CreateColumnComponent);
+    modalResult.componentInstance.content = this.project;
+    modalResult.result.then((result) => {
+      if(result){
+        this.sectorActivity = [];
+        this.getProject();
       }
     })
   }
@@ -126,12 +116,19 @@ export class BoardComponent  implements OnInit {
   onDeleteCard(cardId: number, columnId: number){
     this.sectorActivity = this.sectorActivity.map((column: any) => {
       if(column.id === columnId){
-        column.list = column.list.filter((card: any) => card.id !== cardId);
+        column.activities = column.activities.filter((card: any) => card.id !== cardId);
       }
       return column;
     });
-    this.activityService.deleteActivity(cardId).subscribe(resp =>{
-      this.getActivities();
+    this.activityService.deleteActivity(cardId).subscribe({
+      next: (response: any) => {
+        this.toast.success("atividade removida com sucesso!");
+        this.getProject();
+      },
+      error: (response: any) => {
+        this.toast.error("Erro ao atualizar a atividade de id: " + cardId);
+
+      }
     });
   }
 
@@ -142,10 +139,11 @@ export class BoardComponent  implements OnInit {
   }
 
   onEditCard(cardId: number, columnId: number){
-    this.getActivities();
+    this.getProject();
   }
 
   updateSectorCard(activity: any, columnId: number){
+
     activity.activityDependentList.map((element:any) => {
       this.activitiesUpdate.push({
         ...element,
@@ -153,27 +151,71 @@ export class BoardComponent  implements OnInit {
 
       })
     });
+
     let sector = this.sectorActivity.find(element => element.id === columnId);
     this.activityUpdate = ({
+      columnBoardId: columnId,
+      projectId: this.projectId,
       activityDependentIds: this.activitiesUpdate,
-​      colorCard: activity.colorCard,
 ​      description: activity.description,
 ​      estimatedTime: activity.estimatedTime,
+      usedTime: activity.usedTime,
 ​      id: activity.id,
       identifier: activity.identifier,
 ​      isBlock: activity.isBlock,
-​      sectorActivityEnum: sector.sectorActivityEnum,
-​      statusActivityEnum: activity.statusActivityEnum,
+      isFinished: activity.isFinished,
+​      sectorActivity: sector.sectorActivity,
 ​      statusPriorityEnum: activity.statusPriorityEnum,
 ​      tagsEnum: activity.tagsEnum,
       title: activity.title
-  })
-    this.activityService.updateSectorActivity(this.activityUpdate).subscribe(resp => {
-      this.getActivities();
+  });
+    this.activityService.updateSectorActivity(this.activityUpdate).subscribe({
+      next: (response) => {
+        // this.toast.success("atividade atualizada com sucesso!");
+        this.getProject();
+      },
+      error: (response) => {
+        // this.toast.error("Erro ao atualizar os dados da atividade:" + this.activityUpdate.id);
+
+      }
     });
   }
 
   updateCard(cardId: number, columnId: number){
-    this.getActivities();
+    this.sectorActivity = [];
+    this.getProject();
   }
+  viewActivity(cardId: number, columnId: number){
+    this.sectorActivity = [];
+    this.getProject();
+  }
+
+  viewColunas(){
+    const modalResult = this.modalService.open(ViewColumnsComponent, {size: 'lg', backdrop: 'static'});
+    modalResult.componentInstance.content = this.project;
+    modalResult.result.then((result) => {
+      if(result){
+        this.getProject();
+      }
+    });
+  }
+
+  insertColumns(columns: any) {
+    columns.forEach((column:any) => {
+      if(column.phase === 'INITIAL'){
+        this.sectorActivity.push(column);
+      }
+    });
+    columns.forEach((column:any) => {
+      if(column.phase === 'EXECUTION'){
+        this.sectorActivity.push(column);
+      }
+    });
+    columns.forEach((column:any) => {
+      if(column.phase === 'FINALIZATION'){
+        this.sectorActivity.push(column);
+      }
+    });
+  }
+
 }

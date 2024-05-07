@@ -3,27 +3,29 @@
     <h4>Editar dados Colaborador</h4>
     <span>Editar as informações de um colaborador da organização</span>
   </div>
-  <form action="">
+  <form [formGroup]="formColaborator" action="" (submit)="update()">
     <div class="form-container">
       <div class="form-left">
         <label for="name">
           Nome
         </label>
-        <span>Name</span>
+        <span>{{colaborator.userInformation.name}}</span>
         <!-- <input type="text" name="name" id="name" class="form-control mb-3" autofocus> -->
 
         <label for="username">
           Sobrenome
         </label>
-        <span>Sobrenome</span>
+        <span>{{colaborator.userInformation.username}}</span>
 
         <!-- <input type="text" name="username" id="username" class="form-control mb-3" autofocus> -->
 
         <div class="selection-colabrators-role">
           <label for="role">Cargo</label>
           <select id="role" class="form-select role" name="role" formControlName="role" role="selectRole" >
-            <option [ngValue]="" class="optionForm">selecione</option>
+            <option *ngFor="let role of profiles" [ngValue]="role" class="optionForm">{{role.description}}</option>
           </select>
+          <span class="description-cargo-atual">cargo atual: <span class="cargo-atual">{{colaborator.profile}}</span></span>
+
         </div>
 
       </div>
@@ -31,7 +33,7 @@
         <label for="email">
           Email
         </label>
-        <span>Email</span>
+        <span>{{colaborator.userInformation.email}}</span>
 
         <!-- <input type="email" name="email" id="email" class="form-control mb-3" autofocus> -->
 
@@ -39,25 +41,27 @@
           <label for="login">
             Nome de usuário
           </label>
-          <span>Nome de usuário</span>
+          <span>{{colaborator.login}}</span>
 
           <!-- <input type="text" name="login" id="login" class="form-control mb-3" autofocus> -->
 
           <div class="form-group projects">
             <label for="">Selecionar projeto</label>
             <ng-select
-            formControlName="ids"
+            [items]="projects"
+            [(ngModel)]="projectsUser"
+            formControlName="listProjects"
             [multiple]="true"
-            class="form-select selection-project"
-            bindLabel="title"
+            class="form-control selection-project"
+            bindLabel="name"
             bindValue= "id"
             role="selectedProjecties"
             [searchable]="true"
-            [clearable]="true">
-            <ng-template class="form-select select-project" ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                <div class="form-select custom-checkbox">
+            [clearable]="true" [compareWith]="compareFunction">
+            <ng-template class="form-select" ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <div class="custom-checkbox">
                   <input [ngModelOptions]="{standalone: true}" id="item-{{index}}" type="checkbox" class="custom-control-input" [(ngModel)]="item$.selected"/>
-                  <label for="custom-control-label">project</label>
+                  <label for="custom-control-label">{{item?.name}}</label>
                 </div>
                 <hr class="custom-hr-input">
             </ng-template>
@@ -69,7 +73,7 @@
 
       <div class="buttons">
         <div class="button-login">
-          <button type="button" class="btn btn-lg">Atualizar</button>
+          <button type="submit" class="btn btn-lg" [disabled]="formColaborator.invalid || buttonDisabled">Atualizar</button>
         </div>
         <div class="button-logout">
           <button type="button" class="btn btn-lg" routerLink="/colaborators">Voltar</button>

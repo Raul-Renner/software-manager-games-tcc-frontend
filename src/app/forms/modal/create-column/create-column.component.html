@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="head">
+    <h4>Nova Coluna</h4>
+    <span>Cadastro de uma nova coluna no projeto</span>
+  </div>
+  <form action="" [formGroup]="columnForm" (submit)="columnForm.value.id == null ? createColumn() : updateColumn()">
+    <div class="form-container">
+      <label for="name">
+        Nome da coluna
+      </label>
+      <input type="text" name="name" id="name" formControlName="name" class="form-control mb-3" autofocus>
+
+    </div>
+    <!-- <div class="selection-colabrators-role mb-3">
+      <label for="role">Setor</label>
+      [ngValue]=""
+      <select id="role" class="form-select" name="sectorActivity" formControlName="sectorActivity" role="selectsectorActivity" >
+        <option *ngFor="let column of columns" [ngValue]="column.name" class="optionForm">{{column.name}}</option>
+      </select>
+    </div> -->
+
+      <div class="buttons">
+        <div class="button-login">
+          <button type="submit" *ngIf="columnForm.value.id == null" class="btn btn-lg" [disabled]="columnForm.invalid">Criar</button>
+          <button type="submit" *ngIf="columnForm.value.id != null" class="btn btn-lg" [disabled]="columnForm.invalid">Atualizar</button>
+        </div>
+        <div class="button-logout">
+          <button type="button" class="btn btn-lg" (click)="activeModal.close(false)">Voltar</button>
+        </div>
+      </div>
+  </form>
+</div>

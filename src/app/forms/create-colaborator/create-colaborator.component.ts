@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { timeout } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
@@ -34,7 +35,7 @@ export class CreateColaboratorComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private profileService: ProfileService,
-    private userService: UserService,
+    private user: UserService,
     private toast: ToastrService
   ){}
 
@@ -43,35 +44,37 @@ export class CreateColaboratorComponent implements OnInit {
     name: new FormControl(null, Validators.required),
     username: new FormControl(null, Validators.required),
     profileEnum: new FormControl(null, Validators.required),
-    email: new FormControl(null),
+    email: new FormControl(null, Validators.required),
     login: new FormControl(null),
     password: new FormControl(null),
     organizationId: new FormControl(null),
     projects: new FormControl([]),
   });
 
-  // updateVisibilityPassword(flag: boolean){
-  //   if(flag){
-  //     if (this.password === 'password') {
-  //       this.password = 'text';
-  //       this.show = true;
-  //     } else {
-  //       this.password = 'password';
-  //       this.show = false;
-  //     }
-  //   }else{
-  //     if (this.confirm_password === 'password') {
-  //       this.confirm_password = 'text';
-  //       this.show_confirm_password = true;
-  //     } else {
-  //       this.confirm_password = 'password';
-  //       this.show_confirm_password = false;
-  //     }
-  //   }
-  // }
+  updateVisibilityPassword(flag: boolean){
+    if(flag){
+      if (this.password === 'password') {
+        this.password = 'text';
+        this.show = true;
+      } else {
+        this.password = 'password';
+        this.show = false;
+      }
+    }else{
+      if (this.confirm_password === 'password') {
+        this.confirm_password = 'text';
+        this.show_confirm_password = true;
+      } else {
+        this.confirm_password = 'password';
+        this.show_confirm_password = false;
+      }
+    }
+  }
 
   getProjects(){
-    this.projectService.findBy({organizationId: 1}).subscribe({
+    this.projectService.findBy({
+      organizationId: this.user.organizationId
+    }).subscribe({
       next: (response) => {
         this.projects = response.content;
       },
@@ -87,12 +90,14 @@ export class CreateColaboratorComponent implements OnInit {
   }
 
   save(){
-    this.userForm.patchValue({
-      organizationId: 1
-    });
-    this.userService.save(this.userForm.value).subscribe({
-      next:() =>{
-        this.toast.success("Sucesso!", "Cadastro realizado com sucesso!");
+    var login = this.userForm.value.name.split(' ')[0] + this.userForm.value.username.split(' ')[0]
+    this.userForm.value.login = login;
+    this.userForm.value.organizationId = this.user.organizationId;
+    this.user.save(this.userForm.value).subscribe({
+      next:(response) =>{
+        // this.toast.success("login: " + response.login + " Senha: " + response.password,"Cadastro realizado com sucesso!");
+        this.toast.success("Cadastro realizado com sucesso!");
+
         this.userForm.reset();
       },
       error:(response) => {

@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="head">
+    <h4>Novo Projeto</h4>
+    <span>Cadastro de um novo projeto da organização</span>
+  </div>
+  <form action="" [formGroup]="projectForm" (submit)="updateProject()">
+    <div class="form-container">
+      <label for="name">
+        Nome do projeto
+      </label>
+      <input type="text" name="name" id="name" formControlName="name" class="form-control mb-3" autofocus>
+
+      <label for="description">
+        Descrição
+      </label>
+      <textarea  name="description"  id="description" formControlName="description" class="form-control textarea-description mb-3" rows="3"></textarea>
+
+    </div>
+
+      <div class="buttons">
+        <div class="button-login">
+          <button type="submit" class="btn btn-lg" [disabled]="projectForm.invalid">Cadastrar</button>
+        </div>
+        <div class="button-logout">
+          <button type="button" class="btn btn-lg" (click)="activeModal.close(false)">Voltar</button>
+        </div>
+      </div>
+  </form>
+</div>

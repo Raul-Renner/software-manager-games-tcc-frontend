@@ -7,48 +7,68 @@
 </div>
 
 <div class="modal-body d-flex justify-content-center">
-  <div class="d-flex">
+  <div class="d-flex justify-content-center align-content-center">
     <div class="d-flex flex-column">
       <div class="content-head">
-        <label for="">{{activity.identifier}} - {{activity.title}}</label>
+        <label for="" class="title">{{activity.identifier}} - {{activity.title}}</label>
         <div class="d-flex flex-row justify-content-between">
-          <label for="">{{activity.description}}</label>
+          <label for="" class="sub-title">{{activity.description}}</label>
         </div>
       </div>
-      <div class="d-flex flex-row justify-content-between mt-1">
-        <div class="info-line-3">
+      <div class="d-flex flex-row justify-content-between mt-4">
+
+        <div class="info-line-1">
           <label class="title-info" for="">Setor: </label>
-          <label for="">{{activity.sectorActivityEnum}}</label>
+          <label for="">{{activity.sectorActivity}}</label>
         </div>
-        <!-- <div class="info-line-3">
-          <label class="title-info" for="">Fase: </label>
-          <label for="">{{activity.statusActivityEnum}}</label>
-        </div> -->
-        <div class="info-line-3">
+        <div class="info-line-1">
           <label class="title-info" for="">Tempo estimado: </label>
           <label for="">{{activity.estimatedTime}}</label>
         </div>
+        <div class="info-line-1" id="timeUsed">
+          <label class="title-info" for="">Tempo utilizado: </label>
+          <label for="" *ngIf="activity.usedTime != null">{{activity.usedTime}}</label>
+        </div>
       </div>
-      <div class="d-flex flex-row justify-content-between mt-1">
-        <div>
+      <div class="d-flex flex-row justify-content-between mt-4">
+        <div class="info-line-2">
           <label class="title-info" for="">Status: </label>
           <label for="">{{activity.tagsEnum}}</label>
         </div>
-        <div class="info-line-4">
+        <div class="info-line-2" id="priority">
           <label class="title-info" for="">Prioridade: </label>
           <label for="">{{activity.statusPriorityEnum}}</label>
         </div>
+
       </div>
-      <div class="mt-2">
+      <div class="d-flex flex-row justify-content-between mt-4 mb-4">
+        <div class="info-line-3">
+          <label class="title-info" for="">Projeto: </label>
+          <label for="">{{project.name}}</label>
+        </div>
+        <div class="info-line-3" id="responsable">
+          <div>
+            <label class="title-info" for="">Responsável: </label>
+            <label for="" *ngIf="activity.user !== undefined || activity.user != null">{{activity.user.userInformation.name}} {{activity.user.userInformation.username}}</label>
+            <label for="" *ngIf="activity.user === undefined || activity.user == null">Não atribuido</label>
+          </div>
+          <div *ngIf="userService.profile != 'ADMINISTRADOR'">
+            <button id="btn-icon" type="button" title="assinar atividade" class="btn btn-success button-check" (click)="assignUserActivity(activity)">
+              <img src="assets/icons/assign.svg" />
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="mt-4 container-depedents">
         <div class="align-items-center container-dependent" [hidden]="!activity.isBlock">
-          <button type="button" class="btn btn-link btn-sm" (click)="viewDependentCard(activity)">
+          <button type="button" id="btn-dependent" class="btn btn-link btn-sm" (click)="viewDependentCard(activity)">
             dependências
           </button>
         </div>
         <div class="activityDependent" [hidden]="activity.isBlock">
           <label class="title-info" for="">Não ha atividade pendente</label>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="d-flex flex-row justify-content-center mt-4">
         <button type="button" class="btn btn-outline-primary ml-2">Editar</button>

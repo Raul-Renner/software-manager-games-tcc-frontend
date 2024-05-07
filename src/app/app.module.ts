@@ -12,11 +12,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ToastrModule } from 'ngx-toastr';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/template/header/header.component';
 import { ConfirmModalComponent } from './modal/confirm-modal/confirm-modal.component';
-import { CreateActivityComponent } from './modal/create-activity/create-activity.component';
+import { CreateActivityComponent } from './modal/activity/create-activity/create-activity.component';
 import { BoardComponent } from './board/board/board.component';
 import { BoardItemComponent } from './board/board-item/board-item.component';
 import { ViewActivityComponent } from './modal/view-activity/view-activity.component';
@@ -33,14 +35,19 @@ import { ColaboratorsComponent } from './pages/colaborators/colaborators.compone
 import { ProjectComponent } from './pages/project/project.component';
 import { CreateColaboratorComponent } from './forms/create-colaborator/create-colaborator.component';
 import { CreateProjectComponent } from './forms/modal/create-project/create-project.component';
-import { DeleteColaboratorComponent } from './modal/colaborator/delete-colaborator/delete-colaborator.component';
 import { ViewColaboratorComponent } from './pages/colaborators/view-colaborator/view-colaborator.component';
 import { EditAdmColaboratorComponent } from './pages/colaborators/edit-adm-colaborator/edit-adm-colaborator.component';
-import { DeleteProjectComponent } from './modal/project/delete-project/delete-project.component';
 import { DetailsProjectComponent } from './pages/project/details-project/details-project.component';
 import { ViewColaboratorsComponent } from './modal/project/view-colaborators/view-colaborators.component';
 import { ViewActivitiesComponent } from './modal/project/view-activities/view-activities.component';
 import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-colaborator/view-projects-colaborator.component';
+import { ProjectColaboratorComponent } from './pages/colaborators/project-colaborator/project-colaborator.component';
+import { HomeAdminComponent } from './pages/pages-home/home-admin/home-admin.component';
+import { EditProjectComponent } from './forms/modal/edit-project/edit-project.component';
+import { CreateColumnComponent } from './forms/modal/create-column/create-column.component';
+import { ViewColumnsComponent } from './forms/modal/view-columns/view-columns.component';
+import { DeleteComponent } from './forms/modal/delete/delete.component';
+import { AssignUserActivityComponent } from './modal/assign-user-activity/assign-user-activity.component';
 
 @NgModule({
   declarations: [
@@ -64,14 +71,19 @@ import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-
     ProjectComponent,
     CreateColaboratorComponent,
     CreateProjectComponent,
-    DeleteColaboratorComponent,
     ViewColaboratorComponent,
     EditAdmColaboratorComponent,
-    DeleteProjectComponent,
     DetailsProjectComponent,
     ViewColaboratorsComponent,
     ViewActivitiesComponent,
-    ViewProjectsColaboratorComponent
+    ViewProjectsColaboratorComponent,
+    ProjectColaboratorComponent,
+    HomeAdminComponent,
+    EditProjectComponent,
+    CreateColumnComponent,
+    ViewColumnsComponent,
+    DeleteComponent,
+    AssignUserActivityComponent
   ],
   imports: [
     BrowserModule,
@@ -87,6 +99,7 @@ import { ViewProjectsColaboratorComponent } from './modal/project/view-projects-
     MatIconModule,
     CommonModule,
     MatToolbarModule,
+    MatExpansionModule,
     ToastrModule.forRoot()
 
   ],

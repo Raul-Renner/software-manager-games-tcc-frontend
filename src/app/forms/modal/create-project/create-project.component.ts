@@ -36,24 +36,24 @@ export class CreateProjectComponent implements OnInit {
 
 
   createProject(){
-    this.projectForm.patchValue({
-      organizationId: 1
-    })
+    this.projectForm.value.organizationId = this.userService.organizationId;
     this.projectService.save(this.projectForm.value).subscribe({
       next:() => {
-        this.toastr.success("Projeto cadastrado", "Projeto cadastrado com sucesso!");
+        this.toastr.success("Projeto cadastrado com sucesso!");
+        this.projectForm.reset();
         this.activeModal.close(true);
       },
       error:(response) => {
         this.toastr.error(response.error.errors[0].defaultMessage, "Error ao cadastrar projeto!");
-        //error
+        this.activeModal.close(true);
+        this.projectForm.reset();
       }
     })
   }
 
   getMembers(){
     this.userService.findAllBy({
-      organizationId: 1
+      organizationId: this.userService.organizationId
     }).subscribe(response => {
       this.colaborators = response.content;
     });

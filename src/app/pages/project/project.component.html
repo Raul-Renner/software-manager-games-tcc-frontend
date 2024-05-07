@@ -18,7 +18,7 @@
 
     <div class="projects">
       <div class="container">
-        <div *ngIf="projects?.length == 0">
+        <div *ngIf="projects?.length == 0 || projects == null || projects == undefined">
           <span>Não há projetos registrados</span>
         </div>
         <div *ngIf="projects.length > 0" class="content-card">
@@ -27,7 +27,9 @@
               <div class="name-projeto">
                 <span id="title">{{project.name}}</span>
                 <!-- <span id="responsible">name responsible</span> -->
-                <div class="progress"><span>Em Progresso</span></div>
+                <div class="progress" *ngIf="!project.isFinished"><span>Em Progresso</span></div>
+                <div class="finished" *ngIf="project.isFinished"><span>Concluído</span></div>
+
               </div>
               <div class="button-delete">
                 <button type="button" class="btn" (click)="deleteProject(project)">
@@ -37,7 +39,7 @@
             </div>
             <div class="buttons">
               <div class="button-login">
-                <button type="button" class="btn view-info">Ir para o Board</button>
+                <button type="button" class="btn view-info" [routerLink]="['/board/project/' + project?.id + '/colaborator/' + userId]">Ir para o Board</button>
               </div>
               <div class="button-logout">
                 <button  type="button" class="btn view-info" [routerLink]="['/details-project/' + project?.id]">Detalhes</button>

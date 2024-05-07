@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="head">
+    <h5>Deseja ser o responsável por desenvolver a seguinte atividade?</h5>
+    <div class="info-colaborator">
+      <span>Atividade: <span id="name-colaborator">{{activity.identifier}}  {{activity.title}}</span></span>
+      <span>Setor:<span id="responsible" >{{activity.sectorActivity}}</span></span>
+    </div>
+
+  </div>
+
+  <div class="buttons">
+    <div class="button-login">
+      <button type="button" class="btn btn-lg" (click)="activeModal.close(true)">Confirmar</button>
+    </div>
+    <div class="button-logout">
+      <button type="button" class="btn btn-lg" (click)="activeModal.close(false)">Cancelar</button>
+    </div>
+  </div>
+</div>
