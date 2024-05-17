@@ -1,1 +1,45 @@
-<p>home-general works!</p>
+<div>
+    <table class="tabela">
+        <thead>
+            <tr>
+                <th  *ngFor="let coluna of board.colunas">{{coluna}}</th> 
+            </tr>
+        </thead>
+        <tbody> 
+            <tr *ngFor="let item of board.tagsActivity">
+                <td>
+                    <p>{{item.name}}</p>
+                </td>  
+                <td>
+                   <div  *ngFor="let task of item.listTask">{{ task.status === "ToDo" ? task.name : ""}} 
+                   </div>
+                </td>  
+                <td>
+                    <p *ngFor="let task of item.listTask">{{ task.status === "Preparacao" ? task.name : ""}} </p>
+                </td>  
+                <td>
+                    <p *ngFor="let task of item.listTask">{{ task.status === "Software" ? task.name : ""}} 
+                </td> 
+                <td>
+                    <p *ngFor="let task of item.listTask">{{ task.status === "Arte" ? task.name : ""}} 
+                </td> 
+                <td>
+                    <p *ngFor="let task of item.listTask">{{ task.status === "Design" ? task.name : ""}} 
+                </td> 
+                <td>
+                    <p *ngFor="let task of item.listTask">{{ task.status === "Som" ? task.name : ""}} 
+                </td> 
+                <td>
+                    <p *ngFor="let task of item.listTask">{{ task.status === "Integracao" ? task.name : ""}} 
+                </td> 
+                <td>
+                    <p *ngFor="let task of item.listTask">{{ task.status === "Teste" ? task.name : ""}} 
+                </td> 
+                <td>
+                    <p *ngFor="let task of item.listTask">{{ task.status === "Feito" ? task.name : ""}} 
+                </td> 
+            </tr>
+             
+        </tbody>
+    </table>
+</div>
