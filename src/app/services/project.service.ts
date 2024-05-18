@@ -42,6 +42,8 @@ export class ProjectService {
 
 
   delete(projectId:number): Observable<any>{
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.user.token
     });
@@ -53,8 +55,10 @@ export class ProjectService {
 
 
   findBy(filter: ProjectFilterType): Observable<any>{
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.user.token
+      'Authorization': 'Bearer ' + currentUser.token
     });
     return this.http.get<any>(`${local}/api/org/project/findAllBy`,
     {params: createParams([filter]),

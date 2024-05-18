@@ -79,6 +79,9 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     private toast: ToastrService){
     }
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
+    this.user = currentUser;
     this.sectorActivity = this.content.columnsBoard;
     this.getActivities();
     this.getActivitiesDependents();
@@ -108,6 +111,9 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
       return item.id === selected;
   }
   getActivities(){
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
+    this.user = currentUser;
     this.activitiesList = [];
     this.activityService.findAllBy({
       organizationId: this.user.organizationId,
@@ -118,12 +124,18 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   }
 
   getActivitiesDependents(){
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
+    this.user = currentUser;
     this.activitiesDependentsList = [];
     this.activityDependentService.findAll({}).subscribe(resp =>{
       this.activitiesDependentsList = resp.content;
     });
   }
   save(){
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
+    this.user = currentUser;
     if (!this.buttonDisabled) {
       this.buttonDisabled = true;
 
@@ -161,6 +173,7 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   };
 
   getColaborators(){
+    
     this.user.findAllBy({
       organizationId: this.user.organizationId,
       projectId: this.content.id

@@ -57,8 +57,11 @@ export class UserService {
   }
 
   findAllBy(filter: UserFilterType): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
+    console.log("user ", currentUser.token);
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.token
+      'Authorization': 'Bearer ' + currentUser.token
     });
     return this.http.get<any>(`${local}/api/org/colaborator`,{
       params: createParams([filter]),
@@ -66,8 +69,11 @@ export class UserService {
     });
   }
   findBy(field: any, values: any): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
+     
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.token
+      'Authorization': 'Bearer ' + currentUser.token
     });
     const params = new HttpParams()
     .append("field", field)

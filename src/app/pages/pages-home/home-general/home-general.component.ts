@@ -6,10 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./home-general.component.sass']
 })
 export class HomeGeneralComponent {
-
- public belongsToColumn(task: any, columnStatus: any) {
-    return task.status === columnStatus;
-}
+ 
 
   public board = {
      colunas: [

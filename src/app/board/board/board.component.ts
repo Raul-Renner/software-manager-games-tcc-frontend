@@ -16,6 +16,30 @@ import { ViewColumnsComponent } from 'src/app/forms/modal/view-columns/view-colu
   styleUrls: ['./board.component.sass']
 })
 export class BoardComponent  implements OnInit, AfterViewInit {
+  
+
+  public board = {
+    colunas: [
+     "",
+     "ToDo", 
+     "Preparacao", 
+     "Software",
+     "Arte",
+     "Design",
+     "Som", 
+     "Integracao",
+     "Teste",
+     "Feito" 
+    ],
+
+   tagsActivity: [
+   {id: 1, name:'URGENTE', tagsEnum:'URGENT',listTask: [{name: "atividade 1", status: "Feito"},{ name: "atividade 6", status: "ToDo"},{ name: "atividade 2",status: "ToDo"}] },
+   {id: 2, name:'DEPENDENTE', tagsEnum:'DEPENDENT',listTask: [{name: "atividade 3", status: "ToDo"},{ name: "atividade 4 ", status: "Feito"}]},
+   {id: 3, name:'INDEPENDENTE', tagsEnum:'INDEPENDENT', listTask: [{name: "atividade 5", status: "Preparacao"}]},
+   {id: 4, name:'MELHORIA', tagsEnum:'IMPROVEMENT', listTask: [{name: "atividade 8", status: "ToDo"},{ name: "atividade 7", status: "Feito"}]}
+ ]
+}
+
 
   public activities: Array<any> = [];
   public activitiesUpdate: Array<any> = [];
@@ -45,10 +69,14 @@ export class BoardComponent  implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    
+    const userStorage = localStorage.getItem("currentUser") || null; 
+    const currentUser = JSON.parse(userStorage!); 
+    this.user = currentUser;
     this.projectId = this.route.snapshot.url[2].path;
     this.userId = this.route.snapshot.url[4].path;
     this.elemento.nativeElement.ownerDocument.body.style.backgroundColor = '#FFFFFF';
-    //this.getActivities();
+  //  this.getActivities();
     this.getProject();
   }
 
@@ -63,8 +91,9 @@ export class BoardComponent  implements OnInit, AfterViewInit {
         event.currentIndex,
       );
     }
-      this.updateSectorCard(event.container.data[event.currentIndex], columnId);
-
+    
+    //  this.updateSectorCard(event.container.data[event.currentIndex], columnId);
+      
   }
 
   getProject(): void {
@@ -77,10 +106,12 @@ export class BoardComponent  implements OnInit, AfterViewInit {
       this.activities = resp.content.activities;
       this.insertColumns(resp.content[0].columnsBoard);
     })
+    console.log(this.sectorActivity);
   }
 
   getActivities(): void {
     this.clearBoardCard();
+    console.log("aquii", this.activities);
     this.activityService.findAllBy({
       organizationId: this.user.organizationId,
       projectId: this.projectId
@@ -171,11 +202,11 @@ export class BoardComponent  implements OnInit, AfterViewInit {
   });
     this.activityService.updateSectorActivity(this.activityUpdate).subscribe({
       next: (response) => {
-        // this.toast.success("atividade atualizada com sucesso!");
+         this.toast.success("atividade atualizada com sucesso!");
         this.getProject();
       },
       error: (response) => {
-        // this.toast.error("Erro ao atualizar os dados da atividade:" + this.activityUpdate.id);
+         this.toast.error("Erro ao atualizar os dados da atividade:" + this.activityUpdate.id);
 
       }
     });
