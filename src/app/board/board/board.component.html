@@ -48,9 +48,11 @@
                 <td *ngFor="let sector of sectorActivity">
 
                   <div cdkDropList [cdkDropListData]="sector.activities" (cdkDropListDropped)="drop($event, sector.id)" class="example-list" >
-                    <div cdkDrag class="example-box" *ngFor="let item of sector.activities" >
-                      <app-board-item [item]="item" [project] = "project"
+                    <div cdkDrag class="card-activity" *ngFor="let item of sector.activities" 
+                      [class]="item.tagsEnum !== tag.tagsEnum ? 'hide': ''" >
+                      <app-board-item  class="card" [item]="item" [project] = "project"
                       *ngIf="item.tagsEnum === tag.tagsEnum"
+                    
                       (emitDeleteCard)="onDeleteCard($event, sector.id)"
                       (emitEditCard)="onEditCard($event, sector.id)"
                       (emitViewDependenciesCard)="updateCard($event, sector.id)"

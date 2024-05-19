@@ -1,53 +1,51 @@
-<div class="container container-lg">
-  <div class="child">
-    <div class="button-added">
-      <div class="button-added-project">
-        <button type="button" class="btn btn-lg" (click)="createProject()">Novo Projeto</button>
-      </div>
+<div class="container ">
+ 
+    <div  class="header-page">
+      <div class="status-project">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" (change)="checkedProjectProgress($event.target)" id="inProgress" value="inProgress" [disabled]="checkedProgress">
+          <label class="form-check-label" for="inProgress">Em progresso</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="concluded" (change)="checkedProjectFinish($event.target)" value="concluded" [disabled]="checkedFinished">
+          <label class="form-check-label" for="concluded">Concluído</label>
+        </div>
+      </div> 
+        <button type="button" class="btn btn-add mr-2" (click)="createProject()">Novo Projeto</button>   
     </div>
-    <div class="status-project">
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" (change)="checkedProjectProgress($event.target)" id="inProgress" value="inProgress" [disabled]="checkedProgress">
-        <label class="form-check-label" for="inProgress">Em progresso</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="concluded" (change)="checkedProjectFinish($event.target)" value="concluded" [disabled]="checkedFinished">
-        <label class="form-check-label" for="concluded">Concluído</label>
-      </div>
+  <hr/>
+  <div style="margin-top: 20px;"  class="row ">
+    <div *ngIf="projects?.length == 0 || projects == null || projects == undefined">
+      <span>Não há projetos registrados</span>
+    </div>
+    <div *ngIf="projects?.length !== 0 || projects !== null || projects !== undefined">
+      <span>Projetos: {{projects?.length}}</span>
     </div>
 
-    <div class="projects">
-      <div class="container">
-        <div *ngIf="projects?.length == 0 || projects == null || projects == undefined">
-          <span>Não há projetos registrados</span>
-        </div>
-        <div *ngIf="projects.length > 0" class="content-card">
-          <div *ngFor="let project of projects" class="card">
-            <div class="head">
-              <div class="name-projeto">
-                <span id="title">{{project.name}}</span>
-                <!-- <span id="responsible">name responsible</span> -->
-                <div class="progress" *ngIf="!project.isFinished"><span>Em Progresso</span></div>
-                <div class="finished" *ngIf="project.isFinished"><span>Concluído</span></div>
+        <div style="margin-top: 20px;" class="row"  *ngIf="projects.length > 0">
+          <div *ngFor="let project of projects" class="col-4">
+            <div class="card mt-3 "  >
+              <div class="card-body">
+                <h5 class="card-title">{{project.name}}</h5> 
+               
+                <div *ngIf="!project.isFinished" ><span>Em Progresso</span></div>
+                <div *ngIf="!project.isFinished" class="progress" role="progressbar" aria-label="Warning striped" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                  
+                  <div class="progress-bar progress-bar-striped bg-warning" style="width: 75%"></div>
+                </div>
 
+                <div *ngIf="project.isFinished" class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                  <div class="finished" ><span>Concluído</span></div>
+                  <div class="progress-bar progress-bar-striped bg-success" style="width: 100%"></div>
+                </div>
+                <hr> 
+                  <button type="button" class="btn" (click)="deleteProject(project)">
+                    <img src="assets/icons/delete_forever.svg" />
+                  </button>  
+                 <button type="button" class="btn view-info" [routerLink]="['/board/project/' + project?.id + '/colaborator/' + userId]">Board</button>
+                 <button  type="button" class="btn view-info" [routerLink]="['/details-project/' + project?.id]">Detalhes</button>
               </div>
-              <div class="button-delete">
-                <button type="button" class="btn" (click)="deleteProject(project)">
-                  <img src="assets/icons/delete_forever.svg" />
-                </button>
-              </div>
-            </div>
-            <div class="buttons">
-              <div class="button-login">
-                <button type="button" class="btn view-info" [routerLink]="['/board/project/' + project?.id + '/colaborator/' + userId]">Ir para o Board</button>
-              </div>
-              <div class="button-logout">
-                <button  type="button" class="btn view-info" [routerLink]="['/details-project/' + project?.id]">Detalhes</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </div> 
+        </div> 
   </div>
 </div>

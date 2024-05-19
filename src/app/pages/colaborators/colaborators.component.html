@@ -1,7 +1,9 @@
 <div class="container container-lg">
   <div class="child  mb-5">
     <div class="options-line">
-      <div class="selection-colabrators-project">
+      <p class="mt-1">Projetos: </p>
+      <div  class="selection-colabrators-project">
+      
         <select id="project" class="form-select" name="project" role="selectProject"
         (change)="filterUserProject($event)">
           <option ngValue="all" class="optionForm">Todos</option>
@@ -14,7 +16,7 @@
       </div>
     </div>
   </div>
-
+  <hr/>
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>

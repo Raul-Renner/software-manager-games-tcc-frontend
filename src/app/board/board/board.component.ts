@@ -92,7 +92,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
       );
     }
     
-    //  this.updateSectorCard(event.container.data[event.currentIndex], columnId);
+     this.updateSectorCard(event.container.data[event.currentIndex], columnId);
       
   }
 
