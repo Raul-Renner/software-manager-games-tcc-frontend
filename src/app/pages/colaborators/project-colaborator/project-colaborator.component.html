@@ -1,12 +1,12 @@
-<div class="container">
+<div style="border: 1px solid #ccc; padding: 20px; border-radius: 4px;" class="container">
   <h5>Projetos</h5>
   <span *ngIf="projects.length <= 0">Você não está alocado em nenhum projeto da organização.</span>
-  <mat-expansion-panel [hideToggle]="false" *ngFor="let project of projects">
+  <mat-expansion-panel  [hideToggle]="false" *ngFor="let project of projects">
       <mat-expansion-panel-header>
           <mat-panel-title>{{project.name}}</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <mat-panel-description><span>{{project.description}}</span></mat-panel-description>
+      <mat-panel-description ><span>{{project.description}}</span></mat-panel-description>
       <div class="form-container">
         <span *ngIf="!project.isFinished && project.activities.length > 0"><span class="field">Status do projeto: </span>Em progresso</span> 
         <div style="width: 100%; border: 1px solid;"  *ngIf="!project.isFinished" class="progress" role="progressbar" aria-label="Warning striped"> 
@@ -70,5 +70,7 @@
         </div>
       </div>
     </div>
+    <hr>
   </mat-expansion-panel>
+ 
 </div>

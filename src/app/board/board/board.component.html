@@ -1,7 +1,7 @@
 <app-head></app-head>
 <div class="container-fluid">
   <div cdkDropListGroup class="row">
-    <div class="d-flex description-project">
+    <div class=" description-project">
       <span id="title-project">{{project[0].name}}</span>
       <span id="title-description">{{project[0].description}}</span>
     </div>
@@ -15,23 +15,23 @@
               <th>
                 <div   *ngIf="user.profile === 'ADMINISTRADOR' || user.profile === 'GERENTE' || user.profile === 'LIDER_TECNICO' ">
                   <div class="buttons p-2 m-1">
-                    <button class="btn btn-primary" (click)="createActivity()">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <button class="btn " (click)="createActivity()">
+                      <svg  style="fill: #0063AE;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                       </svg>
                      </button>
-                    <button class="btn btn-success" (click)="createColumm()">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-sidebar-inset-reverse" viewBox="0 0 16 16">
+                    <button class="btn " (click)="createColumm()">
+                      <svg style="fill: #57A773;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-layout-sidebar-inset-reverse" viewBox="0 0 16 16">
                         <path d="M2 2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zm12-1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2z"/>
                         <path d="M13 4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/>
                       </svg>
                     </button>
-                    <button class="btn btn-secondary" (click)="viewColunas()">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                    <button class="btn" (click)="viewColunas()">
+                      <svg  style="fill: #6F6F6F;"  xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
                         <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5z"/>
                       </svg>
                     </button>
-                  </div>
+                  </div> 
                 </div>
               </th>
                 <th style="border-bottom: 1px solid #ccc;"  *ngFor="let coluna of sectorActivity">
