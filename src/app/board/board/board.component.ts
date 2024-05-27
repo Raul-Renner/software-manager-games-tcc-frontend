@@ -26,10 +26,10 @@ export class BoardComponent  implements OnInit, AfterViewInit {
   public test:any;
 
   public tagsActivity: Array<any> = [
-    {id: 1, name:'URGENTE', tagsEnum:'URGENT'},
-    {id: 2, name:'DEPENDENTE', tagsEnum:'DEPENDENT'},
-    {id: 3, name:'INDEPENDENTE', tagsEnum:'INDEPENDENT'},
-    {id: 4, name:'MELHORIA', tagsEnum:'IMPROVEMENT'}
+    {id: 1, name:'URGENTE', tagsEnum:'URGENT', color: '#FF0000'},
+    {id: 2, name:'DEPENDENTE', tagsEnum:'DEPENDENT', color: '#E38623'},
+    {id: 3, name:'INDEPENDENTE', tagsEnum:'INDEPENDENT', color: '#ccc'},
+    {id: 4, name:'MELHORIA', tagsEnum:'IMPROVEMENT', color: '#2B7AD2'}
   ];
 
   public sectorActivity: Array<any> = [];
@@ -45,6 +45,9 @@ export class BoardComponent  implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.projectId = this.route.snapshot.url[2].path;
     this.userId = this.route.snapshot.url[4].path;
     this.elemento.nativeElement.ownerDocument.body.style.backgroundColor = '#FFFFFF';
@@ -52,7 +55,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
     this.getProject();
   }
 
-  drop(event: CdkDragDrop<any[]>, columnId: number) {
+  drop(event: CdkDragDrop<any[]>,  rowId: number, columnId: number) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -63,7 +66,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
         event.currentIndex,
       );
     }
-      this.updateSectorCard(event.container.data[event.currentIndex], columnId);
+    this.updateSectorCard(event.container.data[event.currentIndex], rowId, columnId);
 
   }
 
@@ -142,7 +145,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
     this.getProject();
   }
 
-  updateSectorCard(activity: any, columnId: number){
+  updateSectorCard(activity: any, rowId: number, columnId: number){
 
     activity.activityDependentList.map((element:any) => {
       this.activitiesUpdate.push({
@@ -151,6 +154,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
 
       })
     });
+    let tag = this.tagsActivity.find(element => element.id === rowId);
 
     let sector = this.sectorActivity.find(element => element.id === columnId);
     this.activityUpdate = ({
@@ -166,7 +170,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
       isFinished: activity.isFinished,
 ​      sectorActivity: sector.sectorActivity,
 ​      statusPriorityEnum: activity.statusPriorityEnum,
-​      tagsEnum: activity.tagsEnum,
+​      tagsEnum: tag.tagsEnum,
       title: activity.title
   });
     this.activityService.updateSectorActivity(this.activityUpdate).subscribe({
@@ -175,7 +179,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
         this.getProject();
       },
       error: (response) => {
-        // this.toast.error("Erro ao atualizar os dados da atividade:" + this.activityUpdate.id);
+        this.toast.error("Erro ao atualizar os dados da atividade:" + this.activityUpdate.id);
 
       }
     });
@@ -190,7 +194,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
     this.getProject();
   }
 
-  viewColunas(){
+  viewColumns(){
     const modalResult = this.modalService.open(ViewColumnsComponent, {size: 'lg', backdrop: 'static'});
     modalResult.componentInstance.content = this.project;
     modalResult.result.then((result) => {
@@ -217,5 +221,6 @@ export class BoardComponent  implements OnInit, AfterViewInit {
       }
     });
   }
+
 
 }

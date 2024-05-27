@@ -1,4 +1,4 @@
-<div class="container">
+<div style="border: 1px solid #ccc; padding: 20px; border-radius: 4px;"  class="container">
   <h5>Projetos</h5>
   <span *ngIf="projects.length <= 0">Você não está alocado em nenhum projeto da organização.</span>
   <mat-expansion-panel [hideToggle]="false" *ngFor="let project of projects">
@@ -8,17 +8,20 @@
 
       <mat-panel-description><span>{{project.description}}</span></mat-panel-description>
       <div class="form-container">
-        <div class="progress" *ngIf="!project.isFinished && project.activities.length > 0">
-          <div class="status-progress">
-            <span>Em progresso</span>
-          </div>
-          <!-- <span id="porcent-progress">100% concluída</span> -->
+        <span *ngIf="!project.isFinished && project.activities.length > 0"><span class="field">Status do projeto: </span>Em progresso</span>
+        <div style="width: 50%; border: 1px solid;"  *ngIf="!project.isFinished" class="progress" role="progressbar" aria-label="Warning striped">
+          <div class="progress-bar progress-bar-striped bg-warning" [style.width.%]="project.activitiesFinished.length > 0 ? (project.activitiesFinished.length  / project.activities.length) * 100 : 0"></div>
         </div>
+
         <div class="progress" *ngIf="project.isFinished && project.activities.length > 0">
           <div class="status">
             <span>Concluído</span>
           </div>
           <span id="porcent-progress">100% concluída</span>
+        </div>
+        <span *ngIf="project.isFinished && project.activities.length > 0 "><span class="field">Status do projeto </span> Concluido</span>
+        <div style="width: 100%; border: 1px solid;" *ngIf="project.isFinished && project.activities.length > 0 " class="progress" role="progressbar" aria-label="Success striped example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar progress-bar-striped bg-success" style="width: 100%"></div>
         </div>
 
       <div class="container-infos">
@@ -68,5 +71,6 @@
         </div>
       </div>
     </div>
+    <hr>
   </mat-expansion-panel>
 </div>

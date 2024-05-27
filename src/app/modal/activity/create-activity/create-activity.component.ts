@@ -12,7 +12,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./create-activity.component.sass']
 })
 export class CreateActivityComponent implements OnInit, AfterViewInit{
-   @Input() content:any;
   public sectorActivity: Array<any> = [];
 
 
@@ -45,6 +44,7 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
 
   public owner: Array<any> = [];
   @Input() activity:any;
+  @Input() content:any;
   @Input() activitiesSource: Array<any> = [];
 
   public buttonDisabled : boolean = false;
@@ -53,6 +53,7 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   public activitiesDependentsListUpdate: Array<any> | undefined;
   public colaborators: Array<any> = [];
   public userSaveVO: any;
+  public user: any;
 
 
 
@@ -75,16 +76,19 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     private activityService: ActivityService,
     private activityDependentService: ActivityDependentService,
     public activeModal: NgbActiveModal,
-    public user: UserService,
+    private userService: UserService,
     private toast: ToastrService){
     }
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.sectorActivity = this.content.columnsBoard;
     this.getActivities();
     this.getActivitiesDependents();
     this.getColaborators();
     if(this.activity != undefined && this.activity != null){
-      const sectorActivityEnum = this.sectorActivity.find(element => element.sectorActivityEnum === this.activity.sectorActivityEnum);
+      const sectorActivityEnum = this.sectorActivity.find(element => element.sectorActivity === this.activity.sectorActivity);
       const statusPriorityEnum = this.statusPriorityActivity.find(element => element.statusPriorityEnum === this.activity.statusPriorityEnum);
       const tagActivityEnum = this.tagsActivity.find(element => element.tagsEnum === this.activity.tagsEnum);
       this.activity.activityDependentList.map((activityDependent: any) => {
@@ -108,6 +112,9 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
       return item.id === selected;
   }
   getActivities(){
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.activitiesList = [];
     this.activityService.findAllBy({
       organizationId: this.user.organizationId,
@@ -118,12 +125,18 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   }
 
   getActivitiesDependents(){
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.activitiesDependentsList = [];
     this.activityDependentService.findAll({}).subscribe(resp =>{
       this.activitiesDependentsList = resp.content;
     });
   }
   save(){
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     if (!this.buttonDisabled) {
       this.buttonDisabled = true;
 
@@ -161,12 +174,12 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   };
 
   getColaborators(){
-    this.user.findAllBy({
-      organizationId: this.user.organizationId,
-      projectId: this.content.id
-    }).subscribe( response => {
-      this.colaborators = response.content.filter((colaborator:any) => colaborator.profile != 'ADMINISTRADOR');
-    })
+  this.userService.findAllBy({
+    organizationId: this.user.organizationId,
+    projectId: this.content.id
+  }).subscribe( response => {
+    this.colaborators = response.content.filter((colaborator:any) => colaborator.profile != 'ADMINISTRADOR');
+  })
   }
 
   update(){
