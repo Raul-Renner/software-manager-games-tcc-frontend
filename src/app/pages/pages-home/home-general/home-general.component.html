@@ -1,1 +1,22 @@
-<p>home-general works!</p>
+<div class="container">
+  <div class="row">
+    <div class="head">
+      <h4>Olá, {{user.fullName}}</h4>
+      <span>Organização: <span>{{user.nameOrganization}}</span></span>
+      <span>Cargo: <span>{{user.profile}}</span></span>
+    </div>
+    <div class="projects-info">
+      <div class="info">
+        <div class="project-progress">
+          <h4>Projetos: </h4> <span>Você está participando de {{this.projects.length}} <span>{{this.projects.length > 1 ? 'projetos' : 'projeto'}}</span></span>
+        </div>
+        <div class="project-finished">
+          <h4>Suas atividades: </h4> <span>Você é responsável por {{this.projects[0].activitiesUser.length}} atividades</span>
+        </div>
+      </div>
+      <div class="button-login">
+        <button type="button" class="btn btn-lg" routerLink="/colaborator-projects">Visualizar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,31 @@
 <div class="container">
   <div class="row">
-   <p>Projetos em andamento</p>
+    <div class="head">
+      <h4>Olá, {{user.fullName}}</h4>
+      <span>Organização: <span>{{user.nameOrganization}}</span></span>
+      <span>Cargo: <span>{{user.profile}}</span></span>
+    </div>
+    <div class="projects-info">
+      <div class="info">
+        <div class="project-progress">
+          <h4>Projetos Em Andamento: </h4> <span>{{projectsProgress.length}} projetos em andamento</span>
+        </div>
+        <div class="project-finished">
+          <h4>Projetos finalizados: </h4> <span>{{projectsFinished.length}} projetos finalizados</span>
+        </div>
+      </div>
 
+      <div class="button-login">
+        <button type="button" class="btn btn-lg" routerLink="/projects">Visualizar</button>
+      </div>
+      <hr/>
+    </div>
+
+    <div class="colaborators-info">
+        <h4>Número de colaboradores:</h4><span>{{colaborators.length}} Colaboradores</span>
+      <div class="button-login">
+        <button type="button" class="btn btn-lg" routerLink="/colaborators">Visualizar</button>
+      </div>
+    </div>
   </div>
 </div>
