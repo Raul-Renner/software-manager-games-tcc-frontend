@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpHeaders,HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import { local } from 'src/environments/environment';
-import { ResponseGeneric } from './activity.service';
-import { ActivityDependentFilterType } from '../interfaces/filters';
 import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
@@ -32,7 +30,6 @@ export class ActivityDependentService {
   }
 
 }
-
 
 export const createParams = (objects: any[]) => {
   let params = new HttpParams();

@@ -22,11 +22,14 @@ export class ProjectComponent implements OnInit{
   public storage: any;
   public userInfo: any;
   public userId: number;
-
+  user: any;
   @Output() emitDeleteProject: EventEmitter<number> = new EventEmitter();
 
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.userId = this.user.userId
     this.getProjects();
   }
@@ -34,9 +37,7 @@ export class ProjectComponent implements OnInit{
   constructor(
     private modalService: NgbModal,
     private projectService: ProjectService,
-    private toastr: ToastrService,
-    private authService: AuthService,
-    private user: UserService){
+    private toastr: ToastrService){
       this.storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
 
       var storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,13 +7,15 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./sidebar.component.sass']
 })
 export class SidebarComponent implements OnInit {
-
+  user: any;
   constructor(
     public authService: AuthService,
-    public user: UserService
   ){}
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.linksNavigationUser();
   }
 

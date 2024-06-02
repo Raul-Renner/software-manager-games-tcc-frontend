@@ -31,6 +31,9 @@ export class BoardItemComponent implements OnInit{
 
   ngOnInit(): void {
    this.color = this.item.colorCard !== '#FFFFFF' ? '#FFFFFF' : '#363636';
+   const userStorage = localStorage.getItem("currentUser") || null;
+   const currentUser = JSON.parse(userStorage!);
+   this.user = currentUser;
   }
 
   onCardDelete(id: number){
@@ -82,7 +85,7 @@ export class BoardItemComponent implements OnInit{
 
   userActivity(activity:any) {
     this.userService.filterUserPerActivityType({
-      organizationId: this.userService.organizationId,
+      organizationId: this.user.organizationId,
       projectId: this.project[0].id,
       activityId: activity.id
     }).subscribe({

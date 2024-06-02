@@ -10,19 +10,22 @@ import { UserService } from 'src/app/services/user.service';
 export class NavComponent implements OnInit{
   public navbarOpen = false;
   public nameOrganization: string;
-
+  public user: any;
 
   constructor(
-    public user: UserService,
+    public userService: UserService,
     public auth: AuthService
   ){}
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.nameOrganization = this.user.nameOrganization;
   }
 
 
   logout(){
-    
+
   }
 }

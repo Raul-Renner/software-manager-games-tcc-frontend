@@ -4,7 +4,7 @@ body
 .row
   display: flex
   row-gap: 20px
-  h4
+  h5
     font-weight: 600
     margin-right: 15px
   .head
@@ -13,9 +13,11 @@ body
     flex-direction: column
     h4
       margin-bottom: 15px
+      font-weight: 600
+      margin-right: 15px
     span
       font-weight: 600
-      font-size: 18px
+      font-size: 16px
       margin-top: 4px
       margin-bottom: 4px
   .projects-info
@@ -31,7 +33,7 @@ body
       button
         background-color: #072047
         color: #ffffff
-        font-size: 16px
+        font-size: 14px
         font-weight: bold
   .info
     border-radius: 4px
@@ -41,30 +43,34 @@ body
     width: 100%
     justify-content: space-between
     span
-      font-size: 21px
+      font-size: 18px
       font-weight: 400
     .project-progress, .project-finished
       display: flex
       flex-direction: row
 
   .colaborators-info
-    width: 55%
+    min-width: 100%
+    width: auto
     display: flex
     flex-direction: row
     justify-content: space-between
     vertical-align: middle
-    h4
-      margin: 5px 0px
-    span
-      font-size: 21px
-      font-weight: 400
-      margin: 5px 120px 0px 0px
+    .infos
+      display: flex
+      flex-direction: row
+      h5
+        margin: 0px 0px 0px 10px
+      span
+        font-size: 18px
+        font-weight: 400
+        margin-left: 10px
+
     .button-login
       display: flex
       justify-content: center
-      mar
       button
         background-color: #072047
         color: #ffffff
-        font-size: 16px
+        font-size: 14px
         font-weight: bold

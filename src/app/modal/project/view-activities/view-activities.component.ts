@@ -1,4 +1,3 @@
-import { UserService } from './../../../services/user.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +17,6 @@ export class ViewActivitiesComponent implements OnInit {
   constructor(
     public activeModal: NgbActiveModal,
     public modalService: NgbModal,
-    public user: UserService,
     public toast: ToastrService,
     public activityService: ActivityService){}
 

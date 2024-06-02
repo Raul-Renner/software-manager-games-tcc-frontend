@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivityService } from 'src/app/services/activity.service';
-import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
@@ -22,8 +20,6 @@ export class ViewColaboratorsComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal,
     private userService: UserService,
-    private projectService: ProjectService,
-    private activityService: ActivityService,
     private modalService: NgbModal,
     public toast: ToastrService){
 
@@ -64,7 +60,7 @@ export class ViewColaboratorsComponent implements OnInit {
           error: (error) => {
             this.toast.error(`Ocorreu um ao remover o usuário: ${colaborator.userInformation.name}`);
           }
-        })
+        });
       }
     })
   }

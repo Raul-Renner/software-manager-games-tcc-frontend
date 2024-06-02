@@ -34,8 +34,7 @@ const routes: Routes = [
    },
   { path: 'add_organization', component: LoggedOrganizationComponent},
   { path: 'recovery-password', component: RecoveryPasswordComponent},
-  { path: 'board/project/:idProject/colaborator/:idColaborator', component: BoardComponent},
-
+  { path: 'board/project/:idProject/colaborator/:idColaborator', component: BoardComponent}
 ];
 
 @NgModule({

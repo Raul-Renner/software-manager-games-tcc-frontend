@@ -18,24 +18,22 @@ export class ColaboratorsComponent implements OnInit{
 
   public storage: any;
   public userInfo: any;
-
+  public user : any;
   constructor(private modalService: NgbModal,
-              public user: UserService,
+              public userService: UserService,
               private projectService: ProjectService,
               private toast: ToastrService){}
 
   ngOnInit(): void {
-    this.storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
-
-    var storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
-    this.userInfo = JSON.parse(storage.getItem("currentUser") || '{}');
-
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.getProjects();
     this.getColaborators();
   }
 
   getColaborators(){
-    this.user.findAllBy({
+    this.userService.findAllBy({
       organizationId: this.user.organizationId
     }).subscribe({
       next: (response) => {
@@ -53,7 +51,7 @@ export class ColaboratorsComponent implements OnInit{
     modalResult.componentInstance.infor3 = colaborator.profile;
     modalResult.result.then((result) => {
       if(result){
-        this.user.delete(colaborator.id).subscribe({
+        this.userService.delete(colaborator.id).subscribe({
           next: () => {
             this.getColaborators();
             this.toast.success('Usuário foi removido com sucesso!');
@@ -79,7 +77,7 @@ export class ColaboratorsComponent implements OnInit{
     if(event.target.value === "Todos"){
       this.getColaborators();
     }else{
-      this.user.findAllBy({
+      this.userService.findAllBy({
         organizationId: this.user.organizationId,
         projectId: event.target.value
       }).subscribe({

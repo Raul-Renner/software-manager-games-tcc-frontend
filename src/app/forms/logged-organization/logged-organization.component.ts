@@ -30,7 +30,6 @@ export class LoggedOrganizationComponent implements OnInit {
     private elemento: ElementRef,
     private organizationService: OrganizationService,
     private toastr: ToastrService,
-    private userService: UserService,
     private router: Router) {}
 
   ngOnInit(): void {
@@ -63,7 +62,7 @@ export class LoggedOrganizationComponent implements OnInit {
     this.organizationService.save(this.organizationForm.value).subscribe({
 
       next: (resp) => {
-      this.toastr.success('O cadastro da sua organização foi realizada com sucesso!','Cadastro realizado!');
+      this.toastr.success('O cadastro da sua organização foi realizada com sucesso! Verifique o email cadastrado!','Cadastro realizado!');
       this.organizationForm.reset();
       setTimeout(() => {
         this.router.navigateByUrl("login");

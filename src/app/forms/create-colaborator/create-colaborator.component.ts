@@ -24,8 +24,12 @@ export class CreateColaboratorComponent implements OnInit {
 
   public projectsSelected: Array<any> = [];
 
+  user: any;
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.password = 'password';
     this.getProjects();
     this.getProfiles();
@@ -35,7 +39,7 @@ export class CreateColaboratorComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private profileService: ProfileService,
-    private user: UserService,
+    private userService: UserService,
     private toast: ToastrService
   ){}
 
@@ -92,12 +96,10 @@ export class CreateColaboratorComponent implements OnInit {
   save(){
     var login = this.userForm.value.name.split(' ')[0] + this.userForm.value.username.split(' ')[0]
     this.userForm.value.login = login;
-    this.userForm.value.organizationId = this.user.organizationId;
-    this.user.save(this.userForm.value).subscribe({
+    this.userForm.value.organizationId = this.userService.organizationId;
+    this.userService.save(this.userForm.value).subscribe({
       next:(response) =>{
-        // this.toast.success("login: " + response.login + " Senha: " + response.password,"Cadastro realizado com sucesso!");
         this.toast.success("Cadastro realizado com sucesso!");
-
         this.userForm.reset();
       },
       error:(response) => {

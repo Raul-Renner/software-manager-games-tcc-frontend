@@ -20,6 +20,7 @@ export class ViewActivityComponent implements OnInit{
 
   activityEntity: any;
   userVO:any;
+  user:any;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -27,7 +28,9 @@ export class ViewActivityComponent implements OnInit{
     public userService: UserService,
     private activityService: ActivityService){}
   ngOnInit(): void {
-
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
   }
 
   assignUserActivity(activity: any){
@@ -38,7 +41,7 @@ export class ViewActivityComponent implements OnInit{
       if(result){
 
         this.userVO = {
-          id: this.userService.userId
+          id: this.user.userId
         }
         activity.userSaveVO = this.userVO
         this.activityService.assignUserInActivity(activity).subscribe({
@@ -54,7 +57,7 @@ export class ViewActivityComponent implements OnInit{
 
   userActivity(activity:any) {
     this.userService.filterUserPerActivityType({
-      organizationId: this.userService.organizationId,
+      organizationId: this.user.organizationId,
       projectId: this.project.id,
       activityId: activity.id
     }).subscribe({
