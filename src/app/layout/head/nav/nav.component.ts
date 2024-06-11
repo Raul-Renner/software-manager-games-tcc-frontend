@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from 'src/app/modal/confirm-modal/confirm-modal.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -13,6 +15,7 @@ export class NavComponent implements OnInit{
   public user: any;
 
   constructor(
+    private modalService: NgbModal,
     public userService: UserService,
     public auth: AuthService
   ){}
@@ -26,6 +29,15 @@ export class NavComponent implements OnInit{
 
 
   logout(){
+    const modalRef = this.modalService.open(ConfirmModalComponent);
+    modalRef.componentInstance.content = 'Deseja realmente encerrar sua sessão no sistema?';
 
+    modalRef.result.then((result) => {
+      if (result) {
+        this.userService.signOut();
+        this.auth.logout();
+      }
+
+    });
   }
 }

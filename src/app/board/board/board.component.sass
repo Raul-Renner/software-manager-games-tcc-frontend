@@ -31,6 +31,7 @@
 
   table
     width: auto
+    display: inline
 .description-project
   display: flex
   justify-content: center
@@ -42,12 +43,14 @@
     font-weight: 600
 .example-list
   background-color: #fff
-  min-height: 400px
+  min-height: 250px
   overflow: hidden
-  display: inline flow-root list-item
+  display: grid
   padding: 2px
   justify-content: center
   width: 155px
+  .card-activity
+    width: 130px
 .card
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px
   border-radius: 4px
@@ -55,7 +58,7 @@
   color: rgba(53, 29, 29, 0.87)
   cursor: move
   font-size: 14px
-  width: 150px
+  width: 130px
   padding: 4px 2px 2px 2px
 
 .cdk-drag-preview
@@ -110,9 +113,7 @@
 
 h2
   color: #252525
-.table-board
-  margin: 20px
-  padding: 20px
+
 td
   border-bottom: 1px solid #ccc
   text-align: center
@@ -128,7 +129,6 @@ tr
   border-left: 1px solid #ccc
 
 td
-  padding: 10px
   margin: 0 10px
   border-right: 1px solid #ccc
 

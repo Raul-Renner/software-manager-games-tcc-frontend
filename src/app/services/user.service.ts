@@ -104,4 +104,10 @@ export class UserService {
     const session = JSON.parse(storage.getItem("currentUser") || '{}');
     return this.loggedInStatus && !!session;
   }
+
+  signOut() {
+    this.setLoggedIn(false);
+    sessionStorage.clear();
+    localStorage.clear();
+  }
 }

@@ -28,9 +28,9 @@
   </div>
 
 
-  <div style="margin-top: 20px;" class="row" *ngIf="projects.length > 0">
-    <div *ngFor="let project of projects" class="col-4">
-      <div class="card mt-3">
+  <div style="margin-top: 15px;" class="row" *ngIf="projects.length > 0">
+    <div *ngFor="let project of projects" class="col-4 w-30">
+      <div class="card mt-2">
         <div class="card-body">
           <span id="card-title">{{project.name}}</span>
           <div class="inProgress" *ngIf="!project.isFinished"><span>Em Progresso</span></div>
