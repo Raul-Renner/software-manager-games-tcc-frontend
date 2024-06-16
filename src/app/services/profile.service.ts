@@ -7,12 +7,13 @@ import { local } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ProfileService {
-
+ 
   constructor(
     private http: HttpClient
   ) { }
 
   findAll(): Observable<any>{
-    return this.http.get<any>(`${local}/api/profiles`);
+
+    return this.http.get<any>(`/api/profiles`);
   }
 }

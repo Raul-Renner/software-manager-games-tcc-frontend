@@ -15,10 +15,11 @@ export class AuthService {
     private router: Router
   ) { }
 
+  private local = '/api/auth/login'; 
+  
   login(auth: any, logged: boolean = false): Observable<HttpResponse<any>> {
-    return this.http.post(`${local}/api/auth/login`, auth, {
-      observe: "response",
-      headers: new HttpHeaders({"Content-type": "application/json", "Logged": logged.toString() })
+    return this.http.post(this.local, auth, {
+      observe: 'response'
     });
   }
 }

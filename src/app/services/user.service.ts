@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { local } from 'src/environments/environment';
+import { Observable } from 'rxjs'; 
 import { UserFilterPerActivityType, UserFilterType } from '../interfaces/filters';
 import { createParams } from './activity-dependent.service';
 import { UserEntity } from '../interfaces/UserEntity';
@@ -37,28 +36,28 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' +  this.currentUser.token
     });
-    return this.http.post<any>(`${local}/api/org/colaborator`, user, {headers: headers});
+    return this.http.post<any>(`/api/org/colaborator`, user, {headers: headers});
   }
 
   update(user: any): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' +  this.currentUser.token
     });
-    return this.http.put<any>(`${local}/api/org/colaborator/${user.id}`, user, { headers: headers });
+    return this.http.put<any>(`/api/org/colaborator/${user.id}`, user, { headers: headers });
   }
 
   delete(userId: number): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' +  this.currentUser.token
     });
-    return this.http.delete<any>(`${local}/api/org/colaborator/${userId}`,{headers: headers});
+    return this.http.delete<any>(`/api/org/colaborator/${userId}`,{headers: headers});
   }
 
   findAllBy(filter: UserFilterType): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' +  this.currentUser.token
     });
-    return this.http.get<any>(`${local}/api/org/colaborator`,{
+    return this.http.get<any>(`/api/org/colaborator`,{
       params: createParams([filter]),
       headers: headers
     });
@@ -70,7 +69,7 @@ export class UserService {
     const params = new HttpParams()
     .append("field", field)
     .append("values", values);
-    return this.http.get<any>(`${local}/api/org/colaborator/find-by`,{
+    return this.http.get<any>(`/api/org/colaborator/find-by`,{
       params,
       headers
     });
@@ -80,7 +79,7 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' +  this.currentUser.token
     });
-    return this.http.put<any>(`${local}/api/org/colaborator/update-user-function/${user.id}`, user, { headers: headers });
+    return this.http.put<any>(`/api/org/colaborator/update-user-function/${user.id}`, user, { headers: headers });
   }
 
 
@@ -88,7 +87,7 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' +  this.currentUser.token
     });
-    return this.http.get<any>(`${local}/api/org/colaborator/find-by-activity`,{
+    return this.http.get<any>(`/api/org/colaborator/find-by-activity`,{
       params: createParams([filter]),
       headers: headers
     });
