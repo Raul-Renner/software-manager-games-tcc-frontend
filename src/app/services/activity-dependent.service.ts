@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpHeaders,HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
-import { Observable } from 'rxjs'; 
+import { Observable } from 'rxjs';
+import { local } from 'src/environments/environment';
 import { ResponseGeneric } from './activity.service';
 import { ActivityDependentFilterType } from '../interfaces/filters';
 import { UserService } from './user.service';
@@ -17,7 +18,7 @@ export class ActivityDependentService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.user.token
     });
-    return this.http.get<any>(`/api/activity-dependent`,{
+    return this.http.get<any>(`${local}/api/activity-dependent`,{
       params: createParams([filter]),
       headers: headers
     });
@@ -27,7 +28,7 @@ export class ActivityDependentService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.user.token
     });
-    return this.http.delete(`/api/activity-dependent/${activityDependentId}`, {headers: headers})
+    return this.http.delete(`${local}/api/activity-dependent/${activityDependentId}`, {headers: headers})
   }
 
 }

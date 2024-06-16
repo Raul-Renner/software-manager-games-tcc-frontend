@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs'; 
+import { Observable } from 'rxjs';
+import { local } from 'src/environments/environment';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -17,21 +18,21 @@ export class ColumnService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.userService.token
     });
-    return this.http.post<any>(`/api/org/project/board`, column, {headers: headers});
+    return this.http.post<any>(`${local}/api/org/project/board`, column, {headers: headers});
   }
 
   update(column: any): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.userService.token
     });
-    return this.http.put<any>(`/api/org/project/board/${column.id}`, column, {headers: headers});
+    return this.http.put<any>(`${local}/api/org/project/board/${column.id}`, column, {headers: headers});
   }
 
   delete(columnId:number): Observable<any>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.userService.token
     });
-    return this.http.delete<any>(`/api/org/project/board/${columnId}`,
+    return this.http.delete<any>(`${local}/api/org/project/board/${columnId}`,
     {
       headers: headers
     });
