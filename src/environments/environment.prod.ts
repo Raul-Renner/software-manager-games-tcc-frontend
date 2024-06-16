@@ -1,4 +1,4 @@
-export const local = "http://localhost:8080";
+export const local = "https://161.35.208.18:8443";
 export const environment = {
   production: true,
   type: 'prod',
