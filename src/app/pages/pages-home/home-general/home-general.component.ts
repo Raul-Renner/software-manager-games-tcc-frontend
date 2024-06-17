@@ -10,7 +10,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home-general.component.sass']
 })
 export class HomeGeneralComponent implements OnInit {
-  storage: any;
   user: any;
   projects: Array<any> = [];
   activitiesUser: Array<any> = [];

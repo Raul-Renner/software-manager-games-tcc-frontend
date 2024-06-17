@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ToastrModule } from 'ngx-toastr';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/template/header/header.component';
@@ -100,6 +100,7 @@ import { AssignUserActivityComponent } from './modal/assign-user-activity/assign
     CommonModule,
     MatToolbarModule,
     MatExpansionModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot()
 
   ],

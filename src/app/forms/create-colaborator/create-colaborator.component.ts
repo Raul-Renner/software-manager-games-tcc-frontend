@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { timeout } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
@@ -27,7 +27,7 @@ export class CreateColaboratorComponent implements OnInit {
   user: any;
 
   ngOnInit(): void {
-    const userStorage = localStorage.getItem("currentUser") || null;
+    const userStorage = localStorage.getItem("currentUser");
     const currentUser = JSON.parse(userStorage!);
     this.user = currentUser;
     this.password = 'password';
@@ -40,7 +40,8 @@ export class CreateColaboratorComponent implements OnInit {
     private projectService: ProjectService,
     private profileService: ProfileService,
     private userService: UserService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private spinner: NgxSpinnerService
   ){}
 
   public userForm: FormGroup = new FormGroup({
@@ -88,22 +89,27 @@ export class CreateColaboratorComponent implements OnInit {
   getProfiles(){
     this.profileService.findAll().subscribe({
       next: (response) => {
-        this.profiles = response;
+        this.profiles = response.filter((profile:any) => profile.type === 'ADMINISTRADOR' || profile.type === 'DESENVOLVEDOR');
       }
     })
   }
 
   save(){
+    this.spinner.show();
     var login = this.userForm.value.name.split(' ')[0] + this.userForm.value.username.split(' ')[0]
     this.userForm.value.login = login;
     this.userForm.value.organizationId = this.userService.organizationId;
     this.userService.save(this.userForm.value).subscribe({
       next:(response) =>{
+        this.spinner.hide();
+
         this.toast.success("Cadastro realizado com sucesso!");
         this.userForm.reset();
+
       },
       error:(response) => {
-        this.toast.error(response.error.errors[0].defaultMessage, "Error ao cadastrar usuário!");
+        this.spinner.hide();
+        this.toast.error("Error ao cadastrar usuário!");
       }
     })
   }

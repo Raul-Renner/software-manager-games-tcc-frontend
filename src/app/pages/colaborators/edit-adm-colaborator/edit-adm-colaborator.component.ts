@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { timeout } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -34,7 +35,8 @@ export class EditAdmColaboratorComponent implements OnInit, AfterViewInit {
     public userService: UserService,
     private toast: ToastrService,
     public profileService: ProfileService,
-    public projectService: ProjectService
+    public projectService: ProjectService,
+    private spinner: NgxSpinnerService
 
   ){}
 
@@ -71,8 +73,9 @@ export class EditAdmColaboratorComponent implements OnInit, AfterViewInit {
 
   getProfiles(){
     this.profileService.findAll().subscribe({
-      next: (resp) => {
-        this.profiles = resp;
+      next: (response) => {
+        this.profiles = response.filter((profile:any) => profile.type === 'ADMINISTRADOR' || profile.type === 'DESENVOLVEDOR');
+
       }
     })
   }
@@ -86,6 +89,7 @@ export class EditAdmColaboratorComponent implements OnInit, AfterViewInit {
   }
 
   update(){
+    this.spinner.show();
     if (!this.buttonDisabled) {
       this.buttonDisabled = true;
       const userDTO = {
@@ -95,11 +99,13 @@ export class EditAdmColaboratorComponent implements OnInit, AfterViewInit {
       };
       this.userService.updateProjectsAndProfile(this.idColaborator ,userDTO).subscribe({
           next: (response) => {
+            this.spinner.hide();
             this.toast.success("Usuário atualizado com sucesso!");
 
             this.router.navigate(['/colaborators']);
           },
           error: () => {
+            this.spinner.hide();
             this.toast.error("Erro ao atualizar dados do usuário!");
           }
       })

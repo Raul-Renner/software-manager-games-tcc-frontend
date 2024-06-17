@@ -28,6 +28,7 @@ export class HomeAdminComponent implements OnInit {
     const userStorage = localStorage.getItem("currentUser") || null;
     const currentUser = JSON.parse(userStorage!);
     this.user = currentUser;
+
     this.getColaborators();
     this.getProjects();
   }
