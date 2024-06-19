@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 import { ConfirmModalComponent } from 'src/app/modal/confirm-modal/confirm-modal.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -29,8 +30,8 @@ export class NavComponent implements OnInit{
 
 
   logout(){
-    const modalRef = this.modalService.open(ConfirmModalComponent);
-    modalRef.componentInstance.content = 'Deseja realmente encerrar sua sessão no sistema?';
+    const modalRef = this.modalService.open(DeleteComponent);
+    modalRef.componentInstance.head = 'Deseja realmente sair do sistema?';
 
     modalRef.result.then((result) => {
       if (result) {

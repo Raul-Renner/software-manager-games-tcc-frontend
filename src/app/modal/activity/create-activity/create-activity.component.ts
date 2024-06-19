@@ -87,27 +87,37 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     this.getActivities();
     this.getActivitiesDependents();
     this.getColaborators();
-    if(this.activity != undefined && this.activity != null){
-      const sectorActivityEnum = this.sectorActivity.find(element => element.sectorActivity === this.activity.sectorActivity);
-      const statusPriorityEnum = this.statusPriorityActivity.find(element => element.statusPriorityEnum === this.activity.statusPriorityEnum);
-      const tagActivityEnum = this.tagsActivity.find(element => element.tagsEnum === this.activity.tagsEnum);
-      this.activity.activityDependentList.map((activityDependent: any) => {
-        this.owner.push({
-          ...activityDependent,
-          id: activityDependent.activitySource
 
-        });
-      });
-      this.formActivity.patchValue({
-        ...this.activity,
-        activityDependentIds: this.activity.activityDependentList,
-        sectorActivity: sectorActivityEnum,
-        statusPriorityActivity: statusPriorityEnum,
-        tagsActivity: tagActivityEnum
-        });
-      }
+    if(this.activity != undefined && this.activity != null){
+      this.userActivity(this.activity);
+    }
 
   }
+
+  updateActivity(){
+
+    const userReponsable = this.colaborators.filter((resp: any) => resp.id === this.activity.user.id);
+    const sectorActivityEnum = this.sectorActivity.find(element => element.sectorActivity === this.activity.sectorActivity);
+    const statusPriorityEnum = this.statusPriorityActivity.find(element => element.statusPriorityEnum === this.activity.statusPriorityEnum);
+    const tagActivityEnum = this.tagsActivity.find(element => element.tagsEnum === this.activity.tagsEnum);
+    this.activity.activityDependentList.map((activityDependent: any) => {
+      this.owner.push({
+        ...activityDependent,
+        id: activityDependent.activitySource
+
+      });
+    });
+
+    this.formActivity.patchValue({
+      ...this.activity,
+      activityDependentIds: this.activity.activityDependentList,
+      sectorActivity: sectorActivityEnum,
+      statusPriorityActivity: statusPriorityEnum,
+      tagsActivity: tagActivityEnum,
+      userSelect: userReponsable[0]
+      });
+  }
+
   compareFunction(item: any, selected: any){
       return item.id === selected;
   }
@@ -238,5 +248,21 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
         }
       });
     }
+  }
+
+  userActivity(activity:any) {
+    this.userService.filterUserPerActivityType({
+      organizationId: this.user.organizationId,
+      projectId: this.content.id,
+      activityId: activity.id
+    }).subscribe({
+      next: (result) => {
+        if(result.content[0] != undefined){
+          this.activity.userResp = result.content[0];
+        }
+
+        this.updateActivity();
+      }
+    })
   }
 }

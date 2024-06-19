@@ -1,7 +1,7 @@
     <div class="modal-content modal-lg">
       <div class="modal-header d-flex">
         <div class="title w-100">
-          <h4>Criar Atividade</h4>
+          <h4>{{formActivity.value.id != null ? 'Editar Atividade': 'Criar Atividade'}}</h4>
         </div>
         <button type="button" class="btn-close close" data-dismiss="modal" (click)="activeModal.dismiss()">
 
@@ -50,6 +50,8 @@
                   <select id="selectUser" class="form-select select-response" name="selectUser" formControlName="userSelect"
                     role="selectUser">
                     <option *ngFor="let colaborator of colaborators" [ngValue]="colaborator" class="optionForm">{{colaborator.userInformation.name}} | {{colaborator.profile}}</option>
+                    <option [ngValue]="undefined" class="optionForm">Sem responsável</option>
+
                   </select>
                 </div>
                 <div class="d-flex flex-column">

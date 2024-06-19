@@ -3,7 +3,7 @@
     <h5>{{head}}</h5>
     <div class="info-colaborator">
       <span id="name-colaborator" *ngIf="infor != null && subInfor != null">{{infor}}  {{subInfor}}</span>
-      <span>{{label}}:<span id="responsible" *ngIf="infor3 != null">{{infor3}}</span></span>
+      <span *ngIf="label != null">{{label}}:<span id="responsible" *ngIf="infor3 != null">{{infor3}}</span></span>
     </div>
 
   </div>

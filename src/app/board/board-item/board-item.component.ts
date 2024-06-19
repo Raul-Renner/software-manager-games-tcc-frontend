@@ -6,6 +6,7 @@ import { ViewActivityComponent } from 'src/app/modal/view-activity/view-activity
 import { ViewDependenciesComponent } from 'src/app/modal/view-dependencies/view-dependencies.component';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrModule } from 'ngx-toastr';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 
 @Component({
   selector: 'app-board-item',
@@ -37,8 +38,10 @@ export class BoardItemComponent implements OnInit{
   }
 
   onCardDelete(id: number){
-    const modalResult = this.modalService.open(ConfirmModalComponent);
-    modalResult.componentInstance.content = "Deseja confirmar a deleção da atividade?";
+    const modalResult = this.modalService.open(DeleteComponent);
+    modalResult.componentInstance.head = "Deseja confirmar a deleção da atividade?";
+    modalResult.componentInstance.infor = this.item.id;
+    modalResult.componentInstance.subInfor = this.item.title;
     modalResult.result.then((result) => {
       if(result){
         this.emitDeleteCard.emit(id);
@@ -58,6 +61,7 @@ export class BoardItemComponent implements OnInit{
     })
   }
   onCardEdit(activity: any){
+    this.userActivity(activity);
     const modalRef = this.modalService.open(CreateActivityComponent, {size: 'lg', backdrop: 'static'});
 
     modalRef.componentInstance.activity = activity;
