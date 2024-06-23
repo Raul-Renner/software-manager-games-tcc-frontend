@@ -4,6 +4,7 @@ import { ActivityService } from 'src/app/services/activity.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { ActivityDependentService } from 'src/app/services/activity-dependent.service';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 
 @Component({
   selector: 'app-view-dependencies',
@@ -72,7 +73,7 @@ export class ViewDependenciesComponent implements OnInit {
         id: this.activity.user.id
       }
     }
-    const modalResult = this.modalService.open(ConfirmModalComponent);
+    const modalResult = this.modalService.open(DeleteComponent);
     this.activityEntity = ({
       ...this.activity,
       columnBoardId: column[0].id,
@@ -81,7 +82,9 @@ export class ViewDependenciesComponent implements OnInit {
       activityDependentIds: this.activityUpdate.filter((element:any) => element.id !== item.idActivityDependentId),
 
   })
-    modalResult.componentInstance.content = "Deseja confirmar a deleção da atividade dependente?";
+    modalResult.componentInstance.head = "Deseja confirmar a deleção da atividade dependente?";
+    modalResult.componentInstance.infor =  this.activityEntity.identifier;
+    modalResult.componentInstance.subInfor = this.activityEntity.title;
     modalResult.result.then((result) => {
       if(result){
         this.activityService.updateActivity(this.activityEntity).subscribe({

@@ -32,7 +32,7 @@ export class CreateProjectComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const userStorage = localStorage.getItem("currentUser") || null;
+    const userStorage = localStorage.getItem("currentUser");
     const currentUser = JSON.parse(userStorage!);
     this.user = currentUser;
     this.getMembers();

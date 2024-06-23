@@ -54,6 +54,8 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
   public colaborators: Array<any> = [];
   public userSaveVO: any;
   public user: any;
+  public colaboratorsIds: Array<any> = [];
+  public userUpdate: any;
 
 
 
@@ -87,16 +89,14 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
     this.getActivities();
     this.getActivitiesDependents();
     this.getColaborators();
-
     if(this.activity != undefined && this.activity != null){
       this.userActivity(this.activity);
     }
 
   }
 
-  updateActivity(){
-
-    const userReponsable = this.colaborators.filter((resp: any) => resp.id === this.activity.user.id);
+  updateActivity(activity1: any, colaborators: any){
+    const userUpdate = colaborators.filter((resp: any) => resp.id === activity1.user.id);
     const sectorActivityEnum = this.sectorActivity.find(element => element.sectorActivity === this.activity.sectorActivity);
     const statusPriorityEnum = this.statusPriorityActivity.find(element => element.statusPriorityEnum === this.activity.statusPriorityEnum);
     const tagActivityEnum = this.tagsActivity.find(element => element.tagsEnum === this.activity.tagsEnum);
@@ -106,16 +106,19 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
         id: activityDependent.activitySource
 
       });
+      this.colaboratorsIds.push(activityDependent.activitySource);
     });
 
     this.formActivity.patchValue({
       ...this.activity,
-      activityDependentIds: this.activity.activityDependentList,
+      activityDependentIds: this.colaboratorsIds,
       sectorActivity: sectorActivityEnum,
       statusPriorityActivity: statusPriorityEnum,
       tagsActivity: tagActivityEnum,
-      userSelect: userReponsable[0]
+      userSelect: userUpdate[0]
+
       });
+
   }
 
   compareFunction(item: any, selected: any){
@@ -130,7 +133,12 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
       organizationId: this.user.organizationId,
       projectId: this.content.id
     }).subscribe(resp =>{
-      this.activitiesList = resp.content;
+      if(this.activity != undefined && this.activity != null){
+        this.activitiesList = resp.content.filter((resp: any) => resp.id != this.activity.id);
+      }else{
+        this.activitiesList = resp.content;
+      }
+
     });
   }
 
@@ -260,8 +268,7 @@ export class CreateActivityComponent implements OnInit, AfterViewInit{
         if(result.content[0] != undefined){
           this.activity.userResp = result.content[0];
         }
-
-        this.updateActivity();
+        this.updateActivity(this.activity, this.colaborators);
       }
     })
   }

@@ -182,6 +182,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
 
       }
     });
+    this.activitiesUpdate = [];
   }
 
   updateCard(cardId: number, columnId: number){
