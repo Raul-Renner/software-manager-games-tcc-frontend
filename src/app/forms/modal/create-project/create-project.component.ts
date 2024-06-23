@@ -13,6 +13,7 @@ import { ProjectService } from 'src/app/services/project.service';
 export class CreateProjectComponent implements OnInit {
 
   public owner: Array<any> = [];
+  public user: any;
 
   public colaborators: Array<any> = [];
 
@@ -31,12 +32,15 @@ export class CreateProjectComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser");
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.getMembers();
   }
 
 
   createProject(){
-    this.projectForm.value.organizationId = this.userService.organizationId;
+    this.projectForm.value.organizationId = this.user.organizationId;
     this.projectService.save(this.projectForm.value).subscribe({
       next:() => {
         this.toastr.success("Projeto cadastrado com sucesso!");
@@ -53,9 +57,9 @@ export class CreateProjectComponent implements OnInit {
 
   getMembers(){
     this.userService.findAllBy({
-      organizationId: this.userService.organizationId
+      organizationId: this.user.organizationId
     }).subscribe(response => {
-      this.colaborators = response.content;
+      this.colaborators = response.content.filter((user: any) => user.profile != 'ADMINISTRADOR');
     });
   }
 

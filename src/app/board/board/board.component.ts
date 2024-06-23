@@ -7,7 +7,6 @@ import { CreateColumnComponent } from 'src/app/forms/modal/create-column/create-
 import { CreateActivityComponent } from 'src/app/modal/activity/create-activity/create-activity.component';
 import { ActivityService } from 'src/app/services/activity.service';
 import { ProjectService } from 'src/app/services/project.service';
-import { UserService } from 'src/app/services/user.service';
 import { ViewColumnsComponent } from 'src/app/forms/modal/view-columns/view-columns.component';
 
 @Component({
@@ -24,6 +23,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
   public projectId: any;
   public project: any;
   public test:any;
+  public user:any;
 
   public tagsActivity: Array<any> = [
     {id: 1, name:'URGENTE', tagsEnum:'URGENT', color: '#FF0000'},
@@ -37,7 +37,6 @@ export class BoardComponent  implements OnInit, AfterViewInit {
   constructor(private activityService:ActivityService,
     private modalService: NgbModal,private elemento: ElementRef,
     private route: ActivatedRoute,
-    public user: UserService,
     private projectService: ProjectService,
     private toast: ToastrService
     ){}
@@ -183,6 +182,7 @@ export class BoardComponent  implements OnInit, AfterViewInit {
 
       }
     });
+    this.activitiesUpdate = [];
   }
 
   updateCard(cardId: number, columnId: number){

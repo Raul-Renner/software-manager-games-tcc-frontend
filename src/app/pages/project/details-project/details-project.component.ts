@@ -22,7 +22,7 @@ export class DetailsProjectComponent implements OnInit {
   activities: Array<any> = [];
   activitiesFinished: Array<any> = [];
   userId: number;
-
+  user: any;
 
   constructor(private route: ActivatedRoute,
     private userService: UserService,
@@ -31,8 +31,11 @@ export class DetailsProjectComponent implements OnInit {
     private modalService: NgbModal){}
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.idProject = this.route.snapshot.url[1].path;
-    this.userId = this.userService.userId;
+    this.userId = this.user.userId;
     if(this.idProject === null || this.idProject === undefined){
 
     }else{
@@ -45,7 +48,7 @@ export class DetailsProjectComponent implements OnInit {
 
   getColaborators(){
     this.userService.findAllBy({
-      organizationId: this.userService.organizationId,
+      organizationId: this.user.organizationId,
       projectId: this.idProject
     }).subscribe({
       next:(response) => {
@@ -56,7 +59,7 @@ export class DetailsProjectComponent implements OnInit {
 
   getActivities(){
     this.activityService.findAllBy({
-      organizationId: this.userService.organizationId,
+      organizationId: this.user.organizationId,
       projectId: this.idProject
     }).subscribe({
       next:(response) => {
@@ -69,7 +72,7 @@ export class DetailsProjectComponent implements OnInit {
   getProject(){
     this.projectService.findBy({
       projectIds:[this.idProject],
-      organizationId: this.userService.organizationId
+      organizationId: this.user.organizationId
     }).subscribe({
       next: (response) => {
         this.project = response.content[0];

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { local } from 'src/environments/environment';
 import { UserFilterPerActivityType, UserFilterType } from '../interfaces/filters';
@@ -26,37 +26,45 @@ export class UserService {
   public projects: any;
   public pathHome: string = '';
   public token: string;
-  public currentUser: any = '';
+  public currentUser: any;
 
   constructor(private http: HttpClient) {
-    const userStorage = localStorage.getItem("currentUser") || null;
-    this.currentUser = JSON.parse(userStorage!);
-   }
+
+  }
+
 
   save(user: any): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' +  this.currentUser.token
+      'Authorization': 'Bearer ' +  currentUser.token
     });
     return this.http.post<any>(`${local}/api/org/colaborator`, user, {headers: headers});
   }
 
   update(user: any): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' +  this.currentUser.token
+      'Authorization': 'Bearer ' +  currentUser.token
     });
     return this.http.put<any>(`${local}/api/org/colaborator/${user.id}`, user, { headers: headers });
   }
 
   delete(userId: number): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' +  this.currentUser.token
+      'Authorization': 'Bearer ' +  currentUser.token
     });
     return this.http.delete<any>(`${local}/api/org/colaborator/${userId}`,{headers: headers});
   }
 
   findAllBy(filter: UserFilterType): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' +  this.currentUser.token
+      'Authorization': 'Bearer ' +  currentUser.token
     });
     return this.http.get<any>(`${local}/api/org/colaborator`,{
       params: createParams([filter]),
@@ -64,8 +72,10 @@ export class UserService {
     });
   }
   findBy(field: any, values: any): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' +  this.currentUser.token
+      'Authorization': 'Bearer ' +  currentUser.token
     });
     const params = new HttpParams()
     .append("field", field)
@@ -77,16 +87,20 @@ export class UserService {
   }
 
   updateProjectsAndProfile(userId:number, user: any): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' +  this.currentUser.token
+      'Authorization': 'Bearer ' +  currentUser.token
     });
-    return this.http.put<any>(`${local}/api/org/colaborator/update-user-function/${user.id}`, user, { headers: headers });
+    return this.http.put<any>(`${local}/api/org/colaborator/update-user-function/${userId}`, user, { headers: headers });
   }
 
 
   filterUserPerActivityType(filter: UserFilterPerActivityType): Observable<any> {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' +  this.currentUser.token
+      'Authorization': 'Bearer ' +  currentUser.token
     });
     return this.http.get<any>(`${local}/api/org/colaborator/find-by-activity`,{
       params: createParams([filter]),
@@ -100,8 +114,14 @@ export class UserService {
   }
 
   get isLoggedIn() {
-    const storage = sessionStorage.getItem("currentUser") ? sessionStorage : localStorage;
+    const storage = localStorage.getItem("currentUser") ? localStorage : localStorage;
     const session = JSON.parse(storage.getItem("currentUser") || '{}');
     return this.loggedInStatus && !!session;
+  }
+
+  signOut() {
+    this.setLoggedIn(false);
+    sessionStorage.clear();
+    localStorage.clear();
   }
 }

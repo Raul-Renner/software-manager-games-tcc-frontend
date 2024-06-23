@@ -3,7 +3,7 @@
   <div cdkDropListGroup class="row">
     <div style="display: flex;" class="head">
       <button style=" position: absolute;
-      left: 0;" type="button" class="btn btn-lg" routerLink="/projects">
+      left: 0;" type="button" class="btn btn-lg" [routerLink]="user.profile === 'ADMINISTRADOR' ? '/projects' : '/colaborator-projects'">
         <svg style="fill: #072047" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
         </svg>
@@ -21,9 +21,8 @@
       <thead>
         <tr>
           <th>
-            <div
-              *ngIf="user.profile === 'ADMINISTRADOR' || user.profile === 'GERENTE' || user.profile === 'LIDER_TECNICO' ">
-              <div class="buttons p-2 m-1">
+            <div>
+              <div class="buttons p-1 m-1">
                 <button class="btn" (click)="createActivity()">
                   <svg style="fill: #0063AE;" xmlns="http://www.w3.org/2000/svg" width="25" height="25"  fill="currentColor" class="bi bi-list"
                     viewBox="0 0 16 16">
@@ -31,7 +30,7 @@
                       d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
                   </svg>
                 </button>
-                <button class="btn" (click)="createColumm()">
+                <button class="btn" (click)="createColumm()" *ngIf="user.profile === 'ADMINISTRADOR' || user.profile === 'GERENTE' || user.profile === 'LIDER_TECNICO' ">
                   <svg style="fill: #57A773;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                     class="bi bi-layout-sidebar-inset-reverse" viewBox="0 0 16 16">
                     <path
@@ -39,7 +38,7 @@
                     <path d="M13 4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z" />
                   </svg>
                 </button>
-                <button class="btn" (click)="viewColumns()">
+                <button class="btn" (click)="viewColumns()"  *ngIf="user.profile === 'ADMINISTRADOR' || user.profile === 'GERENTE' || user.profile === 'LIDER_TECNICO' ">
                   <svg style="fill: #6F6F6F;"  xmlns="http://www.w3.org/2000/svg" width="25" height="25"  fill="currentColor"
                     class="bi bi-collection" viewBox="0 0 16 16">
                     <path

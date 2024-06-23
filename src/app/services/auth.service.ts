@@ -21,4 +21,8 @@ export class AuthService {
       headers: new HttpHeaders({"Content-type": "application/json", "Logged": logged.toString() })
     });
   }
+
+  logout() {
+    this.router.navigate(["/login"]);
+  }
 }

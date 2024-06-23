@@ -14,7 +14,7 @@ export class ProjectService {
   constructor(
     private http: HttpClient,
     private user: UserService) {
-      const userStorage = localStorage.getItem("currentUser") || null;
+      const userStorage = localStorage.getItem("currentUser");
       const currentUser = JSON.parse(userStorage!);
       this.user = currentUser;
      }

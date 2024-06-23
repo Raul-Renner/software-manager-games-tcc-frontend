@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProjectColaboratorComponent implements OnInit {
   hideToggle: boolean = false;
-
+  user: any;
   projects: Array<any> = [];
   activitiesUser: Array<any> = [];
   activitiesAllProject: Array<any> = [];
@@ -18,17 +18,20 @@ export class ProjectColaboratorComponent implements OnInit {
   userId: number;
 
   constructor(
-    public user: UserService,
+    public userService: UserService,
     public projectService: ProjectService,
     public toast: ToastrService){}
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.userId = this.user.userId;
     this.getProjectsUser();
   }
 
   getProjectsUser(){
-    this.user.findAllBy({
+    this.userService.findAllBy({
       organizationId: this.user.organizationId,
       userId: this.user.userId
     }).subscribe({

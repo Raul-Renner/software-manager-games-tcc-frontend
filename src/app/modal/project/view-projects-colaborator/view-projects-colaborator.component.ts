@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-view-projects-colaborator',
@@ -16,7 +15,6 @@ export class ViewProjectsColaboratorComponent implements OnInit {
   entityColaborator: any;
   constructor(
     public activeModal: NgbActiveModal,
-    private user: UserService,
     private toast: ToastrService){}
 
 

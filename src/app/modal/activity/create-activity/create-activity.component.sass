@@ -14,6 +14,8 @@ label
   width: 300px
 
 .select-input
+  display: flex
+  flex-direction: row
   select
     width: 350px
 
@@ -36,9 +38,38 @@ label
   justify-content: center
   align-items: center
 
+.details-responsable
+  span
+    font-size: 13px
+    font-weight: 500
+#head-resizing
+  display: flex
+  flex-direction: row
 
 .timeEstimated
   input
     width: 130px
 ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option
   background-color: rgba(255, 255, 255, 1.5)
+
+
+@media (max-width: 992px)
+  .select-input
+    display: flex
+    flex-direction: column
+    select
+      width: 100%
+    .resizing
+      margin-top: 4px
+
+@media (max-width: 492px)
+  #head-resizing
+    display: flex
+    flex-direction: column
+    .input-title
+      width: 100%
+    .time-estimated
+      margin-top: 4px
+      select
+        width: 100%
+

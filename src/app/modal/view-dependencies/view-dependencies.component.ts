@@ -3,9 +3,8 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivityService } from 'src/app/services/activity.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { ActivityDependentService } from 'src/app/services/activity-dependent.service';
-import { forkJoin } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteComponent } from 'src/app/forms/modal/delete/delete.component';
 
 @Component({
   selector: 'app-view-dependencies',
@@ -21,7 +20,7 @@ export class ViewDependenciesComponent implements OnInit {
   public activityUpdate: Array<any> = [];
   activityEntity: any;
   userVO: any;
-
+  user: any;
 
   activitiesSource: Array<any> = [];
   activitiesList: Array<any> = [];
@@ -30,18 +29,20 @@ export class ViewDependenciesComponent implements OnInit {
     private modalService: NgbModal,
     public activeModal: NgbActiveModal,
     private activityService:ActivityService,
-    public userService: UserService,
     public toast: ToastrService,
     private activityDependentService: ActivityDependentService){}
 
   ngOnInit(): void {
+    const userStorage = localStorage.getItem("currentUser") || null;
+    const currentUser = JSON.parse(userStorage!);
+    this.user = currentUser;
     this.getActivities();
   }
 
   getActivities(){
     this.activitiesList = [];
     this.activityService.findAllBy({
-      organizationId: this.userService.organizationId,
+      organizationId: this.user.organizationId,
       projectId: this.project.id
     }).subscribe(resp => {
       this.activitiesList = resp.content;
@@ -72,7 +73,7 @@ export class ViewDependenciesComponent implements OnInit {
         id: this.activity.user.id
       }
     }
-    const modalResult = this.modalService.open(ConfirmModalComponent);
+    const modalResult = this.modalService.open(DeleteComponent);
     this.activityEntity = ({
       ...this.activity,
       columnBoardId: column[0].id,
@@ -81,7 +82,9 @@ export class ViewDependenciesComponent implements OnInit {
       activityDependentIds: this.activityUpdate.filter((element:any) => element.id !== item.idActivityDependentId),
 
   })
-    modalResult.componentInstance.content = "Deseja confirmar a deleção da atividade dependente?";
+    modalResult.componentInstance.head = "Deseja confirmar a deleção da atividade dependente?";
+    modalResult.componentInstance.infor =  this.activityEntity.identifier;
+    modalResult.componentInstance.subInfor = this.activityEntity.title;
     modalResult.result.then((result) => {
       if(result){
         this.activityService.updateActivity(this.activityEntity).subscribe({

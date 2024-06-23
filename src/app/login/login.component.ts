@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private userCurrent: UserService,
+    private spinner: NgxSpinnerService,
     private toast: ToastrService){
       this.login = '';
       this.password = '';
@@ -49,20 +51,21 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(){
+    this.spinner.show();
     this.authService.login({login: this.login, password: this.password}).subscribe( resp => {
 
       const { body } = resp;
       this.configurationUserLogin(body);
       this.navigationHomeUerProfile();
-
+      this.spinner.hide();
     }, err => {
       if(err.status = 401){
         this.toast.error('Usuário e/ou senha inválidos. Verifique o usuário e senha e tente novamente.');
       } else {
         this.toast.error(err.error);
       }
+      this.spinner.hide();
       this.password = '';
-      this.login = '';
     });
   }
 
@@ -101,11 +104,15 @@ export class LoginComponent implements OnInit {
         this.userCurrent.pathHome = "/home";
         break;
       case "GERENTE":
+        this.userCurrent.pathHome = "/home-admin";
         break;
       case "LIDER_TECNICO":
+        this.userCurrent.pathHome = "/home";
+        break;
+      case "TESTADOR":
+        this.userCurrent.pathHome = "/home";
         break;
     }
-
     this.storage.setItem('currentUser', JSON.stringify(this.userCurrent));
     this.router.navigate([this.userCurrent.pathHome]);
   }
