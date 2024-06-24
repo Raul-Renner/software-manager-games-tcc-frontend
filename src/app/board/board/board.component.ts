@@ -176,13 +176,14 @@ export class BoardComponent  implements OnInit, AfterViewInit {
       next: (response) => {
         // this.toast.success("atividade atualizada com sucesso!");
         this.getProject();
+        this.activitiesUpdate = [];
       },
       error: (response) => {
         this.toast.error("Erro ao atualizar os dados da atividade:" + this.activityUpdate.id);
-
+        this.activitiesUpdate = [];
       }
     });
-    this.activitiesUpdate = [];
+
   }
 
   updateCard(cardId: number, columnId: number){
