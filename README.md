@@ -151,3 +151,14 @@ docker run -d -p 80:80 games-dev-angular
   possam remover atividades da lista de dependências de uma atividade dependente registrada no
   sistema de um projeto específico.
 
+## Algumas telas da ferramenta
+[Tela de login](https://github.com/Raul-Renner/software-manager-games-tcc-frontend/blob/main/docs/telas%20do%20projeto/login.png)
+
+[Tela de cadastro de uma organização](https://github.com/Raul-Renner/software-manager-games-tcc-frontend/blob/main/docs/telas%20do%20projeto/form-org.png)
+
+[Tela de visualizar projetos - Desenvolvedor](https://github.com/Raul-Renner/software-manager-games-tcc-frontend/blob/main/docs/telas%20do%20projeto/user.png)
+
+
+[Tela de projetos - ADM](https://github.com/Raul-Renner/software-manager-games-tcc-frontend/blob/main/docs/telas%20do%20projeto/projetos-ad1m.png)
+
+[Tela de board](https://github.com/Raul-Renner/software-manager-games-tcc-frontend/blob/main/docs/telas%20do%20projeto/board-adm1.png)
