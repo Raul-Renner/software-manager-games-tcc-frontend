@@ -151,4 +151,3 @@ docker run -d -p 80:80 games-dev-angular
   possam remover atividades da lista de dependências de uma atividade dependente registrada no
   sistema de um projeto específico.
 
-  
